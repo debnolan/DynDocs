@@ -1,0 +1,5 @@
+First, touch HOWTOADDFILES.txt ,  then vi HOWTOADDFILES.txt
+Second, git add HOWTOADDFILES.txt
+Now ready to commit:  git commit HOWTOADDFILES.txt -m "your comment"
+git pull before git push.  or you will be rejected.
+then git push.
