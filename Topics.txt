@@ -1,0 +1,92 @@
+Topics
+1. Drug trial, e.g., Salk
+  a.Random permutations tests
+  b.	Cobb manuscript
+2. Crabs 
+  a. Correlation
+  b. Stat Labs 
+3. Infant health
+  a. Comparison of distributions
+  b. Stat Labs   
+4. Web Cache
+  a. Poisson scatter and MLE
+  b. Grimes paper
+5. Wireless
+  a. Nearest neighbor
+  b. DSiR
+6. Zillow
+  a. Indicator variables in regression
+  b. DeVeaux vignette
+7. State of Union speeches
+  a. Distances between text documents
+  b. 133 HW
+8. National Crime Victimization Survey
+  a. Jackknife estimate of variance
+  b. Lohr
+9. Another National Survey
+  a. Bootstrap estimate of variance
+  b. Lohr
+10. Pairs Trading
+  a. Time-series and simulation
+  b. DSiR
+11. Traffic jams on I-80
+  a. Regression and change points
+  b. StatSci/Rice materials
+12. Robot experiment
+  a. Nonlinear least squares
+  b. DSiR
+13. 2000 Election
+  a. Logistic regression
+  b. Sekhon papers/151a assignment
+14. Spam filter
+  a. Naïve Bayes or CART
+  b. DSiR
+15. Obesity & Behavioral Risk Factor Surveillance Survey
+  a. Estimation and confidence interval
+16. Running times
+  a. Splines and lines
+  b. DSiR
+17. Traffic simulation
+  a. Simulation of a network
+  b. DSiR
+18. Snow gauge
+  a. Calibration
+  b. Stat Labs 
+19. Rainfall in Colorado – the 100-year event
+  a. Extreme values and Quantiles
+  b. Nychka material
+20. Elephant seal migration
+  a. Simulating a random walk on a great circle
+  b. Brillinger paper
+21. Junk mail
+  a. Variable selection
+  b. SAGTU - deVeaux
+22. Statistics in the Courtroom
+  a. 2 by 2 tables
+  b. SAGTU – Cobb & Gehlback
+23. SAT and Teachers salaries
+  a. Confounding and linear models
+  b. Kaplan chapter
+24. Abortion and incarceration
+  a. Confidence intervals 
+  b. Ibser thesis + Freakonomics
+25. Fertility in Fiji
+  a. Poisson Models for count data 
+  b. Agresti
+26. Map making
+  a. Graphics 
+27. Global Climate Models
+  a. Bayesian variance estimation
+  b. Nychka materials
+28. Phylogenetic trees
+  a. Hidden Markov models (HMMs)
+  b. Pollard vignette and package
+29. Census and Congressional seat apportionment
+  a. Least squares
+  b. SAGTU – Cobb & Wright
+30. Africanized Bee invasion
+  a. Model fitting and simulation
+  b. SAGTU – Matis and Kiffe
+31. Radon in Minnesota
+  a. Predictions in stratified sampling
+  b. SAGTU & Stat Labs
