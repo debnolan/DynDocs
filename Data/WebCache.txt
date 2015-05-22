@@ -1,9 +1,19 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+Hi Everyone
+=======
+my new changes
+A change
+
+>>>>>>> 234808733f351f9761e4c279eddf357fea0f4acc
+=======
 TEST
 my new changes
 A change
 
 
-
+Test:////
 
 More stuff
 
+>>>>>>> d34cd002aa9b1f138b4e9404ea0f863ea4354c1a
