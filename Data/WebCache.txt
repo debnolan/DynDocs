@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 Hi Everyone
+=======
+my new changes
+A change
+
+>>>>>>> 234808733f351f9761e4c279eddf357fea0f4acc
