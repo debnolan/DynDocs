@@ -7,7 +7,7 @@ Topics
   b. Stat Labs 
 3. Infant health  [Ziao]
   a. Comparison of distributions
-  b. Stat Labs   
+  b. Stat Labs - chapter 1   
 4. Web Cache [Ben]
   a. Poisson scatter and MLE
   b. Grimes paper
