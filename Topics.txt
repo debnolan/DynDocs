@@ -32,10 +32,10 @@ Topics
 11. Traffic jams on I-80 [Inna]
   a. Regression and change points
   b. StatSci/Rice materials
-12. Robot experiment [Xintong and Qingyuon]
+12. Robot experiment [Sophia and Skyler]
   a. Nonlinear least squares
   b. DSiR
-13. 2000 Election
+13. 2000 Election [Xintong and Qingyuon]
   a. Logistic regression
   b. Sekhon papers/151a assignment
 14. Spam filter
@@ -54,8 +54,8 @@ Topics
   b. Stat Labs 
 19. Rainfall in Colorado – the 100-year event [Wuji]
   a. Extreme values and Quantiles
-  b. Nychka material [Donovan and ChanIk]
-20. Elephant seal migration
+  b. Nychka material
+20. Elephant seal migration [Donovan and ChanIk]
   a. Simulating a random walk on a great circle
   b. Brillinger paper
 21. Junk mail
