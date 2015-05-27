@@ -125,3 +125,5 @@ nlm(circle.fit.nlm.funk, c(x0 = mean(xi), y0 = mean(yi), r = .5),
 circle.fit <-
   function (x, y, initGuess = c(mean(x), mean(y), .5), ...) 
     nlm(circle.fit.nlm.funk, initGuess, x = x, y = y, ...)
+
+a =3
