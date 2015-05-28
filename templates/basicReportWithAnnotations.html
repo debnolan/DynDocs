@@ -1,10 +1,15 @@
 <html>
 <!--In html there is head and body-->
 <head>
-  <script src="shared/jquery.js" type="text/javascript"></script> <!--this is javascript--> <!--red are the tags, green is the attribute name, yellow are the attribute values, white is text content, grey is comments-->
+  <script src="shared/jquery.js" type="text/javascript"></script> 
+   <!--this is javascript--> 
+   <!-- in sublime red text are the tags, green is the attribute name, 
+        yellow are the attribute values, white is text content, grey is comments-->
   <script src="shared/shiny.js" type="text/javascript"></script>
-  <link rel="stylesheet" type="text/css" href="shared/template.css"/> <!--this is a link to the CSS file-tells it to pull from this page-->
-  <!--the function of head is to tell us where the javascript functions are and where the styles (CSS) are-->
+  <link rel="stylesheet" type="text/css" href="shared/template.css"/> 
+  <!--this is a link to the CSS file-tells it to pull from this page-->
+  <!--the function of the head tag is to tell the browser 
+ where the javascript functions and the styles (CSS) are-->
 </head>
  
 <body>
@@ -15,12 +20,22 @@
   <h2>Test</h2>
   <h1 style="color: orange;"> Test 2</h1>
 </div>
- <!--div is a way to lay things out on the page. This particular example uses a header style-->
+ <!-- the div tag is used to lay things out on the page and
+     to apply styles to a group of tags (the children of the div). 
+    This particular example uses a header style -->
   <div class="shiny-input-panel" style="float:left;">
   <p>
     <label for="idSelect1">Distribution type:</label>
-    <br />
+    <br /> 
+    <!-- The select tag is used to creat a dropdown menu.
+      Think of the value of the name attribute as the parameter
+      name for a function. Here the parameter is dist. -->
     <select name="dist" id="idSelect1">
+    <!-- These children option tags give choices that appear 
+      in the drop down menu.
+      The value attribute on the option tags are the values for 
+      the argument. For example, norm is the value for the dist
+      paramter when the reader selects the Normal option.  -->
       <option value="norm">Normal</option>
       <option value="unif">Uniform</option>
       <option value="lnorm">Log-normal</option>
@@ -34,6 +49,11 @@
     <br /> 
     <input type="number" name="n" value="500" 
            min="1" max="1000" />
+    <!-- This input tag is used to allow the reader to type in values.  
+      The attribute indicates that the value must be numeric.
+      Again, the value of the name attribute is the parameter name
+      for the function.  Here the parameter is n. -->
+    <select name="dist" id="idSelect1">
 
  </p>
  <p>
@@ -44,6 +64,10 @@
        data-skin="plastic" data-round="FALSE" 
        data-locale="us" data-format="#,##0.#####" 
        data-smooth="FALSE"/>
+    <!-- This input tag is used to allow the reader to 
+      specify a value with a slider. 
+      The value attribute holds the default value for the 
+      argument called bins.   -->
 
   </p>
  </div> 
@@ -56,6 +80,8 @@
  </div> 
 
 <div class="output">
+<!-- The pre nodes are used to represent code. -->
+
   <pre id="summary" class="shiny-text-output" style="color: green;"> <!--the style allows you to add to an html element in addition to using CSS-->
     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
 -2.93100 -1.09400 -0.05999 -0.12130  0.69600  2.76800 
