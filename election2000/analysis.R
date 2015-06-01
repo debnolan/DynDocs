@@ -1,3 +1,7 @@
+load(url("http://www.stat.berkeley.edu/users/nolan/data/Projects/election.rda"))
+rm(countyUS)
+rm(precintPBC)
+
 # The dependent variable is whether the voter cast a vote for 
 # Buchanan or voted for another candidate. 
 # In addition to the constant, the regressors are two dummy variables
@@ -5,10 +9,10 @@
 # Nelson (D) or a vote for Deckard (Ref).
 
 summary(glm(ibuchanan ~ inelson + ideckard, family = "binomial",
-       subset = isabs==0, data = ballot data goes here ))
+       subset = isabs==0, data = ballotPBC))
 
 summary(glm(ibuchanan ~ inelson + ideckard, family = "binomial",
-        subset = isabs==1, data = ballot data goes here ))
+        subset = isabs==1, data = ballotPBC))
 
 # The above output should match Table 3 in the paper.
 
