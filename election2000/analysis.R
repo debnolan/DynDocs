@@ -38,3 +38,52 @@ xtabs(Freq ~ inelson + ideckard + isabs, data = ballotPBC ,
 # those who vote for Deckard. 
 
 
+# Analyze PBC data in precinct-level
+
+precinct = levels(ballotPBC$precinct)
+data = as.data.frame(matrix(0, nrow = length(precinct), ncol = 6))
+
+for (i in 1:length(precinct)) {
+    data[i, 1] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
+                                  ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 0 &
+                                  ballotPBC$ideckard == 0], 0)
+  }
+
+for (i in 1:length(precinct)) {
+  data[i, 2] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
+                                    ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 0 &
+                                    ballotPBC$ideckard == 0], 0)
+}
+
+for (i in 1:length(precinct)) {
+  data[i, 3] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
+                                    ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 1 &
+                                    ballotPBC$ideckard == 0], 0)
+}
+
+for (i in 1:length(precinct)) {
+  data[i, 4] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
+                                    ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 1 &
+                                    ballotPBC$ideckard == 0], 0)
+}
+
+for (i in 1:length(precinct)) {
+  data[i, 5] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
+                                    ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 0 &
+                                    ballotPBC$ideckard == 1], 0)
+}
+
+for (i in 1:length(precinct)) {
+  data[i, 6] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
+                                    ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 0 &
+                                    ballotPBC$ideckard == 1], 0)
+}
+
+# Find the precincts with no data
+
+excl.precinct = vector()
+for (i in 1:length(precinct)) {
+  if (all(data[i, ] == 0)) excl.precinct = c(excl.precinct, i)
+}
+
+data1 = data[-excl.precinct,]
