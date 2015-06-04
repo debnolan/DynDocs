@@ -1,0 +1,4 @@
+export(staleSim, mle)
+S3method(summary, StalePageSim)
+S3method(plot, StalePageSim)
+

@@ -1,0 +1,7 @@
+Package: CrawlRates
+Title:  For Carrie Grimes' 2 days
+Version: 0.1-0
+Description: Data and functions for estimating time between changes to Web pages.
+Maintainer: Duncan Temple Lang <duncan@wald.ucdavis.edu>
+Author: Carrie Grimes, Duncan Temple Lang 
+License: BSD
