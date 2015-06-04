@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,27 +23,35 @@
 </head>
 
 <body>
-<div class="container-fluid">
-  <h2 style="padding: 10px 0px;">censusVis</h2>
+<div style="padding-right: 15px; padding-left: 15px; margin-right:
+  auto; margin-left: auto;" >  <!--class="container-fluid"-->
+  <h2 style="padding: 10px 10px;">censusVis</h2>
   <div class="row-fluid">
     <div class="span4">
       <form class="well">
-        <span class="help-block">Create demographic maps with 
-        information from the 2010 US Census.</span>
-        <label class="control-label" for="var">Choose a variable to display</label>
-        <select id="var"><option value="Percent White" selected>Percent White</option>
-<option value="Percent Black">Percent Black</option>
-<option value="Percent Hispanic">Percent Hispanic</option>
-<option value="Percent Asian">Percent Asian</option></select>
+        <p>
+         Create demographic maps with information
+         from the 2010 US Census.
+        </p>
+        <label for="var">Choose a variable to display</label>
+        <select id="var">
+	  <option value="Percent White" selected>Percent White</option>
+          <option value="Percent Black">Percent Black</option>
+          <option value="Percent Hispanic">Percent Hispanic</option>
+          <option value="Percent Asian">Percent Asian</option></select>
         <script type="application/json" data-for="var" data-nonempty="">{}</script>
         <div>
-          <label class="control-label" for="range">Range of interest:</label>
-          <input id="range" type="slider" name="range" value="0;100" class="jslider" data-from="0" data-to="100" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>
+          <label for="range">Range of interest:</label>
+          <input id="range" type="slider" name="range" value="0;100"
+	     class="jslider" data-from="0" data-to="100" data-step="1"
+	     data-skin="plastic" data-round="FALSE" data-locale="us"
+	     data-format="#,##0.#####" data-smooth="FALSE"/>
         </div>
       </form>
     </div>
     <div class="span8">
-      <div id="map" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+      <div id="text1" class="shiny-text-output"></div>
+      <div id="text2" class="shiny-text-output"></div>
     </div>
   </div>
 </div>
