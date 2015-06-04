@@ -5,10 +5,10 @@
 # Nelson (D) or a vote for Deckard (Ref).
 
 summary(glm(ibuchanan ~ inelson + ideckard, family = "binomial",
-       subset = isabs==0, data = ballot data goes here ))
+       subset = isabs==0, data = ballotPBC ))
 
 summary(glm(ibuchanan ~ inelson + ideckard, family = "binomial",
-        subset = isabs==1, data = ballot data goes here ))
+        subset = isabs==1, data = ballotPBC ))
 
 # The above output should match Table 3 in the paper.
 
