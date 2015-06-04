@@ -1,0 +1,22 @@
+Hi Ben,
+
+I have committed a power point about the project to git. 
+In addition, there is an R package that Duncan wrote that is in the 
+repository.  This package contains the data that you need. 
+The data are in CrawlRates/data/  you only need to look at two
+of the files there: smallChangeFasts and smallChangeSlow.  You
+can load them into R. They are lists and the main object of interest
+is the list called intervals in the object smallChangeFast/smallChangeSlow.  
+These are in the webCache directory. A git pull with get them. 
+Also there is a function to compute the estimate for the rate of change
+using the different techniques (regular MLE, which you thought of in our
+earlier meeting) and the modified MLE that accounts for the censoring.
+
+I have placed two papers on bcourses about the project. 
+
+You will want to choose a site that has a lot of changes, but not so many that it is changing at every visit. You can use sapply on the list of web sites to
+get some summary statitistics and select the one to use. You probably want to choose about 6 of them in case one doesn't work well, then you will have other options.
+
+
+
+

@@ -40,6 +40,10 @@ readLog <-
 system.time(logs <- lapply(ff, readLog))
 names(logs) <- ff
 
+save(logs, file = "logs.rda")
+load("logs.rda")
+png("Robotfield.png")
+
 getSegments <-
   # return a list with elements being integer vectors
   # giving the indices of each contiguous segment
@@ -126,4 +130,37 @@ circle.fit <-
   function (x, y, initGuess = c(mean(x), mean(y), .5), ...) 
     nlm(circle.fit.nlm.funk, initGuess, x = x, y = y, ...)
 
-a =3
+robot.evaluation <-
+  function(look, min.length = 3, max.ss.ratio = 0.01, 
+           min.radius = .5, max.radius = 2,
+           range.threshold = 2,
+           segs = getWrappedSegments(range, range.threshold),
+           ...)
+  {
+    x = look$x
+    y = look$y
+    range = as.numeric(look[, -(1:3)])
+    theta = seq(0, 2*pi, length = 360)
+    
+    for(s in segs) {
+      if(length(s) < min.length)
+        next  
+      
+      xi = x + cos(theta[s]) * range[s]
+      yi = y + sin(theta[s]) * range[s]
+      out = circle.fit(xi, yi, ...)
+      
+      if(out$code > 3)  
+        next
+      
+      if((out$minimum/length(s)) > max.ss.ratio)
+        next
+      
+      if(abs(out$estimate[3]) < min.radius  
+         || abs(out$estimate[3]) > max.radius) 
+        next
+      
+      return(list(x = xi, y = yi, range = range[s], 
+                  robot = c(x, y), fit = out))
+    }
+  }
