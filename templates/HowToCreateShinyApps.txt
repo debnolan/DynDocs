@@ -1,0 +1,339 @@
+
+Creating Interactive Documents
+
+You can create reactive output with a two step process.
+
+1. Define your user interface in an HTML file. 
+
+In this case the directory structure looks like this:
+
+<application-dir>
+|-- www
+    |-- index.html
+|-- server.R
+
+That is, the application directory contains a server.R file and a www directory, which contains the html file. This html file must be called index.html. 
+
+In the HTML file, we need to set up three things:
+a) the <head> must contain links to all of the necessary scripts and css files.
+If you copy the head in templates/census-app/www/index.html, then you should
+have all of the necessary <script> and <link> files.
+
+b) Identify the input arguments, which contain information needed for the interactivity,
+via the name attribute. For example,
+
+<input type="number" name="n" value="500" min="1" max="1000" />
+
+This tag will be rendered as a numeric input box in the Web page, and 
+the value of the name attribute, i.e., "n", will be the name of the R object 
+that contains the numeric value selected by the reader. 
+It is accessed in R via input$n
+
+c) The regions in the Web page where you want the output from your computations 
+to be rendered require the creation of placeholders for them in the HTML.
+Output is rendered into HTML elements based on matching their id attribute to 
+an output slot and by specifying the requisite css class for the element 
+(e.g.,  shiny-text-output, shiny-plot-output, or shiny-html-output).
+
+Here are two examples:
+
+<pre id="summary" class="shiny-text-output"></pre> 
+  
+<div id="plot" class="shiny-plot-output" 
+     style="width: 100%; height: 400px">
+</div> 
+
+The first <pre> node is used to render output from an R function call. The id of "summary"
+is used in R as the name of the object to contain the information, e.g.,
+
+output$summary = renderPrint( { 
+                                                summary(data())
+                                               } )
+
+You will soon see where this code appears.
+
+
+The following are the possible classes of output
+
+Output class     	creates
+shiny-html-output	raw HTML
+shiny-image-output	image
+shiny-plot-output	plot
+shiny-table-output	table
+shiny-text-output	text
+shiny-ui-output	raw HTML
+shiny-verbatim-text-output	text
+
+
+2. Provide R code to build the object.
+
+In this step, you tell Shiny how to build the output object.
+We do this by providing R code that builds the object in the server.R file. 
+The code should go in the unnamed function that appears inside shinyServer in your server.R script.
+
+The unnamed function plays a special role in the Shiny process;
+it builds a list-like object named "output" that contains all of the code needed to update the R objects in your app. 
+Each R object needs to have its own entry in the list.
+
+You can create an entry by defining a new element for output within the unnamed function. 
+VERY IMPORTANT: The element name should match the id of the tag that will hold the output
+in your HTML file.
+
+For example, in the script below, output$text1 matches the id="text1" on the 
+<div> tag in the HTML file.
+
+# server.R
+shinyServer(function(input, output) {
+
+    output$text1 = renderText({ 
+      paste("You have selected", input$var)
+     })
+  }
+)
+
+You do not need to arrange for the unnamed function to return output in its last line of code.
+R will automatically update output through reference class semantics.
+
+Each entry to output should contain the output of one of Shiny’s render* functions. 
+These functions capture an R expression and do some light pre-processing on the expression.
+Use the render* function that corrresponds to the type of reactive object you are making.
+
+render function	creates
+renderImage	images (saved as a link to a source file)
+renderPlot	        plots
+renderPrint	any printed output
+renderTable	data frame, matrix, other table like structures
+renderText	character strings
+renderUI	a Shiny tag object or HTML
+
+Each render* function takes a single argument: an R expression surrounded by braces, {}. 
+The expression can be one simple line of text, or it can involve many lines of code,
+as if it were a complicated function call.
+
+Think of this R expression as a set of instructions that you give Shiny to store for later. 
+Shiny will run the instructions when you first launch your app, and then Shiny will re-run the instructions every time it needs to update your object.
+
+For this to work, your expression should return the object you have in mind 
+(a piece of text, a plot, a data frame, etc). 
+You will get an error if the expression does not return an object, 
+or if it returns the wrong type of object.
+
+HOW TO USE widget values
+
+You can make text reactive by asking Shiny to call a widget value when it builds the text. 
+Let’s look at how to do this.
+
+Take a look at the first line of code in server.R below. Notice that the unnamed function mentions two arguments, input and output. The output argument holds a list-like object 
+that stores instructions for building the R objects in your app.
+
+The input parameter is a second list-like object. It stores the current values of all of the widgets in your app. These values will be saved under the names that you gave the widgets in the 
+HTML.
+
+So for example, our app has two widgets, one named “var” and one named “range” 
+(we gave the widgets these names in the HTML).  See below:
+
+        <label for="var">Choose a variable to display</label>
+        <select id="var">
+	  <option value="Percent White" selected>Percent White</option>
+          <option value="Percent Black">Percent Black</option>
+          <option value="Percent Hispanic">Percent Hispanic</option>
+          <option value="Percent Asian">Percent Asian</option></select>
+        <script type="application/json" data-for="var" data-nonempty="">{}</script>
+        <div>
+          <label for="range">Range of interest:</label>
+          <input id="range" type="slider" name="range" value="0;100"
+	     class="jslider" data-from="0" data-to="100" data-step="1"
+	     data-skin="plastic" data-round="FALSE" data-locale="us"
+	     data-format="#,##0.#####" data-smooth="FALSE"/>
+        </div>
+
+
+The values of “var” and “range” will be saved in input as input$var and input$range in R. 
+Since the slider widget has two values (a min and a max), input$range will contain a 
+vector of length two.
+
+Shiny will automatically make an object reactive if the object uses an input value. 
+For example, the server.R file below creates a reactive line of text by calling the value of the select box widget to build the text.
+
+# server.R
+
+shinyServer(
+  function(input, output) {
+  
+    output$text1 <- renderText({ 
+      paste("You have selected", input$var)
+    })
+    
+  }
+)
+
+Shiny tracks which outputs depend on which widgets. 
+When a user changes a widget, Shiny will rebuild all of the outputs that depend on the widget,
+using the new value of the widget as it goes. As a result, the rebuilt objects will be completely up-to-date.
+
+This is how you create reactivity with Shiny, by connecting the values of input to the objects in output. Shiny takes care of all of the other details.
+
+
+
+To include data in your app you need to do a bit more work
+
+3. Loading files and file paths
+
+To locate data to read into the interactive session, you will need to provide the path name 
+from the directory that contains server.R; in other words, the working directory will be the 
+directory that contains the server.R file.
+
+An .R file saved in the app-directory can be read into R with, e.g.,
+source("helpers.R")
+
+A data file that is saved in the sub-directory data in your app directory can be 
+read into R with, e.g.,
+counties = readRDS("data/counties.rds")
+
+A package can be loaded with
+library(maps)
+
+4. Execution
+
+Shiny will execute all of the commands placed in your server.R script. 
+However, where you place them in server.R will determine how many times they are run 
+(or re-run), which will in turn affect the performance of your app.
+
+Shiny will run the whole script the first time you call runApp. 
+This causes Shiny to execute shinyServer. 
+The shinyServer then gives Shiny the unnamed function in its first argument.
+
+Code that is placed before the call to shinyServer is run once, when the app is launched.
+The shinyServer call is run once each time a user visits the your app.
+
+There are three places to put code:
+a) before the call to shinyServer(). Source scripts, load libraries, and read data sets at the beginning of server.R outside of the shinyServer function. Shiny will only run this code once, which is all you need to set your server up to run the R expressions contained in shinyServer.
+
+b) in the anonymous function in the call to shinyServer(). Define user specific objects inside shinyServer’s unnamed function, but outside of any render* calls. These would be objects that you think each user will need their own personal copy of. For example, an object that records the user’s session information. This code will be run once per user.
+
+c) in a render* function call within the call to shinyServer().  Only place code that Shiny must rerun to build an object inside of a render* function. Shiny will rerun all of the code in a render* chunk each time a user changes a widget mentioned in the chunk. This can be quite often.
+You should generally avoid placing code inside a render function that does not need to be there. The code will slow down the entire app.
+
+As user changes widgets, Shiny will re-run the R expressions assigned to each reactive object. 
+If the user is very active, these expressions may be re-run many, many times a second.
+
+You may wonder, Won’t each user need their own copy of counties and percent_map?  (which would imply that the code should go inside of shinyServer’s unnamed function).  No, each user will not.
+
+Keep in mind that your user’s computer won’t run any of the R code in your Shiny app. In fact, their computer won’t even see the R code. The computer that you use as a server will run all of the R code necessary for all of your users. It will send the results over to your users as HTML elements.
+
+Your server can rely on a single global copy of counties.rds and percent_map to do all of the R execution necessary for all of the users. You only need to build a separate object for each user if the objects will have different values for each of your users.
+
+Finishing the app
+
+The census_app has one reactive object, a plot named map. The plot is built with the percent_map function, which takes five arguments.
+
+The first three arguments, var, color, and legend.title, depend on the value of the select box widget. The last two arguments, max and min, should be the max and min values of the slider bar widget. 
+
+shinyServer(
+  function(input, output) {
+    output$map <- renderPlot({
+      args <- switch(input$var,
+        "Percent White" = list(counties$white, "darkgreen", "% White"),
+        "Percent Black" = list(counties$black, "black", "% Black"),
+        "Percent Hispanic" = list(counties$hispanic, "darkorange", "% Hispanic"),
+        "Percent Asian" = list(counties$asian, "darkviolet", "% Asian"))
+        
+      args$min <- input$range[1]
+      args$max <- input$range[2]
+  
+      do.call(percent_map, args)  # this function calls percent_map() with the arguments in args
+    })
+  }
+)
+
+5 Use reactive expressions to control when code is executed
+
+You can limit what gets re-run during a reaction with reactive expressions.
+
+A reactive expression is an R expression that uses widget input and returns a value. The reactive expression will update this value whenever the original widget changes.
+
+To create a reactive expression use the reactive function, which takes
+an R expression surrounded by braces (just like the render*
+functions).
+
+For example, here’s a reactive expression that uses the widgets of
+stockVis to fetch data from Yahoo.
+
+dataInput <- reactive({
+  getSymbols(input$symb, src = "yahoo", 
+    from = input$dates[1],
+    to = input$dates[2],
+    auto.assign = FALSE)
+})
+
+When you run the expression, it will run getSymbols and return the results, a data frame of price data. You can use the expression to access price data in renderPlot by calling dataInput().
+
+output$plot <- renderPlot({    
+  chartSeries(dataInput(), theme = chartTheme("white"), 
+    type = "line", log.scale = input$log, TA = NULL)
+})
+
+Reactive expressions are a bit smarter than regular R functions. They
+cache their values and know when their values have become
+outdated. What does this mean? The first time that you run a reactive
+expression, the expression will save its result in your computer’s
+memory. The next time you call the reactive expression, it can return
+this saved result without doing any computation (which will make your
+app faster).
+
+
+The reactive expression will only return the saved result if it knows
+that the result is up-to-date. If the reactive expression has learned
+that the result is obsolete (because a widget has changed), the
+expression will recalculate the result. It then returns the new result
+and saves a new copy. The reactive expression will use this new copy
+until it too becomes out of date.
+
+Let’s summarize this behavior
+
+A reactive expression saves its result the first time you run it.
+
+The next time the reactive expression is called, it checks if the saved value has become out of date (i.e., whether the widgets it depends on have changed).
+
+If the value is out of date, the reactive object will recalculate it (and then save the new result).
+
+If the value is up-to-date, the reactive expression will return the saved value without doing any computation.
+
+You can use this behavior to prevent Shiny from re-running unnecessary
+code. Consider how a reactive expression will work in the revised app
+below.
+
+When you click “Plot y axis on the log scale”, input$log will change and renderPlot will re-execute. Now
+
+renderPlot will call dataInput()
+dataInput will check that the dates and symb widgets have not changed
+dataInput will return its saved data set of stock prices without re-fetching data from Yahoo
+renderPlot will re-draw the chart with the correct axis.
+
+Dependencies
+What if your user changes the stock symbol in the symb widget?
+
+This will make the plot drawn by renderPlot out of date, but renderPlot no longer calls input$symb. Will Shiny know that input$symb has made plot out of date?
+
+Yes, Shiny will know and will redraw the plot. Shiny keeps track of which reactive expressions an output object depends on, as well as which widget inputs. Shiny will automatically re-build an object if
+
+a) an input value in the objects’s render* function changes, or
+b) a reactive expression in the objects’s render* function becomes obsolete
+
+Think of reactive expressions as links in a chain that connect input
+values to output objects. The objects in output will respond to
+changes made anywhere downstream in the chain. (You can fashion a long
+chain because reactive expressions can call other reactive
+expressions).
+
+Only call a reactive expression from within a reactive or a
+render*function. Why? Only these R functions are equipped to deal with
+reactive output, which can change without warning. In fact, Shiny will
+prevent you from calling reactive expressions outside of these
+functions.
+
+
+
+
+
+
