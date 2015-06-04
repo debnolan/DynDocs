@@ -1,0 +1,42 @@
+<html>
+<head>
+	<title>Simulation Studies</title>
+	<link rel="stylesheet" type="text/css" href="trafficSim.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<hr />
+			<h1>Simulation Studies</h1>
+			<hr />
+		</div>
+		<div class="content">
+			<h2>Introduction</h2>
+				<p>
+					A simulation study is a technique for conducting experiments on a computer. A model is developed to represent the key parameters of a process. The simulation shows the operation of the model, representing the operation of the system over time (Wikipedia - Simulation).
+				</p>
+				<p>
+					A model involves random sampling from probability distributions. The larger the sample the easier it is to approximate the properties of the system with a model. Assumptions must also be made to be able to model the system (Simulation Studies in Statistics).
+				</p>
+				<p>
+					With a model and simulation, various parameters can be tested to find the optimal or desired results of the system.
+				</p>
+			<h2>Methods</h2>
+				<h3>Monte Carlo Simulation</h3>
+					<p>
+						(Simulation Studies in Statistics)
+					</p>
+				<h3>Cross Validation</h3>
+					<p>
+						Cross validation is a model validation technique used to estimate how well a model will perform. By analyzing subsets of the known data, the performance of the model on the unknown data can be predicted (Wikipedia - Cross-Validation).
+					</p>
+			<h2>Traffic Simulation Example</h2>
+				<p>
+					Here is a sample simulation representing the flow of traffic. The model is extremely simplified, representing traffic as cars going horizontally and vertically. Horizontal and vertical cars take turns moving if the next space is open and velocity is determined by the number of cars that can move at a time step. The widget simulates the velocity of traffic at various densities.
+				</p>
+				<div class="shiny-widget">
+
+				</div>
+		</div>
+	</div>
+</body>
