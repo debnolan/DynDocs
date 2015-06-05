@@ -122,7 +122,6 @@ DichPop = function(total, ones) {
   return(c(zero, one))
 }
 
-
 fisherTest(pop1 = DichPop(Plac[1], Plac[2] + Plac[3]), 
            pop2 = DichPop(Vac[1], Vac[2] + Vac[3]), NRep = 100000, 
            comp = 200000, bin = TRUE)
