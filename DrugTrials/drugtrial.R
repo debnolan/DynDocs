@@ -51,14 +51,6 @@ pValPlot = function(pop1, pop2, comp, x = 10^seq(0.5, 5, by = 0.1)) {
 pValPlot(calcium, placebo, comp = 5)
 pValPlot(popHosp1, popHosp2, comp = 11.2)
 
-pVal = sapply(x, function(n) permTest(calcium, placebo,  NRep = n, comp = 5))
-plot(pVal ~ log10(x), type = "l")
-abline(h = pVal[46], lty = 3, col = "grey")
-
-pVal2 = sapply(x, function(n) permTest(popHosp1,  popHosp2, NRep = n, comp = 11.2))
-plot(pVal2 ~ log10(x), type = "l")
-abline(h = pVal2[46], lty = 3, col = "grey")
-
 fisherTest = function(pop1, pop2, NRep, comp, thresh = NA, bin = FALSE) {
   #fisher's exact test on binary variables (e.g. NO = 0, YES = 1)
   #if two populates are quantitative, dichotomize based on a threshold value
@@ -111,6 +103,11 @@ wilTest = function(pop1, pop2, NRep, comp) {
 }
 
 wilTest(calcium, placebo, NRep = 10000, comp = 5)
+
+popJob1 = c(25, 33, 35, 38, 48, 55, 56)
+popJob2 = c(55, 55, 64)
+
+wilTest(popJob1, popJob2, NRep = 10000, comp = 55)
 
 http://www.math.uah.edu/stat/data/Polio.html
 
