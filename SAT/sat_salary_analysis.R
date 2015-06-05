@@ -31,8 +31,8 @@ lm.frac = lm(sat ~ frac, data = satDF)
 summary(lm.Ex)
 summary(lm.frac)
 
-plot(math ~ salary, data = satDF)
-coplot(math ~ salary | frac, data = satDF, xlab = "Teacher Salary", ylab = "SAT score")
+plot(sat ~ salary, data = satDF)
+coplot(sat ~ salary | frac, data = satDF, xlab = "Teacher Salary", ylab = "SAT score")
 
 ## Two-variables 
 plot(residuals(lm.Ex) ~ satDF$frac,
