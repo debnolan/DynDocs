@@ -2,7 +2,7 @@
 vehical = read.csv("vius.csv")
 ca = read.csv("viusca.csv", header = FALSE)
 names(ca) = names(vehical)
-ca = ca[c(1,5,10)]
+hist(ca$MILES_ANNL, breaks = 30)
 
 ## create a new list of 5 vectors (annual miles) for each stratum
 stratum = list()
@@ -20,7 +20,7 @@ weights = unique(ca$TABTRUCKS)
 library(survey)
 
 truckdesign = svydesign( id = ~1, strata = ~STRATUM, weights = ~TABTRUCKS, data = ca)
-estMed = svyquantile(~MILES_ANNL, truckdesign, 0.50)
+sampMed = svyquantile(~MILES_ANNL, truckdesign, 0.50)
 
 
 ## bootstrap 
@@ -35,18 +35,18 @@ for (j in 1:5){
 
 ## combind each stratum to form a new data frame, and add new variables
 ## STRATUM and WEIGHT
-#################################################################################
-## sampling weights for each replicate r are the same because psu = 1, right??? ##
-#################################################################################
+
 bootSamp = as.data.frame(rbind(bootSamp[[1]], bootSamp[[2]],
                               bootSamp[[3]],bootSamp[[4]],bootSamp[[5]]))
 bootSamp$STRATUM = rep(1:5, l - 1) 
-bootSamp$WEIGHT = rep(weights * l, l - 1)
+bootSamp$WEIGHT = rep(weights * l/(l-1), l - 1)
 
 ## calculate the bootstrap median
 bootDesign = svydesign( id = ~1, strata = ~STRATUM, weights = ~WEIGHT,
                         data = bootSamp)
 bootMed = sapply(bootSamp[1:500], svyquantile, design = bootDesign, quantiles = 0.5)
-
+plot(density(bootMed))
 ## 95% confidence interval for the median of truck miles driven in 2002 in CA
 quantile(bootMed, c(0.025, 0.975))
+
+
