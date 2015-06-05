@@ -104,9 +104,10 @@ wilTest = function(pop1, pop2, NRep, comp) {
 
 wilTest(calcium, placebo, NRep = 10000, comp = 5)
 
-popJob1 = c(25, 33, 35, 38, 48, 55, 56)
-popJob2 = c(55, 55, 64)
+popJob2 = c(25, 33, 35, 38, 48, 55, 56)
+popJob1 = c(55, 55, 64)
 
+permTest(popJob1, popJob2, NRep = 10000, comp = 58)
 wilTest(popJob1, popJob2, NRep = 10000, comp = 55)
 
 http://www.math.uah.edu/stat/data/Polio.html
