@@ -54,7 +54,8 @@ summary(lm.3)
 plot(rstandard(lm.3) ~ fitted(lm.3), xlab = "Fitted Values", ylab = "Standardized Residuals", main = "Model: sat ~ salary + ratio + frac")
 coefficients(lm.3)["salary"] * sd(satDF$salary) / sd(satDF$sat)
 coefficients(lm.3)["ratio"] * sd(satDF$ratio) / sd(satDF$sat)
-plot(sat ~ frac, data = satDF) with(satDF, text(x = frac, y= sat, labels = State, cex = 0.5, pos = 4))
+plot(sat ~ frac, data = satDF) 
+with(satDF, text(x = frac, y= sat, labels = State, cex = 0.5, pos = 4))
 
 
 
