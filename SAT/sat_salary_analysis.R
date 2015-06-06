@@ -42,13 +42,19 @@ lm.SalFrac = lm(sat ~ salary + frac, data = satDF)
 lm.RatFrac = lm(sat ~ ratio + frac, data = satDF)
 summary(lm.ExFrac)
 summary(lm.SalFrac)
+summary(lm.RatFrac)
 
 ## 3-variable model
 ## Fit a 3-variable model of SAT on teacher salary, student-teacher ratio, and eligible fraction.
-plot(rstandard(lm.3) ~ fitted(lm.3),
-     xlab = "Fitted Values", ylab = "Standardized Residuals", main = "Model: sat ~ salary + ratio + frac")
-
-
+cor(residuals(lm(sat ~ frac, data = satDF)), residuals(lm(expend ~ frac, data = satDF)))
+cor(residuals(lm(sat ~ frac, data = satDF)), residuals(lm(salary ~ frac, data = satDF)))
+cor(residuals(lm(sat ~ frac, data = satDF)), residuals(lm(ratio ~ frac, data = satDF)))
+lm.3 = lm(sat ~ salary + ratio + frac, data = satDF) 
+summary(lm.3)
+plot(rstandard(lm.3) ~ fitted(lm.3), xlab = "Fitted Values", ylab = "Standardized Residuals", main = "Model: sat ~ salary + ratio + frac")
+coefficients(lm.3)["salary"] * sd(satDF$salary) / sd(satDF$sat)
+coefficients(lm.3)["ratio"] * sd(satDF$ratio) / sd(satDF$sat)
+plot(sat ~ frac, data = satDF) with(satDF, text(x = frac, y= sat, labels = State, cex = 0.5, pos = 4))
 
 
 
