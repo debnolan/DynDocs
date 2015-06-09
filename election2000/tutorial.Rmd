@@ -1,0 +1,99 @@
+---
+title: "Tutorial part"
+author: "Qingyuan Zhang"
+date: "June 9, 2015"
+output: pdf_document
+---
+
+
+
+```{r}
+library(aod)
+library(ggplot2)
+mydata = read.csv("http://www.ats.ucla.edu/stat/data/binary.csv")
+summary(mydata)
+sapply(mydata, sd)
+```
+
+## two-way contingence table of categorical outcome and predictors we want to
+## male sure there are not 0 cells
+
+```{r}
+xtabs(~admit + rank, data = mydata)
+```
+
+```{r}
+mydata$rank = factor(mydata$rank)
+mylogit = glm(admit ~ gre + gpa + rank, data = mydata, family = "binomial")
+summary(mylogit)
+```
+
+## we can use the confint function to obtain confidence intervals for the 
+## coefficient estimates. 
+
+```{r}
+confint(mylogit)
+```
+
+## we can test for an overall effect of rank using the wald.test function 
+## of the aod library. The order in which the coefficients are given in the
+## table of coefficients is the same as the order of the terms in the model.
+## This is important because the wald.test function refers to the coefficients
+## by their ordee in the model. We use the wald.test function. b supplies the
+## coefficients, while Sigma supplies the variance covariance matrix of the 
+## error terms, finally Terms tels R which terms in the model are to be 
+## tested, in this case, terms4,5,and 6, are the three terms for the levels 
+## of rank.
+
+```{r}
+wald.test(b = coef(mylogit), Sigma = vcov(mylogit), Terms = 4:6)
+```
+
+## The chi-squared test statistic of 20.9, with three degrees of freedom is 
+## associated with a p-value of 0.00011 indicating that the overall effect of
+## rank is statistically significant.
+## We can also test additional hypotheses about the differences in the coefficients
+## for the different levels of rank. Below we test that the coefficient for rank=2 
+## is equal to the coefficient for rank=3. The first line of code below creates a
+## vector l that defines the test we want to perform. In this case, we want to test
+## the difference (subtraction) of the terms for rank=2 and rank=3 (i.e., the 4th 
+## and 5th terms in the model). To contrast these two terms, we multiply one of them
+## by 1, and the other by -1. The other terms in the model are not involved in the
+## test, so they are multiplied by 0. The second line of code below uses L=l to 
+## tell R that we wish to base the test on the vector l (rather than using the 
+## Terms option as we did above).
+
+```{r}
+l = cbind(0, 0, 0, 1, -1, 0)
+wald.test(b = coef(mylogit), Sigma = vcov(mylogit), L= l)
+```
+
+## The chi-squared test statistic of 5.5 with 1 degree of freedom is associated 
+## with a p-value of 0.019, indicating that the difference between the coefficient
+## for rank=2 and the coefficient for rank=3 is statistically significant.
+
+```{r}
+exp(coef(mylogit))
+exp(cbind(OR = coef(mylogit), confint(mylogit)))
+```
+
+## Now we can say that for a one unit increase in gpa, the odds of being admitted 
+## to graduate school (versus not being admitted) increase by a factor of 2.23. 
+
+```{r}
+newdata1 = with(mydata, data.frame(gre = mean(gre), gpa = mean(gpa), rank = factor(1:4)))
+newdata1$rankP = predict(mylogit, newdata = newdata1, type = "response")
+newdata1
+newdata2 = with(mydata, data.frame(gre = rep(seq(from = 200, to = 800, length.out = 100),4), gpa = mean(gpa), rank = factor(rep(1:4, each = 100))))
+newdata3 = cbind(newdata2, predict(mylogit, newdata = newdata2, type = "link", se = TRUE))
+newdata3 = within(newdata3, {
+    PredictedProb <- plogis(fit)
+    LL <- plogis(fit - (1.96 * se.fit))
+    UL <- plogis(fit + (1.96 * se.fit))
+})
+head(newdata3)
+ggplot(newdata3, aes(x = gre, y = PredictedProb)) + geom_ribbon(aes(ymin = LL,
+    ymax = UL, fill = rank), alpha = 0.2) + geom_line(aes(colour = rank),
+    size = 1)
+```
+
