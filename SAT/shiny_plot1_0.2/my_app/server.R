@@ -1,5 +1,5 @@
 library(shiny)
-# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.2")
+# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.1")
 load("satDF_new.rda")
 # Note! Need to rename the variables
 library(ggplot2)
