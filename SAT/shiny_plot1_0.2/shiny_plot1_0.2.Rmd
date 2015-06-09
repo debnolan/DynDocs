@@ -7,7 +7,7 @@ runtime: shiny
 ---
 
 ```{r, echo=FALSE}
-# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.2")
+# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/rda_data/shiny_plot1_0.2")
 ```
 
 

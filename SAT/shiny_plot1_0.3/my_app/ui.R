@@ -1,5 +1,5 @@
 library(shiny)
-# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.2")
+# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.3")
 load("../rda_data/satDF_new.rda")
 shinyUI(fluidPage(
   # Application title
