@@ -7,7 +7,7 @@ runtime: shiny
 ---
 
 ```{r, echo=FALSE}
-# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.1")
+# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1")
 # load("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/satDF.rda")
 # # data manipulation for easy use of ggplot
 # # add state.region to satDF
