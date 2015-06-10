@@ -1,0 +1,96 @@
+---
+title: "Analysis"
+author: "Ziao JU"
+date: "June 4, 2015"
+output: pdf_document
+---
+# PART I: 
+
+```{r}
+baby = read.table("https://www.stat.berkeley.edu/~statlabs/data/babiesI.data", header = TRUE)
+baby = baby[baby$smoke != 9, ]
+baby$smoke = as.factor(baby$smoke)
+baby$smoke = droplevels(baby$smoke)
+boxplot(bwt ~ smoke, data = baby, boxwex = 0.5)
+```
+
+From the box plots above, we can see that the two distributions seem to have different means, but approximately same spread. To confirm this, let's check the standard deviation of each distribution
+```{r}
+smoke = baby[baby$smoke == 1, ]
+nosmoke = baby[baby$smoke == 0, ]
+sd(smoke$bwt)
+sd(nosmoke$bwt)
+```
+
+Indeed, the two distributions have very close standard deviations. Next, let's look at the density curve of each distribution:
+
+```{r}
+plot(density(smoke$bwt), lwd = 2, col = "blue", xlim = c(50, 180))
+par(new=TRUE)
+plot(density(nosmoke$bwt), lwd = 2, col = "red", xlim = c(50, 180),
+     axes = FALSE, xlab = NA, ylab = NA, main = NA)
+
+legend(150, 0.02, lwd = c(2,2), cex = 0.7, 
+       legend = c("smokers", "non-smokers"),
+       col = c("blue", "red"), bty = "n")
+```
+
+Next, let's assess the normality/skewness of each distribution individuality.
+```{r}
+par(mfrow = c(1,2), mar = c(5,2,5,2))
+qqnorm(smoke$bwt, main = "QQ plot for smoking mothers")
+qqline(smoke$bwt)
+qqnorm(nosmoke$bwt, main = "QQ plot for non-smoking mothers")
+qqline(nosmoke$bwt)
+```
+
+It seems that the distribution of birth weights of babies from smoking mothers has a closer resemblance of normal distribution. Next, let's compare the two distributions together.
+```{r}
+par(mar=c(5.1, 4.1, 4.1, 2.1))
+par(mfrow=c(1,1))
+qqplot(smoke$bwt, nosmoke$bwt)
+abline(0,1)
+```
+
+From the graph, the qq plot is roughly a straight line with slope of 1; this suggests that the two distributions are approximately equal. The qq plot is above $y=x$ line, indicating that the y-intercept is above 0, because the average birth weight of babies born by non smoking moms is higher than that born by smoking moms. 
+
+To test whether the difference in average birth weights of babies is significant across two groups, let's performa a one-way ANOVE test:
+```{r}
+summary(aov(bwt ~ smoke, data = baby))
+```
+
+From the ouput, we can see that the *p*-value is very small and hence we have enough evidence to reject the null and support that the two distributions indeed have different means.
+
+# PART II: regression analysis
+
+Now, let's add more variables to our analysis by including gestation days, mothers' age (in years), mothers' height (in inches), and mothers' pregnancy weight (in pounds)
+
+```{r}
+baby2 = read.table("https://www.stat.berkeley.edu/~statlabs/data/babies.data", header = TRUE)
+baby2 = baby2[baby2$smoke != 9, ] 
+```
+
+
+Let's first look at the correlation matrix to see which variables are more relevant to our analysis
+
+```{r}
+cor.mat = cor(baby2)
+print(cor.mat, digits = 3)
+```
+
+By looking at the correlation matrix, we can first rule out mother’s age and parity. There is high correlation between mother’s height and mother’s pregnancy weight, 0.4852; hence it might be a good idea to just keep one to avoid multicollinearity. Since mother’s height has a higher correlation with birth weight, we might want to keep mother’s height and drop mother’s pregnancy weight. Therefore, our desired regression model is 
+
+$$bwt_i = \beta_0 + \beta_1 gestation_i + \beta_2 height_i + \beta_3 smoke_i + e_i$$
+
+Before we run the regression analysis, let's first remove the unknown data:
+```{r}
+baby2 = baby2[baby2$gestation != 999, ] 
+baby2 = baby2[baby2$height != 99, ] 
+baby2 = baby2[baby2$weight != 999, ] 
+summary(lm(bwt ~ gestation + height + smoke, data = baby2))
+```
+
+Interpretation:
+The estimated coefficient on the *smoke* variable is about -8.5. It refers to the difference in baby’s weight between a mother who smokes and a mother who doesn’t smoke. The conclusion we can make here is that, keeping mother’s pregnancy weight and gestation days constant, a mother who smokes is expected to have a baby 8.5 ounces lighter than a mother who doesn't smoke. 
+
+
