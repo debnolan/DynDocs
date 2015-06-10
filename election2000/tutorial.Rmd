@@ -28,22 +28,22 @@ mylogit = glm(admit ~ gre + gpa + rank, data = mydata, family = "binomial")
 summary(mylogit)
 ```
 
-## we can use the confint function to obtain confidence intervals for the 
-## coefficient estimates. 
+we can use the confint function to obtain confidence intervals for the 
+coefficient estimates. 
 
 ```{r}
 confint(mylogit)
 ```
 
-## we can test for an overall effect of rank using the wald.test function 
-## of the aod library. The order in which the coefficients are given in the
-## table of coefficients is the same as the order of the terms in the model.
-## This is important because the wald.test function refers to the coefficients
-## by their ordee in the model. We use the wald.test function. b supplies the
-## coefficients, while Sigma supplies the variance covariance matrix of the 
-## error terms, finally Terms tels R which terms in the model are to be 
-## tested, in this case, terms4,5,and 6, are the three terms for the levels 
-## of rank.
+ we can test for an overall effect of rank using the wald.test function 
+ of the aod library. The order in which the coefficients are given in the
+ table of coefficients is the same as the order of the terms in the model.
+ This is important because the wald.test function refers to the coefficients
+ by their ordee in the model. We use the wald.test function. b supplies the
+ coefficients, while Sigma supplies the variance covariance matrix of the 
+ error terms, finally Terms tels R which terms in the model are to be 
+ tested, in this case, terms4,5,and 6, are the three terms for the levels 
+ of rank.
 
 ```{r}
 wald.test(b = coef(mylogit), Sigma = vcov(mylogit), Terms = 4:6)
