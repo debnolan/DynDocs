@@ -15,8 +15,8 @@ summary(mydata)
 sapply(mydata, sd)
 ```
 
-## two-way contingence table of categorical outcome and predictors we want to
-## male sure there are not 0 cells
+ two-way contingence table of categorical outcome and predictors we want to
+ male sure there are not 0 cells
 
 ```{r}
 xtabs(~admit + rank, data = mydata)
