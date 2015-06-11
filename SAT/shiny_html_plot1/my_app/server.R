@@ -5,7 +5,7 @@ library(gridExtra)
 
 # Define server logic required to draw a scatterplot
 shinyServer(function(input, output) {
-  load("my_app/data/satDF_new.rda")
+  load("data/satDF_new.rda")
   
   output$text <- renderText({
     input$title

@@ -6,7 +6,8 @@ output: html_document
 runtime: shiny
 ---
 ```{r, echo=FALSE}
-setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.3")
+# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.3/")
+# load("/Users/Zeyu/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/rda_data/satDF_new.rda")
 ```
 
 ## Data Analysis
@@ -22,7 +23,7 @@ setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_
 <p>We see a negative correlation between sat scores and teacher salary:</p>
 
 ```{r, echo=FALSE}
-shinyAppDir(appDir = "my_app", options = list(
+shinyAppDir(appDir = "my_app/", options = list(
     width="100%", height=650
   ))
 ```
