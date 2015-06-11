@@ -29,7 +29,7 @@ shinyServer(function(input, output) {
         pos = matrix(0, ncol = 2, nrow = num.steps)
         dir = sample(c(1, 2), num.steps, TRUE)
         move = sample(c(1, -1), num.steps, TRUE)
-        pos[cbind(1:num.steps(), dir)] = move
+        pos[cbind(1:num.steps, dir)] = move
         pos = apply(pos, 2, cumsum)
         return(pos)
       }
@@ -41,15 +41,14 @@ shinyServer(function(input, output) {
     if(input$types=="OneDimSimpleRandWalk"){
       typesInput <- OneDimSimpleRandWalk(num.steps)     
     }
-#    if(input$types=="OneDimBrownianRandWalk"){
-#      typesInput <- OneDimBrownianRandWalk(num.steps)     
-#    }
-#    if(input$types=="TwoDimSimpleRandWalk"){
-#      typesInput <- TwoDimSimpleRandWalk(num.steps)     
-#    }
+    else if(input$types=="OneDimBrownianRandWalk"){
+      typesInput <- OneDimBrownianRandWalk(num.steps)     
+    }
+    else if(input$types=="TwoDimSimpleRandWalk"){
+      typesInput <- TwoDimSimpleRandWalk(num.steps)     
+    }
     else{
-      num.steps <- input$steps
-      typesInput <- TwoDimSimpleRandWalk(num.steps)       
+      typesInput <- TwoDimBrownianRandWalk(num.steps)       
     }
     
     plot(typesInput ,type="l")     
@@ -61,11 +60,26 @@ shinyServer(function(input, output) {
       paste("Random_Walk", input$var, sep=".")
     },
     content = function(file){
-      if(input$var == "pdf")
+      if(input$var =="pdf")
         pdf(file)
       else
         png(file)
-      plot(typesInput, type="l")
-    dev.off()
+
+      num.steps <- input$steps
+      
+      if(input$types=="OneDimSimpleRandWalk"){
+        typesInput <- OneDimSimpleRandWalk(num.steps)     
+      }
+      else if(input$types=="OneDimBrownianRandWalk"){
+        typesInput <- OneDimBrownianRandWalk(num.steps)     
+      }
+      else if(input$types=="TwoDimSimpleRandWalk"){
+        typesInput <- TwoDimSimpleRandWalk(num.steps)     
+      }
+      else{
+        typesInput <- TwoDimBrownianRandWalk(num.steps)       
+      }   
+      plot(typesInput ,type="l")
+      dev.off()
     })  
 })

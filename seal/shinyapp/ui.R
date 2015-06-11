@@ -16,7 +16,7 @@ shinyUI(pageWithSidebar(
                      "2D Brownian Rand Walk" = "TwoDimBrownianRandWalk")),
     br(),
     
-    sliderInput("steps", "Number of steps:", 
+    sliderInput("steps", "Number of steps: ", 
                 min = 1, max = 10000, value = 5000),
     
     br(),
