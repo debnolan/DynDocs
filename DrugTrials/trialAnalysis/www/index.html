@@ -29,7 +29,14 @@
 </head>
 <body>
  <h1>Permutations Test</h1>
- 
+ <p>
+
+	<label>Change in BP (mmHg) for Drug Trial:</label><br />
+	  <div id="data" class="shiny-html-output"></div>
+		<label>Average Change in BP (mmHg):</label><br />
+		<div id="compare" class="shiny-html-output"></div>
+  </p>
+
   <p>
  
     <label>Number of repetitions:</label><br /> 
@@ -72,3 +79,35 @@
 </body>
 </html>
 
+    <label>Number of repetitions:</label><br /> 
+    <input type="number" name="r" value="1000" min="1" max="10000" />
+
+  </p>
+
+<p>	
+	<label>Threshold Value:</label><br /> 
+    <input type="number" name="v" value="0" min="0" max="10" />
+ <p>
+	<label>Dichotomized Drug Data:</label><br />
+	  <div id="dataDich" class="shiny-html-output"></div>
+  </p>
+</p>
+  
+  <div id="dich" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+
+<p>	
+    <label>Number of repetitions:</label><br /> 
+    <input type="number" name="p" value="1000" min="1" max="10000" />
+<p>	
+<label>Threshold Value:</label><br /> 
+    <input type="number" name="t" value="5" min="0" max="10" />
+</p>
+ <p>
+	<label>Ranked Drug Data:</label><br />
+	  <div id="rank" class="shiny-html-output"></div>
+  </p>
+</p>
+  
+  <div id="wilcox" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
