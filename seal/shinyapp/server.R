@@ -1,7 +1,7 @@
 
 ##server.R
 library(shiny)
-source("RW.R")
+#source("RW.R")
 
 # Define server logic required to summarize and view the selected dataset
 shinyServer(function(input, output) {
@@ -19,9 +19,7 @@ shinyServer(function(input, output) {
       
       OneDimSimpleRandWalk <- function(num.steps, prob = 0.5) {
         return(cumsum(sample(c(1, -1), num.steps, TRUE)))
-        plot(typesInput,type="l")
       }
-      typesInput <- OneDimSimpleRandWalk(num.steps)
       
       OneDimBrownianRandWalk <- function(num.steps, mean = 0, sd = 1) {
         return(cumsum(rnorm(num.steps, mean, sd)))
@@ -40,8 +38,20 @@ shinyServer(function(input, output) {
         return(cbind(OneDimBrownianRandWalk(num.steps, mean, sd),
                      OneDimBrownianRandWalk(num.steps, mean, sd)))
       }
-
-      
+    if(input$types=="OneDimSimpleRandWalk"){
+      typesInput <- OneDimSimpleRandWalk(num.steps)     
+    }
+#    if(input$types=="OneDimBrownianRandWalk"){
+#      typesInput <- OneDimBrownianRandWalk(num.steps)     
+#    }
+#    if(input$types=="TwoDimSimpleRandWalk"){
+#      typesInput <- TwoDimSimpleRandWalk(num.steps)     
+#    }
+    else{
+      num.steps <- input$steps
+      typesInput <- TwoDimSimpleRandWalk(num.steps)       
+    }
+    
     plot(typesInput ,type="l")     
     })
   
