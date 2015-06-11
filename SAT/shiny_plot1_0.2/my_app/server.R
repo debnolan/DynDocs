@@ -1,6 +1,6 @@
 library(shiny)
-# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.1")
-load("satDF_new.rda")
+# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.2")
+load("../rda_data/satDF_new.rda")
 # Note! Need to rename the variables
 library(ggplot2)
 library(grid)
@@ -27,7 +27,7 @@ shinyServer(function(input, output) {
    # par(mar = c(5.1, 4.1, 0, 1))
    # plot(x, y, pch = 19, col = "blue", cex = 2) 
   
-   dat <- data.frame(x, y, Region = satDF_new$region, Population = satDF_new$StatePopulation, 
+   dat <- data.frame(x, y, Region = satDF_new$Region, Population = satDF_new$`State Population`, 
                      satDF_new$State)
 
    p <- ggplot(dat, aes(x, y, size = Population), guide = FALSE)
@@ -53,7 +53,7 @@ shinyServer(function(input, output) {
      # par(mar = c(5.1, 4.1, 0, 1))
      # plot(x, y, pch = 19, col = "blue", cex = 2) 
      
-     dat <- data.frame(x, y, Region = satDF_new$region, Population = satDF_new$StatePopulation, 
+     dat <- data.frame(x, y, Region = satDF_new$Region, Population = satDF_new$`State Population`, 
                        satDF_new$State)
      
      p <- ggplot(dat, aes(x, y, size = Population), guide = FALSE)
