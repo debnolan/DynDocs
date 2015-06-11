@@ -4,7 +4,7 @@ library(ggplot2)
 
 # Define server logic required to plot various variables against mpg
 shinyServer(function(input, output) {
-  load("show_data_app/data/satDF_pretty.rda")
+  load("data/satDF_pretty.rda")
   
   output$mytable1 = renderDataTable({
     satDF_pretty
