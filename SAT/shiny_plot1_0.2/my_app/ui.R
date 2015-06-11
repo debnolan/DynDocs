@@ -1,6 +1,6 @@
 library(shiny)
-# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.1")
-load("satDF_new.rda")
+# setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/shiny_plot1_0.2")
+load("../rda_data/satDF_new.rda")
 shinyUI(fluidPage(
   # Application title
   titlePanel("SAT Scores"),
