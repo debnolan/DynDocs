@@ -8,10 +8,17 @@ shinyUI(fluidPage(
   # inputs
     fluidRow(
       column(width = 4, 
-             selectInput("x_1", "Choose an x variable:", choices = names(satDF_new)[2:5], 
-                         selected = names(satDF_new)[2]),
-             selectInput("y_1", "Choose a y variable", choices = names(satDF_new)[6:8], 
-                         selected = names(satDF_new)[8])       
+             selectInput("x_1", "Choose an x variable:", 
+                         choices = list("Expenditure Per Pupil" = "Expenditure", 
+                                         "Student-Teacher Ratio" = "Student-Teacher Ratio", 
+                                         "Teacher Salary" = "Teacher Salary", 
+                                         "Eligible Student Fraction" = "Eligible Student Fraction"), 
+                         selected = "Teacher Salary"),
+             selectInput("y_1", "Choose a y variable", 
+                         choices = list("SAT Verbal Score" = "SAT Verbal Score",
+                                        "SAT Math Score" = "SAT Math Score", 
+                                        "SAT Total Score" = "SAT Total Score"), 
+                         selected = "SAT Total Score")       
              ),
       
       column(width = 4, 

@@ -18,6 +18,13 @@ population_df = data.frame(statenames, pop)
 # combine population_df[15:65, ] with satDF
 satDF_new = cbind(satDF, StatePopulation = population_df[15:64, 2])
 library(plyr)
-satDF_new = rename(satDF_new, c("sat" = "SAT Total Score", "math" = "SAT Math Score", "verbal" = "SAT Verbal Score", "expend"="Expenditure", "salary"="Teacher Salary", "ratio" ="Student-Teacher Ratio", "frac" = "Eligible Student Fraction", "StatePopulation" = "State Population"))
+satDF_new = rename(satDF_new, c("sat" = "SAT_Total_Score",
+                                "math" = "SAT Math Score",
+                                "verbal" = "SAT Verbal Score",
+                                "expend"="Expenditure",
+                                "salary"="Teacher Salary",
+                                "ratio" ="Student-Teacher Ratio",
+                                "frac" = "Eligible Student Fraction",
+                                "StatePopulation" = "State Population"))
 save(satDF_new, file = "../rda_data/satDF_new.rda")
 load("../rda_data/satDF_new.rda")

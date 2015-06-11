@@ -12,7 +12,8 @@ output: html_document
 
 ```{r echo = F}
 # satDF = read.csv("http://www.stat.berkeley.edu/users/nolan/data/sat.csv")
-load("satDF.rda")
+setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/sat_analysis_0.1")
+load("../rda_data/satDF.rda")
 library(lattice)
 
 ```
@@ -73,15 +74,14 @@ abline(lm.Ex)
 ```{r}
 # fixing a confounding variable
 coplot(sat ~ salary | frac, data = satDF, xlab = "Salary", ylab = "SAT score")
-frac_intervals = co.intervals(satDF$frac)
+frac_intervals = co.intervals(satDF$frac, number = 5)
 # write a function that extract 6 frac groups
-split()
 frac_group = function(interval_group, data = satDF$frac){
   which(satDF$frac >= interval_group[1] & satDF$frac <= interval_group[2])
 }
 frac_list = apply(frac_intervals, 1, frac_group)
 lm_list = list()
-for(i in 1:6){
+for(i in 1:5){
 lm_list[[i]] = lm(sat[frac_list[[i]]] ~ salary[frac_list[[i]]], data = satDF) 
 }
 lm_summary_list = lapply(lm_list, summary)
@@ -89,8 +89,9 @@ lm_summary_list = lapply(lm_list, summary)
 plot(sat ~ salary, data = satDF, xlab = "Teacher Salary", ylab = "SAT score")
 lm.Ex = lm(sat ~ salary, data = satDF) 
 abline(lm.Ex, lwd = 3)
-for(i in 1:6){
+for(i in 1:5){
   abline(lm_list[[i]], col = "blue")  
 }
 
 ```
+
