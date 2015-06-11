@@ -1,4 +1,4 @@
-OneDimSimpleRandWalk <- function(num.steps, prob = 0.5) {
+ OneDimSimpleRandWalk <- function(num.steps, prob = 0.5) {
   return(cumsum(sample(c(1, -1), num.steps, TRUE)))
 }
 
@@ -20,5 +20,5 @@ TwoDimBrownianRandWalk <- function(num.steps, mean = 0, sd = 1) {
                OneDimBrownianRandWalk(num.steps, mean, sd)))
 }
 
-TDSRW = TwoDimSimpleRandWalk(100000)
-plot(TDSRW, type = "l")
+#TDSRW = OneDimSimpleRandWalk(5000)
+#plot(TDSRW, type = "l")
