@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
        xlab(paste(input$x_1, "(in '000s of dollars)")) +
        ylab(input$y_1) + 
        ggtitle(paste(input$y_1, "vs.", input$x_1)) +
-       scale_size(name = "Population in\n1994") +
+       scale_size(name = "sqrt(Population/pi) in\n1994") +
        # hide population legend
        # scale_size_continuous(guide = FALSE) +
        theme_bw() +
