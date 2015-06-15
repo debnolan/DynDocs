@@ -38,17 +38,20 @@ shinyServer(function(input, output) {
     x <- data$Salary
     y <- data$SAT
     g <- data$Frac
-    #coefs <- regression()$fit.res$coefficients
+    coefs <- regression()$fit.res$coefficients
+    
+   # print(coefs)
+    
     
     # Plot the true model
     
     plot(x, y, pch=16, cex=1.2, col="#333333", bty="n", xlab="x", ylab="y")
    
     if (input$model == "Simple regression") {
-      #abline(coefs["(Intercept)"], coefs["x"], col="#333333", lwd=3)
+      abline(coefs[1], coefs[2], col="#333333", lwd=3)
     } else if (input$model == "Controlling for frac") {
-      #abline(coefs["(Intercept)"], coefs["x"], col="#333333", lwd=3)
-      #abline(coefs["(Intercept)"] + coefs["group"], coefs["x"], lwd=3)
+      abline(coefs[1], coefs[2], col="#333333", lwd=3)
+      abline(coefs[1] + coefs[3], coefs[2], lwd=3)
     } 
     
   })
