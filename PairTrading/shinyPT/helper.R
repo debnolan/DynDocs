@@ -1,5 +1,18 @@
-
-
+readData =
+  function(fileName, dateFormat = c("%Y-%m-%d", "%Y/%m/%d"), ...)
+  {
+    data = read.csv(fileName, header = TRUE, 
+                    stringsAsFactors = FALSE, ...)
+    for(fmt in dateFormat) {
+      tmp = as.Date(data$Date, fmt)
+      if(all(!is.na(tmp))) {
+        data$Date = tmp
+        break
+      }
+    }
+    
+    data[ order(data$Date), ]
+  }
 
 combine2Stocks = 
   function(a, b, stockNames = c(deparse(substitute(a)), 
