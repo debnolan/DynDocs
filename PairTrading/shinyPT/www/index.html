@@ -38,6 +38,12 @@ Below is an example of comparing the AT&T and VERIZON stocks and finding the max
 </p>
 
 
+<p>
+<div id="plot" class="shiny-plot-output" 
+     style="width: 100% ; height: 400px"></div>
+
+</p>
+
 <h3> Pairs Trading Interactive Activity </h3>
 <p> In this activity, you will select two pairs of stocks and click on the following features to see 1) the relationship between two stocks, 
 2) components that affect the time series, and 3) the importance of having the right optimal K.<br/>
@@ -47,7 +53,7 @@ Check the following boxes and see what happens.</p>
 <p>
   <label>Select two stocks:</label>
 </br>
-  <select name="a">
+  <select id = "a">
     <option value="ibm">IBM</option>
     <option value="gm">GM</option>
     <option value="inc">INC</option>
@@ -59,7 +65,7 @@ Check the following boxes and see what happens.</p>
     <option value="united">United</option>
     <option value="southwest">Southwest</option>
   </select>  
-  <select name="b">
+  <select id = "b">
     <option value="southwest">Southwest</option>
     <option value="united">United</option>
     <option value="hilton">Hilton</option>
@@ -89,11 +95,12 @@ Check the following boxes and see what happens.</p>
     <span>Show all Open and Close positions</span>
   </label> 
 </div>
-</div>
-<br/>
 
-<div id="plot" class="shiny-plot-output" 
-     style="width: 100% ; height: 400px"></div>
+<p>
+<div id="plot2" class="shiny-plot-output" 
+     style="width: 200% ; height: 400px"></div>
+
+</p>
 
  
 </body>

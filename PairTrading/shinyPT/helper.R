@@ -1,19 +1,5 @@
 
-readData =
-  function(fileName, dateFormat = c("%Y-%m-%d", "%Y/%m/%d"), ...)
-  {
-    data = read.csv(fileName, header = TRUE, 
-                    stringsAsFactors = FALSE, ...)
-    for(fmt in dateFormat) {
-      tmp = as.Date(data$Date, fmt)
-      if(all(!is.na(tmp))) {
-        data$Date = tmp
-        break
-      }
-    }
-    
-    data[ order(data$Date), ]
-  }
+
 
 combine2Stocks = 
   function(a, b, stockNames = c(deparse(substitute(a)), 
@@ -163,8 +149,8 @@ getBestK =
   }
 
 
-att= readData("C://Users/WinginNicolie/DynDocs/PairTrading/ATT.csv")
-verizon=readData("C://Users/WinginNicolie/DynDocs/PairTrading/VERIZON.csv")
+att = readData("~/DynDocs/PairTrading/ATT.csv")
+verizon = readData("~/DynDocs/PairTrading/VERIZON.csv")
 southwest = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/southwest.csv")
 united = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/united.csv")
 hilton = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/hilton.csv")

@@ -1,20 +1,45 @@
 library(shiny)
 source("helper.R")
 
-funx = function( data ) {
-  r = data[,2]/stock[,3]
+funx = function( a ,b ) {
+  data = combine2Stocks( a, b )
+  r = data[,2]/data[,3]
   plotRatio(r)
 }
 
 
 shinyServer( function( input,output) {
-  
-  data <- reactive({ 
-    combine2Stocks( input$a, input$b )
-  })
+
   
   output$plot <- renderPlot({
-    funx (stock)
+    funx (att,verizon)
   })
 
+  output$plot2 <- renderPlot({
+    arg.a <- switch(input$a,
+                  "ibm" = ibm,
+                  "gm" = gm,
+                  "inc" = inc,
+                  "toyota" = toyota,
+                  "hershey" = hershey,
+                  "kellog" = kellog,
+                  "hyatt" = hyatt,
+                  "hilton" = hilton,
+                  "united" = united,
+                  "southwest" = southwest)
+    
+    
+    arg.b <- switch(input$b,
+                   "ibm" = ibm,
+                   "gm" = gm,
+                   "inc" = inc,
+                   "toyota" = toyota,
+                   "hershey" = hershey,
+                   "kellog" = kellog,
+                   "hyatt" = hyatt,
+                   "hilton" = hilton,
+                   "united" = united,
+                   "southwest" = southwest)
+    funx (arg.a,arg.b)
+  })
 })
