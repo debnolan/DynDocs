@@ -1,0 +1,50 @@
+<html>
+
+<head>
+<title>Permutations Test Tutorial</title>
+</head>
+
+<body>
+
+<p>This is an R HTML document. When you click the <b>Knit HTML</b> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+
+<!--begin.rcode
+library("gtools")
+tutPop1 = c(12, 16, 5)
+tutPop2 = c(9, 4, 11, 5)
+tutPop1
+tutPop2
+mean(tutPop1)
+mean(tutPop2)
+tutPop = c(tutPop1, tutPop2)
+n = 3
+sample(tutPop, n)
+replicate(5, mean(sample(tutPop, n)))
+m = combinations(n = length(tutPop), r = length(tutPop1), v = tutPop, set = FALSE)
+avg = numeric()
+for (i in 1:dim(m)[1]) {
+  avg[i] = mean(m[i,])
+}
+combos = cbind(m, avg)
+combos
+
+plotPerm = function(pop1, pop2, NRep, comp = mean(pop1)) {
+  simPop = replicate(NRep, mean(sample(c(pop1, pop2), length(pop1))))
+  plot(table(unique(simPop, simPop)), type = "h",
+       xlab = "Average of Sample",
+       ylab = "Number of Times")
+  abline(v = comp, col = "red")
+}
+
+rep = 1000
+perm = replicate(rep, mean(sample(tutPop, length(tutPop1))))
+plotPerm(tutPop1, tutPop2, 1000)
+permtest = data.frame(perm, perm >= mean(tutPop1))
+head(permtest)
+compare = sum(permtest[,2])
+compare
+compare/rep
+end.rcode-->
+
+</body>
+</html>

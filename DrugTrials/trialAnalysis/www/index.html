@@ -30,7 +30,23 @@
 <body>
  <h1>Permutations Test</h1>
  <p>
-
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-10">
+        <form class="well">
+          <span class="help-block">Run Permutations Tests on different Drug Data.</span>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="var">Choose a variable to display</label>
+            <div>
+              <select id="var"><option value="Alcohol" selected>Alcohol Trial</option>
+<option value="Calcium">Calcium Trial</option>
+              <script type="application/json" data-for="var" data-nonempty="">{}</script>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p>
 	<label>Change in BP (mmHg) for Drug Trial:</label><br />
 	  <div id="data" class="shiny-html-output"></div>
 		<label>Average Change in BP (mmHg):</label><br />
@@ -54,17 +70,15 @@
   
   <div id="perm" class="shiny-plot-output" 
        style="width: 100%; height: 400px"></div> 
-
- 
 </body>
-</html>
+
+<body>
   <div class="container-fluid">
-    <h2>pVal Convergence</h2>
+    <h2>pValue Convergence</h2>
     <div class="row">
       <div class="col-sm-4">
         <form class="well">
-          <span class="help-block">Plot the pValues for the permutations test with different
-		numbers of repetitions.</span>
+          <span class="help-block">Plot the pValues for the permutations test with different numbers of repetitions.</span>
           <div class="form-group shiny-input-container">
             <label class="control-label" for="range">Logarithmic range of interest:</label>
             <input class="js-range-slider" id="range" data-type="double" data-min="0.5" data-max="4" data-from="0" data-to="100" data-step="0.25" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
@@ -77,8 +91,9 @@
     </div>
   </div>
 </body>
-</html>
 
+<body>
+<h3>Fisher's Exact Test on Dichotomized Data</h3>
     <label>Number of repetitions:</label><br /> 
     <input type="number" name="r" value="1000" min="1" max="10000" />
 
@@ -92,22 +107,27 @@
 	  <div id="dataDich" class="shiny-html-output"></div>
   </p>
 </p>
+
+<p>
   
   <div id="dich" class="shiny-plot-output" 
        style="width: 100%; height: 400px"></div> 
+</p>
+</body>
 
-<p>	
+<body>
+<h4>Wilcoxon Rank-Sum Test</h4>	
     <label>Number of repetitions:</label><br /> 
     <input type="number" name="p" value="1000" min="1" max="10000" />
-<p>	
-<label>Threshold Value:</label><br /> 
-    <input type="number" name="t" value="5" min="0" max="10" />
-</p>
+
  <p>
 	<label>Ranked Drug Data:</label><br />
 	  <div id="rank" class="shiny-html-output"></div>
+	<label>Ranked Sum of Calcium = 124.5</label>
   </p>
 </p>
   
   <div id="wilcox" class="shiny-plot-output" 
-       style="width: 100%; height: 400px"></div> 
+       style="width: 100%; height: 400px"></div>
+</body>
+</html> 
