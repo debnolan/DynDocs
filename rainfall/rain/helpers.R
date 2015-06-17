@@ -38,7 +38,6 @@ plot_map <- function(x){
     geom_point(aes(x = lon, y = lat), data = FR[["info"]][x,],
                alpha = 0.8, color="black", size = 6, shape = 23, fill = "red")  +
     coord_fixed(ylim = c(36.52, 41)) 
-    lengend()
 }
 
 plot_map(4)
