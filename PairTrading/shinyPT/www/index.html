@@ -44,6 +44,14 @@ Below is an example of comparing the AT&T and VERIZON stocks and finding the max
 
 </p>
 
+<p> After doing some computation, the optimal K for the AT&T and VERIZON data appears to be 0.28392, and the corresponding best profit is 3.142893.<br/> 
+Yet, the optimal K is unique to whichever selected pair of stocks . To support this, we ran another pair of stocks ( Toyota and Southwest airline) and compare the best profit found via 
+1)the previous optimal K value and 2)an optimal K found by performing a series of computations. 
+For previous K (0.28392), profit is 3.4909.   
+For optimal K found by computation, K is 0.5403, profit is 6.3725.<br/>
+Such analysis supports the optimal K is unique and special to ratio distribution, and it plays an important role in determining best profit. 
+</p>
+
 <h3> Pairs Trading Interactive Activity </h3>
 <p> In this activity, you will select two pairs of stocks and click on the following features to see 1) the relationship between two stocks, 
 2) components that affect the time series, and 3) the importance of having the right optimal K.<br/>
@@ -88,10 +96,10 @@ Check the following boxes and see what happens.</p>
 </div>
 
 <br/>
-<div class=:form-group shiny-input-container">
+<div class="form-group shiny-input-container">
 <div class="checkbox">
   <label> 
-    <input id="circle" type="checkbox"/>
+    <input name="circle" type="checkbox"/>
     <span>Show all Open and Close positions</span>
   </label> 
 </div>
