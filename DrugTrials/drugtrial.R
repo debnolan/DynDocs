@@ -2,8 +2,10 @@ library("shiny")
 
 setwd("C:/Users/Joseph/DynDocs/templates")
 runApp("shinyEx1")
-runApp("shinyEx2")
+runApp("shinyEx4")
 runApp("census-app")
+
+
 
 # law of large numbers w/ binomial
 
@@ -33,6 +35,16 @@ permTest = function(pop1, pop2, NRep, comp = mean(pop1)) {
   compare = simAvg >= comp
   return(sum(compare)/NRep)
 }
+
+permPlot = function(pop1, pop2, NRep) {
+  
+  pop = c(pop1, pop2)
+  simAvg = replicate(NRep, mean(sample(pop, length(pop1))))
+  
+  return(simAvg)
+}
+
+t = permPlot(calcium, placebo, 10000)
 
 permTest(calcium, placebo, NRep = 10000, comp = 5)
 
@@ -84,7 +96,7 @@ medianTest = function(pop1, pop2, NRep) {
   return(sum(compare)/NRep)
 }
 
-fisherTest(calcium, placebo, NRep = 10000, comp = 10, thresh = 0)
+fisherTest(calcium, placebo, NRep = 100, thresh = 0)
 medianTest(calcium, placebo, NRep = 10000)
 
 replicate(20, 
@@ -98,11 +110,11 @@ medianTest(popHosp1, popHosp2, NRep = 100000)
 wilTest = function(pop1, pop2, NRep, comp) {
   pop = rank(c(pop1, pop2))
   simAvg = replicate(NRep, mean(sample(pop, length(pop1))))
-  compare = simAvg >= pop[which(c(pop1, pop2) == comp)][1]
+  compare = simAvg >= pop[which(c(pop1, pop2) == comp)][1] 
   return(sum(compare)/NRep)
 }
 
-wilTest(calcium, placebo, NRep = 10000, comp = 5)
+wilTest(calcium, placebo, NRep = 1000, comp = 5)
 
 popJob2 = c(25, 33, 35, 38, 48, 55, 56)
 popJob1 = c(55, 55, 64)
@@ -137,3 +149,6 @@ fisherTest(pop1 = DichPop(Plac[1], Plac[2]),
 fisherTest(pop1 = DichPop(Plac[1], Plac[3]), 
            pop2 = DichPop(Vac[1], Vac[3]), NRep = 1000, 
            comp = 200000, bin = TRUE)
+
+data.frame(population = 201229, total = 142, paralytic = 115, nonparalytic = 27)
+data.frame(population = 200745, total = 57, paralytic = 33, nonparalytic = 24)

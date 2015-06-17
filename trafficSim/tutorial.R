@@ -1,5 +1,7 @@
 # create and populate grid of cars
 # returns matrix of class BMLGrid
+# can set numCars as number of red and blue cars or ratio for both
+# in a 10x10 grid either c(30, 20) or 0.3 which equals c(30, 30)
 createGrid = function(dims = c(100, 100), numCars = 0.3) {
   if(length(dims) == 1) {
     dims = rep(dims, 2)
@@ -20,8 +22,9 @@ print.BMLGrid = function(x, ...) {
 }
 
 # plot grid with red and blue boxes
-plot.BMLGrid = function(x, xlab = "", ylab = ""...) {
+plot.BMLGrid = function(x, xlab = "", ylab = "", ...) {
   if(typeof(x) == "character") {
+    # convert to numeric matrix
     z = matrix(match(x, c("", "red", "blue")), nrow(x), ncol(x))
   } else {
     z = x
@@ -62,6 +65,7 @@ getNextPosition = function(curPos, dim, horizontal = TRUE) {
 
 # move all cars of a color in grid in one time step
 # returns updated grid
+# red cars move horizontally; blue cars move vertically
 moveCars = function(grid, color = "red") {
   cars = getCarLocations(grid)
   w = which(rownames(cars) == color)
@@ -112,18 +116,18 @@ crunBML = function(grid, numIter = 100L) {
   ans = .C("R_BML", gi, grid = gi, dim(gi), red = red, nrow(red), blue = blue, nrow(blue), velocity = velocity, as.integer(numIter))
   ans = ans[c("grid", "velocity")]
   class(ans$grid) = k
-  # return(ans)
-  return(ans$grid)
+  return(ans)
 }
 
 # creates and runs grid simulation
 # returns list of initial grid, resulting grid and velocity at each step
-runGrid = function(dims, numCars, numIter = 1000, plot = TRUE) {
+# runGrid(c(50, 50), 0.3)
+runGrid = function(dims, numCars, numIter = 1000, plot = FALSE) {
   grid = createGrid(dims, numCars)
   g.out = crunBML(grid, numIter)
   if(plot) {
     plot(grid)
-    plot(g.out)
+    plot(g.out$grid)
   }
-  return(invisible(list(initial = grid, final = g.out, velocity = g.out)))
+  return(invisible(list(initial = grid, final = g.out$grid, velocity = g.out$velocity)))
 }
