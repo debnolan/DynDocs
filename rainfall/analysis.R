@@ -1,4 +1,5 @@
 library(extRemes)
+library(shiny)
 setwd("~/GitHub/DynDocs/rainfall")
 load("data/FrontRange.rda")
 
