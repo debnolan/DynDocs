@@ -1,7 +1,7 @@
 library(shiny)
 library(ggmap)
 library(extRemes)
-load("/data/FrontRange.rda")
+load("data/FrontRange.rda")
 source("helpers.R")
 shinyServer(function(input, output) {
   # Return the requested dataset
