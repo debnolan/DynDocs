@@ -1,16 +1,24 @@
+permTest = function(pop1, pop2, NRep, comp = mean(pop1)) {
+  pop = c(pop1, pop2)
+  simAvg = replicate(NRep, mean(sample(pop, length(pop1))))
+  compare = simAvg >= comp
+  return(sum(compare)/NRep)
+}
+
 plotPerm = function(pop1, pop2, NRep, comp) {
   simPop = replicate(NRep, mean(sample(c(pop1, pop2), length(pop1))))
-  plot(table(unique(simPop, simPop)), type = "h", xaxt = "n",
-       xlab = "Average Change in Blood Pressure in Sample",
+  plot(table(unique(round(simPop, digits = 2), round(simPop, digits = 2))), 
+       type = "h", xaxt = "n",
+       xlab = "Average of Sample",
        ylab = "Number of Times")
-  abline(v = 5, col = "red")
+  axis(1, round(unique(simPop), digits = 2))
+  abline(v = comp, col = "red")
   compare = simPop >= comp
   pVal = sum(compare)/NRep
   title(main = paste("pValue =", as.character(pVal)))
-  axis(1, floor(unique(simPop)))
 }
 
-pValPlot = function(pop1, pop2, comp = 5, min, max, freq = .1) {
+pValPlot = function(pop1, pop2, comp, min, max, freq = .1) {
   x = 10^seq(from = min, to = max, by = freq)
   pVal = sapply(x, function(n) permTest(pop1, pop2,  NRep = n, comp = comp))
   plot(pVal ~ log10(x), type = "l", 
@@ -34,8 +42,8 @@ dichPlot = function(pop1, pop2, NRep, thresh) {
 }
 
 dichData = function(pop1, pop2, threshold) {
-  return(data.frame(calcium = c(pop1, NA), 
-                    dich1 = c(as.numeric(pop1 >= threshold), NA),
+  return(data.frame(drug = pop1, 
+                    dich1 = as.numeric(pop1 >= threshold),
                     placebo = pop2, dich2 = as.numeric(pop2 >= threshold)))
 }
 
@@ -43,7 +51,7 @@ wilPlot = function(pop1, pop2, NRep) {
   pop = rank(c(pop1, pop2))
   simPop = replicate(NRep, sum(sample(pop, length(pop1))))
   plot(table(ceiling(unique(simPop, simPop))), type = "h",
-       xlab = "Ranked Sum of Blood Pressure Change",
+       xlab = "Ranked Sum of Drug Data",
        ylab = "Number of Times")
   abline(v = 124.5, col = "red")
   compare = simPop >= sum(pop[1:length(pop1)]) 
@@ -52,11 +60,9 @@ wilPlot = function(pop1, pop2, NRep) {
 }
 
 rankData = function(pop1, pop2) {
-  return(data.frame(calcium = c(pop1, NA), 
-            rankedCalcium = c(rank(c(pop1, pop2))[1:length(pop1)], NA),
-            placebo = pop2, 
-            rankedPlacebo = rank(c(pop1, pop2))[length(pop1)+1:length(pop2)])
-              )
+  ranks = rank(c(pop1, pop2), na.last = "keep")
+  return(data.frame(drug = pop1, rankedDrug = ranks[1:length(pop1)],
+                    placebo = pop2, rankedPlacebo = ranks[(length(pop1)+1):length(ranks)]))
 }
 
 drugData = function(char) {
@@ -64,7 +70,7 @@ drugData = function(char) {
     return(data.frame(calcium, placebo1))
   }
   if(char == "Alcohol") {
-    return(Alcohol = data.frame(alcohol, placebo2))
+    return(data.frame(alcohol, placebo2))
   }
 }
 

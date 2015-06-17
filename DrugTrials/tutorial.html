@@ -1,0 +1,183 @@
+<html>
+
+<head>
+<style type="text/css">
+.knitr .inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage .left {
+  text-align: left;
+}
+.rimage .right {
+  text-align: right;
+}
+.rimage .center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>Permutations Test Tutorial</title>
+</head>
+
+<body>
+
+<p>This is an R HTML document. When you click the <b>Knit HTML</b> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(</span><span class="hl str">&quot;gtools&quot;</span><span class="hl std">)</span>
+<span class="hl std">tutPop1</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">12</span><span class="hl std">,</span> <span class="hl num">16</span><span class="hl std">,</span> <span class="hl num">5</span><span class="hl std">)</span>
+<span class="hl std">tutPop2</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">9</span><span class="hl std">,</span> <span class="hl num">4</span><span class="hl std">,</span> <span class="hl num">11</span><span class="hl std">,</span> <span class="hl num">5</span><span class="hl std">)</span>
+<span class="hl std">tutPop1</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 12 16  5
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">tutPop2</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  9  4 11  5
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">mean</span><span class="hl std">(tutPop1)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 11
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">mean</span><span class="hl std">(tutPop2)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 7.25
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">tutPop</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(tutPop1, tutPop2)</span>
+<span class="hl std">n</span> <span class="hl kwb">=</span> <span class="hl num">3</span>
+<span class="hl kwd">sample</span><span class="hl std">(tutPop, n)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  9 16  5
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">replicate</span><span class="hl std">(</span><span class="hl num">5</span><span class="hl std">,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(tutPop, n)))</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  9.666667  8.333333 10.666667  9.666667  6.333333
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">m</span> <span class="hl kwb">=</span> <span class="hl kwd">combinations</span><span class="hl std">(</span><span class="hl kwc">n</span> <span class="hl std">=</span> <span class="hl kwd">length</span><span class="hl std">(tutPop),</span> <span class="hl kwc">r</span> <span class="hl std">=</span> <span class="hl kwd">length</span><span class="hl std">(tutPop1),</span> <span class="hl kwc">v</span> <span class="hl std">= tutPop,</span> <span class="hl kwc">set</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span>
+<span class="hl std">avg</span> <span class="hl kwb">=</span> <span class="hl kwd">numeric</span><span class="hl std">()</span>
+<span class="hl kwa">for</span> <span class="hl std">(i</span> <span class="hl kwa">in</span> <span class="hl num">1</span><span class="hl opt">:</span><span class="hl kwd">dim</span><span class="hl std">(m)[</span><span class="hl num">1</span><span class="hl std">]) {</span>
+  <span class="hl std">avg[i]</span> <span class="hl kwb">=</span> <span class="hl kwd">mean</span><span class="hl std">(m[i,])</span>
+<span class="hl std">}</span>
+<span class="hl std">combos</span> <span class="hl kwb">=</span> <span class="hl kwd">cbind</span><span class="hl std">(m, avg)</span>
+<span class="hl std">combos</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##                      avg
+##  [1,] 12 16  5 11.000000
+##  [2,] 12 16  9 12.333333
+##  [3,] 12 16  4 10.666667
+##  [4,] 12 16 11 13.000000
+##  [5,] 12 16  5 11.000000
+##  [6,] 12  5  9  8.666667
+##  [7,] 12  5  4  7.000000
+##  [8,] 12  5 11  9.333333
+##  [9,] 12  5  5  7.333333
+## [10,] 12  9  4  8.333333
+## [11,] 12  9 11 10.666667
+## [12,] 12  9  5  8.666667
+## [13,] 12  4 11  9.000000
+## [14,] 12  4  5  7.000000
+## [15,] 12 11  5  9.333333
+## [16,] 16  5  9 10.000000
+## [17,] 16  5  4  8.333333
+## [18,] 16  5 11 10.666667
+## [19,] 16  5  5  8.666667
+## [20,] 16  9  4  9.666667
+## [21,] 16  9 11 12.000000
+## [22,] 16  9  5 10.000000
+## [23,] 16  4 11 10.333333
+## [24,] 16  4  5  8.333333
+## [25,] 16 11  5 10.666667
+## [26,]  5  9  4  6.000000
+## [27,]  5  9 11  8.333333
+## [28,]  5  9  5  6.333333
+## [29,]  5  4 11  6.666667
+## [30,]  5  4  5  4.666667
+## [31,]  5 11  5  7.000000
+## [32,]  9  4 11  8.000000
+## [33,]  9  4  5  6.000000
+## [34,]  9 11  5  8.333333
+## [35,]  4 11  5  6.666667
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">plotPerm</span> <span class="hl kwb">=</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">pop1</span><span class="hl std">,</span> <span class="hl kwc">pop2</span><span class="hl std">,</span> <span class="hl kwc">NRep</span><span class="hl std">,</span> <span class="hl kwc">comp</span> <span class="hl std">=</span> <span class="hl kwd">mean</span><span class="hl std">(pop1)) {</span>
+  <span class="hl std">simPop</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(NRep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(pop1, pop2),</span> <span class="hl kwd">length</span><span class="hl std">(pop1))))</span>
+  <span class="hl kwd">plot</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(</span><span class="hl kwd">unique</span><span class="hl std">(simPop, simPop)),</span> <span class="hl kwc">type</span> <span class="hl std">=</span> <span class="hl str">&quot;h&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">xlab</span> <span class="hl std">=</span> <span class="hl str">&quot;Average of Sample&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">ylab</span> <span class="hl std">=</span> <span class="hl str">&quot;Number of Times&quot;</span><span class="hl std">)</span>
+  <span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">v</span> <span class="hl std">= comp,</span> <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">&quot;red&quot;</span><span class="hl std">)</span>
+<span class="hl std">}</span>
+
+<span class="hl std">rep</span> <span class="hl kwb">=</span> <span class="hl num">1000</span>
+<span class="hl std">perm</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(rep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(tutPop,</span> <span class="hl kwd">length</span><span class="hl std">(tutPop1))))</span>
+<span class="hl kwd">plotPerm</span><span class="hl std">(tutPop1, tutPop2,</span> <span class="hl num">1000</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl std">permtest</span> <span class="hl kwb">=</span> <span class="hl kwd">data.frame</span><span class="hl std">(perm, perm</span> <span class="hl opt">&gt;=</span> <span class="hl kwd">mean</span><span class="hl std">(tutPop1))</span>
+<span class="hl kwd">head</span><span class="hl std">(permtest)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##        perm perm....mean.tutPop1.
+## 1  9.333333                 FALSE
+## 2 10.666667                 FALSE
+## 3  6.666667                 FALSE
+## 4  6.000000                 FALSE
+## 5  6.666667                 FALSE
+## 6  9.333333                 FALSE
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">compare</span> <span class="hl kwb">=</span> <span class="hl kwd">sum</span><span class="hl std">(permtest[,</span><span class="hl num">2</span><span class="hl std">])</span>
+<span class="hl std">compare</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 128
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">compare</span><span class="hl opt">/</span><span class="hl std">rep</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.128
+</pre></div>
+</div></div>
+
+</body>
+</html>
