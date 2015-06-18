@@ -29,15 +29,17 @@
   <div class="container-fluid">
     <h2>Permutations Test Analysis</h2>
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-5">
         <form class="well">
           <span class="help-block">Run three permutations tests on drug trial data.</span>
           <div class="form-group shiny-input-container">
             <label class="control-label" for="var">Choose a data set to analyze.</label>
             <div>
               <select id="var">
-<option value="Calcium" selected>Calcium Trial</option>
-<option value="Alcohol">Alcohol Trial</option></select>
+<option value="Calcium">Calcium Trial</option>
+<option value="Alcohol">Alcohol Trial</option>
+  <option value="HIV">HIV Treatment Trial</option>
+</select>
               <script type="application/json" data-for="var" data-nonempty="">{}</script>
             </div>
           </div>
@@ -52,11 +54,7 @@
 </p>
 <p>
     <label>Number of repetitions:</label><br /> 
-    <input type="number" name="NRep1" value="1000" min="1" max="10000" />
-</p>
-<p>
-	<label>Threshold Value:</label><br /> 
-    <input type="number" name="thresh" value="0" min="1" max="10" />
+    <input type="number" name="NRep1" value="1000" min="1" max="10000" step = "100"/>
 </p>
 <p> 
 <div id="permPlot" class="shiny-plot-output" 
@@ -66,14 +64,14 @@
 
 <p>
     <div class="container-fluid">
-    <h2>pValue Convergence</h2>
+    <label>pValue Convergence</label>
     <div class="row">
       <div class="col-sm-4">
         <form class="well">
           <span class="help-block">Plot the pValues for the permutations test with different numbers of repetitions.</span>
           <div class="form-group shiny-input-container">
             <label class="control-label" for="range">Logarithmic range of interest:</label>
-            <input class="js-range-slider" id="range" data-type="double" data-min="0.5" data-max="4" data-from="0" data-to="100" data-step="0.25" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            <input class="js-range-slider" id="range" data-type="double" data-min="0.5" data-max="4" data-from="0" data-to="100" data-step="0.5" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
           </div>
         </form>
       </div>
@@ -86,13 +84,14 @@
 </body>
 
 <body>
-<h3>Fisher's Exact Test on Dichotomized Data</h3>
+<h2>Fisher's Exact Test on Dichotomized Data</h2>
     <label>Number of repetitions:</label><br /> 
-    <input type="number" name="NRep2" value="1000" min="1" max="10000" />
+    <input type="number" name="NRep2" value="1000" min="1" max="10000" step="100"/>
 
   </p>
 
 <p>  
+    <div id="median" class="shiny-text-output"></div>
 	<label>Threshold Value:</label><br /> 
     <input type="number" name="thresh2" value="0" min="0" max="10" />
  <p>
@@ -113,9 +112,9 @@
 </body>
 
 <body>
-<h4>Wilcoxon Rank-Sum Test</h4>	
+<h2>Wilcoxon Rank-Sum Test</h2>	
     <label>Number of repetitions:</label><br /> 
-    <input type="number" name="NRep3" value="1000" min="1" max="10000" />
+    <input type="number" name="NRep3" value="1000" min="1" max="10000" step = "100"/>
 
  <p>
 	<label>Ranked Drug Data:</label><br />
