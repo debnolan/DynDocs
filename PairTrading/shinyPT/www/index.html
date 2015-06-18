@@ -54,7 +54,7 @@ Such analysis supports the optimal K is unique and special to ratio distribution
 
 <h3> Pairs Trading Interactive Activity </h3>
 <p> In this activity, you will select two pairs of stocks and click on the following features to see 1) the relationship between two stocks, 
-2) components that affect the time series, and 3) the importance of having the right optimal K.<br/>
+2) the ratio distribution on the time series, and 3) the importance of optimal K.<br/>
 Check the following boxes and see what happens.</p>
 
 <div class="form-group shiny-input-container" >
@@ -86,14 +86,6 @@ Check the following boxes and see what happens.</p>
     <option value="ibm">IBM</option>
    </select>
 </p>
-<div class="form-group shiny-input-container">
-<div class="checkbox">
-  <label>
-    <input name="log" type="checkbox"/>
-    <span> Plot y axis on log scale</span>
-  </label>
-</div>
-</div>
 
 <br/>
 <div class="form-group shiny-input-container">
@@ -110,6 +102,11 @@ Check the following boxes and see what happens.</p>
 
 </p>
 
- 
+<p> This pair of stocks has an optimal K value of: 
+<div id="best" class="shiny-text-output"> </div>
+And the best profit possible is: 
+<div id="besp" class="shiny-text-output"> </div>
+</p> 
+
 </body>
 </html>
