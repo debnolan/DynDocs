@@ -78,7 +78,7 @@ compare
 compare/rep
 end.rcode-->
 
-<p>We will not conclude that this p-value refutes the null hypothesis here, but we will observe that the probability is quite low. This makes sense; if we divide the 3 possible permutations by the possible 35, we get ~0.086. If we run our permutations test enough times, the probability will eventually converge to this value. We will explore how many repetitions are "enough" in our data analysis. However, note that here we were provided a relatively small data set. What if we had a trial on 20 patients, with 9 randomly selected drug participants? The number of possible combinations would balloon to 1,511,640!</p>
+<p>We will not conclude that this p-value refutes the null hypothesis here, but we will observe that the probability is quite low. This makes sense; if we divide the 3 possible permutations by the possible 35, we get ~0.086. If we run our permutations test enough times, the probability will eventually converge to this value. We will explore how many repetitions are "enough" in our data analysis. However, note that here we were provided a relatively small data set. What if we had a trial on 20 patients, with 9 randomly selected drug participants? The number of possible combinations would balloon to 167,960!</p>
 
 <!--begin.rcode
 3/35
@@ -92,7 +92,7 @@ permTest = function(pop1, pop2, NRep, comp = mean(pop1)) {
 
 permTest(pop1, pop2, 10000)
 
-length(combinations(20, 9, set = FALSE))
+choose(20, 9)
 end.rcode-->
 </body>
 </html>
