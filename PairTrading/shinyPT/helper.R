@@ -162,8 +162,8 @@ getBestK =
   }
 
 
-att = readData("~/DynDocs/PairTrading/ATT.csv")
-verizon = readData("~/DynDocs/PairTrading/VERIZON.csv")
+att = readData("~/Rproject/DynDocs/PairTrading/ATT.csv")
+verizon = readData("~/Rproject/DynDocs/PairTrading/VERIZON.csv")
 southwest = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/southwest.csv")
 united = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/united.csv")
 hilton = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/hilton.csv")

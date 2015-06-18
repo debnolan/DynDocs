@@ -2,7 +2,7 @@
 library(shiny)
 
 AR1 = function(c , rho, sigma){
-  noise = rnorm(400, 0 , sigma)
+  noise = rnorm(300, 0 , sigma)
   AR = c()
   AR[1] = c + noise[1]
   for(i in 2:length(noise)){
