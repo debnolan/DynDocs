@@ -16,6 +16,18 @@ func = function( a ,b) {
   showPosition(pos,r)
 }
 
+funi = function( a ,b) {
+  data=combine2Stocks(a,b)
+  bes= getBestK( x= data[,2], y=data[,3])
+  print(bes)
+}
+
+funh = function( a ,b) {
+  data=combine2Stocks(a,b)
+  k = getBestK( x= data[,2], y=data[,3])
+  tt= getProfit.K(k=k, x=data[,2], y=data[,3])
+  print(tt)
+}
 
 shinyServer( function( input,output) {
 
@@ -54,6 +66,64 @@ shinyServer( function( input,output) {
     
   })
    
+  output$best <-renderPrint({
+    arg.a <- switch(input$a,
+                    "ibm" = ibm,
+                    "gm" = gm,
+                    "inc" = inc,
+                    "toyota" = toyota,
+                    "hershey" = hershey,
+                    "kellog" = kellog,
+                    "hyatt" = hyatt,
+                    "hilton" = hilton,
+                    "united" = united,
+                    "southwest" = southwest)
+    
+    
+    arg.b <- switch(input$b,
+                    "ibm" = ibm,
+                    "gm" = gm,
+                    "inc" = inc,
+                    "toyota" = toyota,
+                    "hershey" = hershey,
+                    "kellog" = kellog,
+                    "hyatt" = hyatt,
+                    "hilton" = hilton,
+                    "united" = united,
+                    "southwest" = southwest)
+    funi (arg.a, arg.b)
+    
+  })
+  
+  output$besp <-renderPrint({
+    arg.a <- switch(input$a,
+                    "ibm" = ibm,
+                    "gm" = gm,
+                    "inc" = inc,
+                    "toyota" = toyota,
+                    "hershey" = hershey,
+                    "kellog" = kellog,
+                    "hyatt" = hyatt,
+                    "hilton" = hilton,
+                    "united" = united,
+                    "southwest" = southwest)
+    
+    
+    arg.b <- switch(input$b,
+                    "ibm" = ibm,
+                    "gm" = gm,
+                    "inc" = inc,
+                    "toyota" = toyota,
+                    "hershey" = hershey,
+                    "kellog" = kellog,
+                    "hyatt" = hyatt,
+                    "hilton" = hilton,
+                    "united" = united,
+                    "southwest" = southwest)
+    funh (arg.a, arg.b)
+    
+  })
+  
 })
 
 if (FALSE) { 
