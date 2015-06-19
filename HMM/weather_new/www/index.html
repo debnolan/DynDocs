@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];selectize[0.11.2];ionrangeslider[2.0.6];bootstrap[3.3.1]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="shared/selectize/js/es5-shim.min.js"></script>
+<![endif]-->
+<script src="shared/selectize/js/selectize.min.js"></script>
+<link href="shared/ionrangeslider/css/normalize.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>  
+</head>
+<body>
+  <h1>Hidden Markov Models</h1>
+
+  <p>
+    The idea of Hidden Markov Model (HMM) is developed based on Markov Model. HMM is used when the system being modeled is assumed to be a Markov process with
+    unobserved (hidden) states.
+  </p>
+
+  <p>
+    So, let us talk a little bit about simple Markov Model first before we dig into HMM. 
+  </p>
+
+  <h2>Markov Chain</h2>
+
+  <p>
+    One typical example of Markov Model is the Markov Chain. A Markov Chain is a random process that undergoes transitions from one state to another on a state space. It must possess a property that is usually characterized as "memoryless": the probability distribution of the next state depends only on the current state and not on the sequence of events that preceded it, which can be shown as:
+  </p>
+
+  <p>
+    $$P(X_t|X_{t-1}, X_{t-2}... X_1) = P(X_t|X_{t-1})$$
+  </p>
+
+  <p>
+    A Markov Chain can be graphically represented as:
+  </p>
+
+  <img src="markov_chain.png" />
+
+  <p>
+    Where $X_1$, $X_2$, $X_3$... are called the <b>state</b>.
+  </p>
+
+  <p>
+    It has the following parameters:
+  </p>
+
+  <p>
+    <LI><b>Initial distribution</b>: $P(X_1)$
+  </p>
+
+  <p>
+    <LI><b>Transition probabilities</b>: $P(X_t|X_{t-1})$
+  </p>
+
+  <h3>Real Life Markov Chain Example: Weather</h3>
+
+  <p>
+    Build a model that each day's weather is depended on the previous day's weather. Also, in order to simlify the problem, we assume there are only two types of weather: sun and rain. In this way, the initial distribution is the first day's weather, and the transition probabilities is the relation between 2 consecutive days' weather.
+  </p>
+
+  <p>
+    The problem can be visulized by setting different parameters and the number of steps (days):
+  </p>
+
+<p>
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <div class="form-group shiny-input-container">
+          <h4><b>Parameters</b></h4> 
+          <div>
+          <label for="initr">Initial Probability of Rain:</label><br /> 
+          <span class="help-block">Note that the Initial Probability of Sun is just 1 - Initial Probability of Rain</span>
+          <input class="js-range-slider" id="initr" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <div>
+          <label for="tranrr">Transition Probability from Rain to Rain:</label><br /> 
+          <span class="help-block">Note that the Transition Probability from Rain to Sun is just 1 - Transition Probability from Rain to Rain</span>
+          <input class="js-range-slider" id="tranrr" data-min="0" data-max="1" data-from="0.7" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+
+          </div>
+          <div>
+          <label for="transs">Transition Probability from Sun to Sun:</label><br /> 
+          <span class="help-block">Note that the Transition Probability from Sun to Rain is just 1 - Transition Probability from Sun to Sun</span>
+          <input class="js-range-slider" id="transs" data-min="0" data-max="1" data-from="0.9" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <div>
+          <label>Number of steps:</label><br /> 
+          <input type="number" name="n" value="5" min="0" max="50" />
+          </div>    
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+         <div id="plot" class="shiny-plot-output"
+       style="width: 100%; height: 500px"></div> 
+      </div>
+    </div>
+  </div>
+
+</p>
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <div class="form-group shiny-input-container">
+          <h4><b>Parameters</b></h4> 
+          <div>
+          <label for="initrhmm">Initial Probability of Rain:</label><br /> 
+          <span class="help-block">Note that the Initial Probability of Sun is just 1 - Initial Probability of Rain</span>
+          <input class="js-range-slider" id="initrhmm" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <div>
+          <label for="tranrrhmm">Transition Probability from Rain to Rain:</label><br /> 
+          <span class="help-block">Note that the Transition Probability from Rain to Sun is just 1 - Transition Probability from Rain to Rain</span>
+          <input class="js-range-slider" id="tranrrhmm" data-min="0" data-max="1" data-from="0.7" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <div>
+          <label for="transshmm">Transition Probability from Sun to Sun:</label><br /> 
+          <span class="help-block">Note that the Transition Probability from Sun to Rain is just 1 - Transition Probability from Sun to Sun</span>
+          <input class="js-range-slider" id="transshmm" data-min="0" data-max="1" data-from="0.9" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <div>
+          <label for="emru">Emission Probability from Rain to Umbrella:</label><br /> 
+          <span class="help-block">Note that the Emission Probability from Rain to No Umbrella is just 1 - Emission Probability from Rain to Umbrella</span>
+          <input class="js-range-slider" id="emru" data-min="0" data-max="1" data-from="0.7" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <div>
+          <label for="emsu">Emission Probability from Sun to Umbrella:</label><br /> 
+          <span class="help-block">Note that the Emission Probability from Sun to No Umbrella is just 1 - Emission Probability from Sun to Umbrella</span>
+          <input class="js-range-slider" id="emsu" data-min="0" data-max="1" data-from="0.9" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <div>
+          <label>Evidences:</label><br />
+          <span class="help-block">um for umbrella, num for no umbrella, and seperate your evidences by ";", for example: um;num;un stands for umbrella, no umbrella, umbrella</span> 
+          <input type="text" name="evi" />
+          </div>    
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+         <div id="plothmm" class="shiny-plot-output"
+       style="width: 100%; height: 500px"></div> 
+      </div>
+    </div>
+  </div>
+
+
+<p>
+
+</p>
+
+</body>
+
+
+</html>
