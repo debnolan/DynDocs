@@ -23,12 +23,29 @@ fisherTest = function(pop1, pop2, NRep, thresh) {
   return(sum(compare)/NRep)
 }
 
+dichPlot = function(pop1, pop2, NRep, thresh) {
+  pop = c(pop1, pop2)
+  dich = as.numeric(pop >= thresh)
+  simPop = replicate(NRep, sum(sample(dich, length(pop1))))
+  plot(table(unique(simPop, simPop)), type = "h",
+       xlab = "Number of Samples Greater than Threshold",
+       ylab = "Number of Times")
+}
+
 
 wilTest = function(pop1, pop2, NRep, comp) {
   pop = rank(c(pop1, pop2))
   simAvg = replicate(NRep, mean(sample(pop, length(pop1))))
   compare = simAvg >= pop[which(c(pop1, pop2) == comp)][1] 
   return(sum(compare)/NRep)
+}
+
+wilPlot = function(pop1, pop2, NRep, comp) {
+  pop = rank(c(pop1, pop2))
+  simPop = replicate(NRep, mean(sample(pop, length(pop1))))
+  plot(table(unique(simPop, simPop)), type = "h",
+       xlab = "Ranked Mean of Blood Pressure Change",
+       ylab = "Number of Times")
 }
 
 plotPerm = function(pop1, pop2, NRep) {
@@ -49,3 +66,14 @@ pValPlot = function(pop1, pop2, comp, range = c(0.5, 5), freq = .25) {
 }
 
 
+fisherTest = function(pop1, pop2, NRep, comp = pop1[1]){
+  pop = c(rep(1, pop1[2] + pop2[2]), 
+          rep(0, pop1[1] + pop2[1] - pop1[2] - pop2[2]))
+  simPop = replicate(NRep, sum(sample(pop, comp)))
+  plot(table(unique(simPop, simPop)), type = "h",
+       xlab = "Number of 'Yes' Sample Values",
+       ylab = "Number of Times")
+  compare = simPop >= pop1[2]
+  pVal = sum(compare)/NRep
+  title(main = paste("pValue =", as.character(pVal)))
+}
