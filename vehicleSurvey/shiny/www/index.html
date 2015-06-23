@@ -8,13 +8,41 @@
  <body>
   <h1>Bootstrap Analysis</h1>
   <p>
-  The Vehicle Inventory and Use Survey (VIUS) has been conducted by the U.S. government to provide information on the number of private and commercial trucks in each state. For the 2002 VIUS-CA survey, 5 strata were formed from the sampling frame of truck registrations using stratification variable trucktype.  The truck registrations were partitioned into one of five classes:
-1. Pickups
-2. Minivans, other light vans, and sport utility vehicles
-3. Light single-unit trucks with gross vehicle weight less than 26,000 pounds
-4. Heavy single-unit trucks with gross vehicle weight greater than or equal to 26,000 pounds
-5. Truck-tractors
-  </p>
+  The Vehicle Inventory and Use Survey (VIUS) has been conducted by
+  the U.S. government to provide information on the number of private
+  and commercial trucks in each state. In the 2002 VIUS-CA survey,
+  2192 trucks were surveyed and 5 strata were formed from the sampling
+  frame of truck registrations using stratification variable
+  trucktype.  The truck registrations were partitioned into one of five classes:
+<div>
+  1. Pickups
+</div>
+<div>
+  2. Minivans, other light vans, and sport utility vehicles
+</div>
+<div>
+3. Light single-unit trucks with gross vehicle weight less than 26,000
+  pounds
+</div>
+<div>
+4. Heavy single-unit trucks with gross vehicle weight greater than or
+  equal to 26,000 pounds
+</div>
+<div>
+  5. Truck-tractors
+</div><br/>
+Based on these five strata and their weights, the median number of
+  miles driven in 2002 in California was 10254 miles. 
+</p>
+
+<p>
+To bootstrap, we resample the data from survey samples with
+replacement multipe times. Because the survey samples are stratified,
+we take bootstrap resamples within each stratum. For every resample,
+we are able to calculate its statistic data such as mean, median. In
+this data set, our estimator is median. By replicating a certain number
+of times, we are able to get the same number of medians.
+</p>
   
   <div id="table" class="shiny-html-output"></div>
   
@@ -29,13 +57,16 @@
   
    
    <div id="plot" class="shiny-plot-output" 
-       style="width: 100%; height: 400px"></div> 
-  <p>
-   The bootstrap estimated number of miles driven in 2002 is
-   <div id = "text1" class="shiny-text-output"></div>  
-   The  the bootstrap estimate of the variance of the sample median is
-   <div id = "text2" class="shiny-text-output"></div>
-   
+     style="width: 100%; height: 400px"></div>
+     
+ <p>
+   <div />
+   The mean number of the estimated median of miles driven in 2002 from bootstrap is
+   <div id = "text1" class="shiny-text-output"></div><br />
+   The estimated variance of bootstrap median is
+   <div id = "text2" class="shiny-text-output"></div><br />
+   The 95% confidence interval of bootstrap is
+   <div id = "CItable" class = "shiny-html-output"></div>
   </p>
        
    
