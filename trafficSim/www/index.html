@@ -1,0 +1,294 @@
+<html>
+<head>
+    <title>Simulation Studies</title>
+    <link rel="stylesheet" type="text/css" href="trafficSim.css" />
+    <link href="shared/shiny.css" rel="stylesheet" />
+    <link href="shared/jqueryui/1.10.4/jquery-ui.min.css" rel="stylesheet" />
+    <link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+    <link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+
+    <script src="shared/jquery.min.js"></script>
+    <script src="shared/shiny.min.js"></script> 
+    <script src="shared/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="shared/bootstrap/js/bootstrap.min.js"></script>
+    <script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+    <script src="trafficSim.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <hr />
+            <h1>Simulation Studies</h1>
+            <hr />
+        </div>
+        <div class="content">
+            <h2>Introduction</h2>
+            <p>
+                A simulation study is a technique for conducting experiments on a computer. A model is developed to represent the key parameters of a process. The simulation shows the operation of the model, representing the operation of the system over time (Wikipedia - Simulation).
+            </p>
+            <p>
+                A model involves random sampling from probability distributions. The larger the sample the easier it is to approximate the properties of the system with a model. Assumptions must also be made to be able to model the system (Simulation Studies in Statistics).
+            </p>
+            <p>
+                With a model and simulation, various parameters can be tested to find the optimal or desired results of the system.
+            </p>
+            <br />
+            <h2>Monte Carlo Simulation</h2>
+            <p>
+                The Monte Carlo method is a technique to solve a statistical problem. It uses repeated random sampling with a simulation to determine the behavior of a model. By taking a large sample, the simulation can approximate the properties of interest. 
+            </p>
+            <p>
+                For example, we generate N data sets with certain parameters. With a large enough N, the average of the data sets will approximate the actual properties of the model.
+            </p>
+            <br />
+            <h2>Traffic Simulation Example</h2>
+            <p>
+                Here is a sample simulation representing the flow of traffic. The model is extremely simplified, representing traffic as cars going horizontally and vertically. Horizontal and vertical cars take turns moving if the next space is open and velocity is determined by the number of cars that can move at a time step.
+            </p>
+            <div class="row">
+                <div class="col-sm-12">
+                    <img src="sim_example.png" class="example-image" />
+                    <p>
+                        In a small 10x10 grid at we can see the initial positions of the cars as well as the positions after 50 time steps. Although the number of red and blue cars can be different, for this example they are equal. 
+                    </p>
+                    <p>
+                        The density of this example grid is 0.3 for both red and blue, corresponding to 30 red cars and 30 blue cars. The simulation shows that after 50 time steps, the cars are already in gridlock.
+                    </p>
+                </div>
+            </div>
+            <p>
+                You can use the widget below to test various parameters and play around with the simulation to see when the cars reach gridlock at various densities. The above example uses seed 12345.
+            </p>
+            <div class="well">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>Simulate Car Movement</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="size_x">Grid X Dimension</label>
+                                    <input id="sim_size_x" class="form-control" type="number" value="10" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="size_y">Grid Y Dimension</label>
+                                    <input id="sim_size_y" class="form-control" type="number" value="10" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="time_steps">Time Steps</label>
+                                    <input id="sim_time_steps" class="form-control" type="number" value="10" onchange="setAnimationFrames()" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="sim_red_cars">Red Cars</label>
+                                    <input id="sim_red_cars" class="form-control" type="number" value="10" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="sim_blue_cars">Blue Cars</label>
+                                    <input id="sim_blue_cars" class="form-control" type="number" value="10" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="sim_seed">Randomization Seed</label>
+                                    <input id="sim_seed" class="form-control" type="number" value="12345" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div id="sim_plot" class="shiny-plot-output"></div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <button id="sim_animate" class="btn btn-default btn-block">Animate</button>
+                                <button id="sim_step" class="btn btn-default btn-block">Step</button>
+                                <button id="sim_reset" class="btn btn-default btn-block">Reset</button>
+                            </div>
+                            <div class="col-sm-9">
+                                <label for="sim_step_slider">Step Through Animation:</label>
+                                <input id="sim_step_slider" class="js-range-slider" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <h2>Traffic Simulation Analysis</h2>
+            <p>
+                By running the simulation with various densities, we can generate a plot showing the velocity (number of cars moving) of the grid at each time step. The plot shows when a grid reaches gridlock at each density. By running the simulation with the same parameters with different seeds, we can approximate when the grid will reach gridlock. By testing various combinations of parameters, we can begin to see the correlation between density and time before gridlock.
+            </p>
+            <div class="row">
+                <div class="col-sm-12">
+                    <img src="density_example.png" class="example-image" />
+                    <p>
+                        The example on the right shows a 10x10 grid during the first 50 time steps. 
+                    </p>
+                    <p>
+                        The plot shows that a low density grid almost never reaches gridlock while a high density grid will reach gridlock almost immediately. The middle densities are the most important information, showing roughly when the grids reach deadlock. 
+                    </p>
+                    <p>
+                        In the widget below, you can also view the table of data to better see the exact time points.
+                    </p>
+                </div>
+            </div>
+            <p>
+                You can view the velocity plot and simulation data for various parameters in the widget below. The above example is a 10x10 grid over 50 time steps with seed 12345.
+            </p>
+            <div class="well">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>Find Optimal Density (red = blue = density/2)</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="density_size_x">Grid X Dimension</label>
+                                    <input id="density_size_x" class="form-control" type="number" value="10" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="density_size_y">Grid Y Dimension</label>
+                                    <input id="density_size_y" class="form-control" type="number" value="10" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="density_time_steps">Time Steps</label>
+                                    <input id="density_time_steps" class="form-control" type="number" value="10" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="density_seed">Randomization Seed</label>
+                                    <input id="density_seed" class="form-control" type="number" value="12345" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label" for="density_select">Densities:</label>
+                                    <div id="density_select" class="shiny-input-checkboxgroup">
+                                        <div class="shiny-options-group">
+                                            <div class="checkbox row">
+                                                <div class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" name="density_select" value="0.15" checked />
+                                                        <span>0.15</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" name="density_select" value="0.65" checked />
+                                                        <span>0.65</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="checkbox row">
+                                                <div class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" name="density_select" value="0.25" checked />
+                                                        <span>0.25</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" name="density_select" value="0.75" checked />
+                                                        <span>0.75</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="checkbox row">
+                                                <div class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" name="density_select" value="0.35" checked />
+                                                        <span>0.35</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" name="density_select" value="0.85" checked />
+                                                        <span>0.85</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="checkbox row">
+                                                <div class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" name="density_select" value="0.45" checked />
+                                                        <span>0.45</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" name="density_select" value="0.95" checked />
+                                                        <span>0.95</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="checkbox row">
+                                                <div class="col-sm-3">
+                                                    <label>
+                                                        <input type="checkbox" name="density_select" value="0.55" checked />
+                                                        <span>0.55</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div id="density_plot" class="shiny-plot-output"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <div class="panel">
+                            <div class="panel-heading" role="tab">
+                                <h3 class="panel-title">
+                                    <a data-toggle="collapse" href="#density_accordion">
+                                        Density Table: Percent of Cars Moving by Density and Time
+                                    </a>
+                                </h3>
+                            </div>
+                            <div id="density_accordion" class="panel-collapse collapse" role="tabpanel" >
+                                <div class="panel-body">
+                                    <div id="density_table" class="shiny-html-output"><div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

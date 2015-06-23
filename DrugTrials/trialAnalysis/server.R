@@ -6,8 +6,8 @@ shinyServer(
     output$data <- renderTable({
       data.frame(calcium = c(calcium, NA), placebo = placebo)
     })
-    output$compare <- renderPrint({
-      c(mean(calcium), mean(placebo))
+    output$compare <- renderTable({
+      data.frame(calcium = mean(calcium), placebo = mean(placebo))
     })
     output$perm <- renderPlot({
     args <- list(NRep = input$n, comp = input$k,
@@ -27,6 +27,12 @@ shinyServer(
       dichData(calcium, placebo, thresh = input$v)
     })
     
+    output$sum <- renderTable({
+      data.frame(calcium = sum(dichData(calcium, placebo, thresh = input$v)$dich1, 
+                               na.rm = TRUE),
+                placebo = sum(dichData(calcium, placebo, thresh = input$v)$dich2))
+    })
+    
     output$dich <- renderPlot({
       args <- list(NRep = input$r, thresh = input$v,
                    pop1 = calcium, pop2 = placebo)
@@ -34,11 +40,11 @@ shinyServer(
     })
     
     output$rank <- renderTable({
-      rankData(calcium, placebo, threshold = input$t)
+      rankData(calcium, placebo)
     })
     
     output$wilcox <- renderPlot({
-      args <- list(NRep = input$p, comp = input$t,
+      args <- list(NRep = input$p,
                    pop1 = calcium, pop2 = placebo)
       do.call(wilPlot, args)
     })

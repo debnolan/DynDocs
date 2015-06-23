@@ -2,7 +2,7 @@ library("shiny")
 
 setwd("C:/Users/Joseph/DynDocs/templates")
 runApp("shinyEx1")
-runApp("shinyEx2")
+runApp("shinyEx4")
 runApp("census-app")
 
 
@@ -149,3 +149,6 @@ fisherTest(pop1 = DichPop(Plac[1], Plac[2]),
 fisherTest(pop1 = DichPop(Plac[1], Plac[3]), 
            pop2 = DichPop(Vac[1], Vac[3]), NRep = 1000, 
            comp = 200000, bin = TRUE)
+
+data.frame(population = 201229, total = 142, paralytic = 115, nonparalytic = 27)
+data.frame(population = 200745, total = 57, paralytic = 33, nonparalytic = 24)
