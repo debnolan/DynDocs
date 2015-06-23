@@ -1,0 +1,159 @@
+body {
+	background: url(content/bg.png);
+	background-color: #C7D0D5;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 94% 97%;
+	color: #838996;
+	font-family: Baskerville, serif;
+	margin: 6%;
+	padding: 0%;
+}
+
+h1 {
+	text-align: center;
+}
+
+select {
+	width: 190px;
+}
+
+table {
+	text-align: center;
+}
+
+.block {
+	display: block;
+	margin: auto;
+}
+
+
+
+
+/* ----------------------------------*/
+/* -------->> CALCULATIONS <<--------*/
+/* ----------------------------------*/
+
+.calculations {
+	font-size: 80%;
+	text-align: center;
+}
+
+div.calculations div {
+	display: inline-block;
+	height: 55px;
+	vertical-align: middle;
+	width: 20px;
+}
+
+div.calculations table.fourRows {
+	display: inline-block;
+	height: 60px;
+}
+
+div.calculations table.threeRows {
+	display: inline-block;
+	height: 60px;
+	vertical-align: -50%;
+}
+
+div.calculations table.twoRows {
+	display: inline-block;
+	height: 60px;
+	vertical-align: -100%;
+}
+
+.tdeath {
+	font-weight: bold;
+	max-width: 55px;
+}
+
+.tgilbert {
+	font-weight: bold;
+	text-align: right;
+	max-width: 55px;
+}
+
+
+
+
+
+/* ----------------------------------*/
+/* ---------->> TUTORIAL <<----------*/
+/* ----------------------------------*/
+
+select {
+	margin-bottom: 8%;
+	margin-left: -.5%;
+	margin-top: 2%;
+	width: 98%;
+}
+
+#cellCount {
+	background-color: #F5F5F5;
+	border: 1px #F5F5F5 solid;
+	color: #838996;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: bold;
+	margin-bottom: 8%;
+	padding: 0%;
+	text-align: right;
+	width: 55px;
+}
+
+.shiny-input-container {
+	width: 100%;
+}
+
+.main-panel {
+	display: inline-block;
+	float: left;
+	margin: 0%;
+	height: 200px;
+	width: 610px;
+}
+
+.side-panel {
+	display: inline-block;
+	float: left;
+	margin: 0%;
+	height: 200px;
+	width: 190px;
+}
+
+.top-panel {
+	display: block;
+	height: 125px;
+}
+
+/* ----------------------------------*/
+/* ----->> HYPOTHESIS TESTING <<-----*/
+/* ----------------------------------*/
+
+.hypothesis-test {
+	float: left;
+	height: 185px;
+	margin: 0%;
+	width: 305px;
+}
+
+.test-summary {
+	float: left;
+	height: 15px;
+	margin: 0%;
+	width: 610px;
+}
+
+.top-top-left {
+	border: 1px solid #F5F5F5;
+	float: left;
+	width: 74%;
+}
+
+.top-top-right {
+	border: 1px solid #F5F5F5;
+	float: left;
+	width: 25%;
+}
+
