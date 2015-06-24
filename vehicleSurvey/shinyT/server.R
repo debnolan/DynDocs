@@ -8,8 +8,8 @@ bootMean = bootSamp$mean
 
 shinyServer(function(input, output) {
     
-    output$summary <- renderPrint({
-      table(as.factor(bootMean))
+    output$summary <- renderTable({
+      data.frame(table(bootMean))
     })
     
     output$table <- renderTable({ 

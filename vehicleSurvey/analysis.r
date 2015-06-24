@@ -103,7 +103,7 @@ plot(density(boot))
 quantile(boot, c(0.025, 0.975))
 var(boot)
 
-
+system.time(replicate(500, med.vehical(straca)))
 
 cd
 git pull
