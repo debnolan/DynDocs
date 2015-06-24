@@ -27,7 +27,33 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     }
   }
 }
-
+myprint <- function (x, ...) 
+{
+  tmp <- attributes(x)
+  cat("\n")
+  print(tmp$method)
+  if (!is.null(tmp$R)) 
+    cat(tmp$R, " iterations\n")
+  cat("\n")
+  if (!is.matrix(x)) {
+    print(paste(names(c(x))[2], ": ", round(x[2], digits = 3), 
+                sep = ""))
+    cat("\n")
+    print(paste(tmp$conf.level, "% Confidence Interval: (", 
+                round(x[1], digits = 4), ", ", round(x[3], digits = 4), 
+                ")", sep = ""))
+  }
+  else {
+    y <- x
+    attributes(y) <- NULL
+    y <- matrix(y, tmp$dim[1], tmp$dim[2])
+    colnames(y) <- tmp$dimnames[[2]]
+    rownames(y) <- tmp$dimnames[[1]]
+    print(y)
+  }
+  cat("\n")
+  invisible()
+}
 plot_map <- function(x){
   myMap <- get_googlemap(center = c(lon = -104.9477, lat = 39.29464), zoom = 7,
                          size = c(640,640), scale = 2, maptype = "terrain")
@@ -39,7 +65,6 @@ plot_map <- function(x){
     coord_fixed(ylim = c(36.52, 41)) 
 }
 
-plot_map(4)
 
 
 
