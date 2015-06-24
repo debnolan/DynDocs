@@ -41,10 +41,10 @@ day1Ahit_per = day1Ahit/day1A
 day1Bhit_per = day1Bhit/day1B
 day2Ahit_per = day2Ahit/day2A
 day2Bhit_per = day2Bhit/day2B
-table = matrix(c(day1Ahit_per, day1Bhit_per, day2Ahit_per, day2Bhit_per, Atotal, Btotal), byrow = T, ncol = 2, 
-       dimnames = list(c("Day1","Day2","Both Days"), c("Treatment A", "Treatment B")))
 Atotal = (day1Ahit + day2Ahit)/350
 Btotal = (day1Bhit + day2Bhit)/350
+table = matrix(c(day1Ahit_per, day1Bhit_per, day2Ahit_per, day2Bhit_per, Atotal, Btotal), byrow = T, ncol = 2, 
+       dimnames = list(c("Day1","Day2","Both Days"), c("Treatment A", "Treatment B")))
 
 
 # other examples: 

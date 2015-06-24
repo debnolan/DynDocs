@@ -9,5 +9,4 @@ shinyServer(function(input, output) {
   output$mytable1 = renderTable({
     satDF_pretty
   }, options = list(orderClasses = TRUE))
-  
 })

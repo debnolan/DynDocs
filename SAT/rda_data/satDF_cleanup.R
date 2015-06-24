@@ -44,7 +44,27 @@ satDF_new$Expenditure = sapply(satDF_new$Expenditure,
 satDF_new$`Teacher Salary` = sapply(satDF_new$`Teacher Salary`, 
                                     function(e) paste("$", as.character(e), sep = ""))
 satDF_new$`State Population` = sapply(satDF_new$`State Population`, function(e) format(e, big.mark=",", scientific=FALSE))
-
-satDF_pretty = satDF_new
+char_col = apply(satDF_new[, c(3, 5, 6, 7, 8)], 2, as.character)
+satDF_pretty = data.frame(STATE = satDF_new$State, 
+                          REGION = satDF_new$Region, 
+                          POPULATION = satDF_new$`State Population`, 
+                          EXPENDITURE = satDF_new$Expenditure, 
+                          TEACHER_SALARY = satDF_new$`Teacher Salary`, 
+                          STUDENT_TEACHER_RATIO = char_col[ , 1], 
+                          ELIGIBLE_STUDENT_FRACTION = char_col[ , 2], 
+                          SAT_TOTAL_SCORE = char_col[ , 5], 
+                          SAT_MATH_SCORE = char_col[ , 4], 
+                          SAT_VERBAL_SCORE = char_col[ , 3])
+satDF_pretty= rename(satDF_pretty, c("STATE" = "STATE", 
+                                      "REGION" = "REGION", 
+                                      "POPULATION" = "POPULATION", 
+                                      "EXPENDITURE" = "EXPENDITURE", 
+                                      "TEACHER_SALARY" = "TEACHER SALARY",
+                                      "STUDENT_TEACHER_RATIO" = "STUDENT-TEACHER RATIO",
+                                      "ELIGIBLE_STUDENT_FRACTION" = "ELIGIBLE STUDENT FRACTION",
+                                      "SAT_TOTAL_SCORE" = "SAT TOTAL SCORE",
+                                      "SAT_MATH_SCORE" = "SAT MATH SCORE",
+                                      "SAT_VERBAL_SCORE" = "SAT VERBAL SCORE"))
+satDF_pretty = format(satDF_pretty, justify = "right")
 save(satDF_pretty, file = "../rda_data/satDF_pretty.rda")
 load("../rda_data/satDF_pretty.rda")
