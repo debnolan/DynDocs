@@ -1,0 +1,74 @@
+<html>
+
+<head>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>	
+</head>
+
+
+<body>
+	<h1>Hidden Markov Models</h1>
+
+	<p>
+		The idea of Hidden Markov Model (HMM) is developed based on Markove Model. HMM is used when the system being modeled is assumed to be a Markov process with
+		unobserved (hidden) states.
+	</p>
+
+	<p>
+		So, let us talk about simple Markov Model before HMM. 
+	</p>
+
+	<h2>Markov Chain</h2>
+
+	<p>
+		One typical example of Markov Model is Markov Chain. A Markov Chain is a random process that undergoes transitions from one state to another on a state space. It must possess a property that is usually characterized as "memoryless": the probability distribution of the next state depends only on the current state and not on the sequence of events that preceded it, which can be shown as:
+	</p>
+
+	<p>
+		$$P(X_t|X_{t-1}, X_{t-2}... X_1) = P(X_t|X_{t-1})$$
+	</p>
+
+	<p>
+		A Markov Chain can be graphically represented as:
+	</p>
+
+	<img src="markov chain.png" />
+
+	<p>
+		Where $X_1$, $X_2$, $X_3$... are called the <b>state</b>.
+	</p>
+
+	<p>
+		It has the following parameters:
+	</p>
+
+	<p>
+		<LI><b>Initial distribution</b>: $P(X_1)$
+	</p>
+
+	<p>
+		<LI><b>Transition probabilities</b>: $P(X_t|X_{t-1})$
+	</p>
+
+	<h3>Real Life Markov Chain Example: Weather</h3>
+
+	<p>
+		Build a model that each day's weather is depended on the previous day's weather. Also, in order to simlify the problem, we assume there are only two types of weather: sun and rain. In this way, the initial distribution is the first day's weather, and the transition probabilities is the relation between 2 consecutive days' weather.
+	</p>
+
+	<p>
+		The problem can be visulized by setting different parameters and the number of steps (days):
+	</p>
+
+
+
+	
+
+
+
+</body> 
+
+
+
+
+</html>
