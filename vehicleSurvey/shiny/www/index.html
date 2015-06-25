@@ -56,17 +56,26 @@
 </div><br/>
 Based on these five strata and their weights, the median number of
   miles driven in 2002 in California was 10254 miles. 
-  </p>
-<table border=1>
-  <tr> <th>TruckTypes</th> <th> Sample Size</th><th> Sampling Weight</th><th>Median</th> </tr>
-  <tr> <td align="middle"> 1 </td> <td align="middle">219 </td> <td align="middle">18410.0</td> <td align="middle">10000</td></tr>
-  <tr> <td align="middle"> 2 </td> <td align="middle"> 275 </td><td align="middle">17078.6</td> <td align="middle">11000</td> </tr>
-  <tr> <td align="middle"> 3 </td> <td align="middle"> 565 </td><td align="middle">608.9</td> <td align="middle">11000</td> </tr>
-  <tr> <td align="middle"> 4 </td> <td align="middle"> 546 </td> <td align="middle">155.6</td> <td align="middle">19924</td></tr>
-  <tr> <td align="middle"> 5 </td> <td align="middle">587 </td> <td align="middle">150.3</td> <td align="middle">44640</td></tr>
-  <tr> <td align="middle"> All </td> <td align="middle">2192 </td> <td align="middle">9245452.2</td> <td align="middle">10254</td></tr>
-</table>
-</p>
+  
+  <div class="col-sm-8">
+              <div class="tabbable tabs-above">
+                <ul class="nav nav-tabs">
+                  <li class="active">
+                    <a href="#tab-3106-1" data-toggle="tab" data-value="Plot">Plot</a>
+                  </li>
+                  <li>
+                    <a href="#tab-3106-2" data-toggle="tab" data-value="Sumary">Summary</a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" data-value="Plot" id="tab-3106-1">
+                    <div id="sPlot" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                  </div>
+                <div class="tab-pane" data-value="Summary" id="tab-3106-2">
+                  <pre id="sTable" class="shiny-html-output"></pre>
+            </div>
+  </div>
+
 
 <p>
 To bootstrap, we resample the data from survey samples with
@@ -77,25 +86,22 @@ this data set, our estimator is median. By replicating a certain number
 of times, we are able to get the same number of medians.
 </p>
   
-  <div id="table" class="shiny-html-output"></div>
-  
-  <p>
-    <label>Number of Replication:</label><br /> 
-    <select name="n">
+<p>
+   <label>Number of Replication:</label>
+     <select name="n">
       <option value="500">500</option>
       <option value="1000">1000</option>
       <option value="2000">2000</option>
-    </select> <br /> 
-  </p>
-  
-   
-   <div id="plot" class="shiny-plot-output" 
-     style="width: 100%; height: 400px"></div>
-     
- <p>
-
-   <div class="row">
-            <div class="col-sm-4">
+    </select>
+</p>
+<p>    
+<table id="showcase-app-code">
+ <tr>
+  <td id="showcase-app-container" class="showcase-app-container-expanded">
+    <div id="plot" class="shiny-plot-output" 
+     style="width: 600px; height: 400px"></div> <br/>
+ </td>
+  <td id="showcase-app-container" class="showcase-app-container-expanded">
               <form class="well">
                 <div class="form-group shiny-input-container">
                 The mean number of the estimated median of miles driven in 2002 from bootstrap is
@@ -104,11 +110,17 @@ of times, we are able to get the same number of medians.
                  <div id = "text2" class="shiny-text-output"></div><br />
                  The <input type="number" name="p" value="90" min="1" max="100" /> % confidence interval of bootstrap estimated sample median is
                  <div id = "CItable" class = "shiny-html-output"></div>
-                </div>
-               </form>
-             </div>
-   
-  </p>
+                 </div>
+                </form>          
+     </td> 
+     <td id="showcase-app-container" class="showcase-app-container-expanded">
+     </td>
+  </tr>  
+ </table>
+</p>      
+  
+      
+  
        
   
 </body>
