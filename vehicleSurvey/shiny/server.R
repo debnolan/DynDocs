@@ -9,24 +9,35 @@ shinyServer(function(input, output) {
            "1000" = 1000,
            "2000" = 2000)
   })
+  x = reactive({ boot(n())})
+  
+  CI = reactive({
+    p = input$p
+    quantile(x(), c((1-p/100)/2, (1+p/100)/2))
+  })
  
   output$plot = renderPlot({
-    x = boot(n())
-    plot(density(x), main = "Histrogram of Median Number of Annual Mile Driven in CA from Bootstrap")
+    plot(density(x()), main = "Histrogram of Median Number of Annual Mile Driven in CA from Bootstrap")
+    abline(v = CI()[1], col = "red")
+    abline(v = CI()[2], col = "red")
+    text(CI()[1] , 0.0005, "LowerBound")
+    text(CI()[2] , 0.0005, "UpperBound")
+    abline(v = mean(x()), col = "blue")
+    text(mean(x()), 0.0009, paste("Estimated Median", mean(x()), sep = ""))
   }) 
   
-  output$text1 = renderText({ 
-    mean(boot(n()))
+  output$text1 = renderText({    
+    mean(x())
   })
   
   output$text2 = renderText({ 
-    var(boot(n()))
+    var(x())
   })
   
   output$CItable = renderTable({
-    data.frame(LowerBound = t(quantile(boot(n()), c(0.025, 0.975)))[1], 
-               UpperBound = t(quantile(boot(n()), c(0.025, 0.975)))[2])
+    matrix(CI(), nrow = 1, 
+           dimnames = list("CI", c("LowerBound", "UpperBound")))
   })
 
-  
+
 })
