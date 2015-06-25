@@ -67,16 +67,15 @@ residGen = function(counts) {
 # Function to generate conclusion statement to be displayed in tutorial.
 conclusion = function(counts) {
   myChiSq = chiSqStat(counts)
-  #pValue = 1 - pgamma(myChiSq, shape = 1/2, rate = 1/2)
-  #if (pValue < .05) {
-  #  statement = "reject"
-  #} else {
-  #  statement = "fail to reject"
-  #}
-  #paste0("We assessed the null hypothesis that the instance of death on a ",
-  #       "shift was independent of Gilbert's presense. We found a chi-square ",
-  #       "test statistic of ", myChiSq, ", which corresponds to a P-value of ",
-  #       pValue, ". Given this information, we would ", statement, " the ",
-  #       "null hypothesis at the standard .05 significance level.")
-  return(class(counts))
+  pValue = 1 - pchisq(myChiSq, df = 1)
+  if (pValue < .05) {
+    statement = "reject"
+  } else {
+    statement = "fail to reject"
+  }
+  paste0("We assessed the null hypothesis that the instance of death on a ",
+         "shift was independent of Gilbert's presense. We found a chi-square ",
+         "test statistic of ", sprintf("%.2f", myChiSq), ", which corresponds to a P-value of ",
+         sprintf("%g", pValue), ". Given this information, we would ", statement, " the ",
+         "null hypothesis at the standard .05 significance level.")
 }
