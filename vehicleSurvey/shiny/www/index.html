@@ -1,8 +1,31 @@
 <!DOCTYPE html>
 <html>
  <head>
- <script src="shared/jquery.js" type="text/javascript"></script>
-  <script src="shared/shiny.js" type="text/javascript"></script>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.1];jqueryui[1.10.4];showdown[0.3.1];highlight.js[6.2];selectize[0.11.2];bootstrap[3.3.1];font-awesome[4.2.0]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<script src="shared/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="shared/showdown/compressed/showdown.js"></script>
+<script src="shared/highlight/highlight.pack.js"></script>
+<link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="shared/selectize/js/es5-shim.min.js"></script>
+<![endif]-->
+<script src="shared/selectize/js/selectize.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+<link href="shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+  <script src="shared/shiny-showcase.js"></script>
+  <link rel="stylesheet" type="text/css" href="shared/highlight/rstudio.css"/>
+  <link rel="stylesheet" type="text/css" href="shared/shiny-showcase.css"/>
+  <script type="text/markdown" id="showcase-markdown-content"> </script>
  </head>
 
  <body>
@@ -36,11 +59,12 @@ Based on these five strata and their weights, the median number of
   </p>
 <table border=1>
   <tr> <th>TruckTypes</th> <th> Sample Size</th><th> Sampling Weight</th><th>Median</th> </tr>
-  <tr> <td align="middle"> Pickups</td> <td align="middle">219 </td> <td align="middle">18410.0</td> <td align="middle">10000</td></tr>
-  <tr> <td align="middle"> Vans </td> <td align="middle"> 275 </td><td align="middle">17078.6</td> <td align="middle">11000</td> </tr>
-  <tr> <td align="middle"> Light</td> <td align="middle"> 565 </td><td align="middle">608.9</td> <td align="middle">11000</td> </tr>
-  <tr> <td align="middle"> Heavy</td> <td align="middle"> 546 </td> <td align="middle">155.6</td> <td align="middle">19924</td></tr>
-  <tr> <td align="middle"> Truck-Tractors</td> <td align="middle">587 </td> <td align="middle">150.3</td> <td align="middle">44640</td></tr>
+  <tr> <td align="middle"> 1 </td> <td align="middle">219 </td> <td align="middle">18410.0</td> <td align="middle">10000</td></tr>
+  <tr> <td align="middle"> 2 </td> <td align="middle"> 275 </td><td align="middle">17078.6</td> <td align="middle">11000</td> </tr>
+  <tr> <td align="middle"> 3 </td> <td align="middle"> 565 </td><td align="middle">608.9</td> <td align="middle">11000</td> </tr>
+  <tr> <td align="middle"> 4 </td> <td align="middle"> 546 </td> <td align="middle">155.6</td> <td align="middle">19924</td></tr>
+  <tr> <td align="middle"> 5 </td> <td align="middle">587 </td> <td align="middle">150.3</td> <td align="middle">44640</td></tr>
+  <tr> <td align="middle"> All </td> <td align="middle">2192 </td> <td align="middle">9245452.2</td> <td align="middle">10254</td></tr>
 </table>
 </p>
 
@@ -70,17 +94,22 @@ of times, we are able to get the same number of medians.
      
  <p>
 
-   <div />
-   <form class="well">
-   The mean number of the estimated median of miles driven in 2002 from bootstrap is
-   <div id = "text1" class="shiny-text-output"></div><br />
-   The estimated variance of bootstrap median is
-   <div id = "text2" class="shiny-text-output"></div><br />
-   The 95% confidence interval of bootstrap is
-   <div id = "CItable" class = "shiny-html-output"></div>
-   <form/>
+   <div class="row">
+            <div class="col-sm-4">
+              <form class="well">
+                <div class="form-group shiny-input-container">
+                The mean number of the estimated median of miles driven in 2002 from bootstrap is
+                 <div id = "text1" class="shiny-text-output"></div><br />
+                 The estimated variance of bootstrap median is
+                 <div id = "text2" class="shiny-text-output"></div><br />
+                 The <input type="number" name="p" value="90" min="1" max="100" /> % confidence interval of bootstrap estimated sample median is
+                 <div id = "CItable" class = "shiny-html-output"></div>
+                </div>
+               </form>
+             </div>
+   
   </p>
        
-   
+  
 </body>
 </html>
