@@ -22,38 +22,54 @@
 <script src="shared/bootstrap/js/bootstrap.min.js"></script>
 <script src="shared/bootstrap/shim/html5shiv.min.js"></script>
 <script src="shared/bootstrap/shim/respond.min.js"></script>
-  <title>censusVis</title>
+  <title>MNIST</title>
 </head>
 <body>
   <div class="container-fluid">
-    <h2>censusVis</h2>
+    <h2>Handwritten Number Recognition</h2>
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-12">
         <form class="well">
-          <span class="help-block">Create demographic maps with 
-        information from the 2010 US Census.</span>
+          <span class="help-block">Return recognized numbers based on MNIST data base.</span>
           <div class="form-group shiny-input-container">
-            <label class="control-label" for="var">Choose a variable to display</label>
-            <div>
-              <select id="var"><option value="Percent White" selected>Percent White</option>
-<option value="Percent Black">Percent Black</option>
-<option value="Percent Hispanic">Percent Hispanic</option>
-<option value="Percent Asian">Percent Asian</option></select>
-              <script type="application/json" data-for="var" data-nonempty="">{}</script>
+
+          	<label class="control-label" for="var1">Choose the number of boxes you want</label>
+          	<div>
+              <select id="var1">
+              <option value="one" selected>1</option>
+              <option value="two">2</option>
+              <option value="three">3</option>
+              <option value="four">4</option>
+              <option value="five">5</option>
+              <option value="six">6</option>
+              <option value="seven">7</option>
+              <option value="eight">8</option>
+              <option value="nine">9</option>
+              <option value="ten">10</option></select>
+              <script type="application/json" data-for="var1" data-nonempty="">{}</script>
             </div>
-          </div>
-          <div class="form-group shiny-input-container">
-            <label class="control-label" for="range">Range of interest:</label>
-            <input class="js-range-slider" id="range" data-type="double" data-min="0" data-max="100" data-from="0" data-to="100" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+
+            <label class="control-label" for="var2">Write numbers</label>
+            <div>
+            	
+
+
+
+            </div>
           </div>
         </form>
       </div>
-      <div class="col-sm-8">
+      <div class="col-sm-12">
         <div id="text1" class="shiny-text-output"></div>
         <div id="text2" class="shiny-text-output"></div>
       </div>
     </div>
   </div>
+  
+  
+  
+  
+ 
 </body>
 </html>
 

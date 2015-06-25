@@ -24,6 +24,36 @@ plot(fit0)
 plot(fit0, "rl")
 return.level(fit0)
 
+myprint <- function (x, ...) 
+{
+  tmp <- attributes(x)
+  cat("\n")
+  print(tmp$method)
+  if (!is.null(tmp$R)) 
+    cat(tmp$R, " iterations\n")
+  cat("\n")
+  if (!is.matrix(x)) {
+    print(paste(names(c(x))[2], ": ", round(x[2], digits = 3), 
+                sep = ""))
+    cat("\n")
+    print(paste(tmp$conf.level, "% Confidence Interval: (", 
+                round(x[1], digits = 4), ", ", round(x[3], digits = 4), 
+                ")", sep = ""))
+  }
+  else {
+    y <- x
+    attributes(y) <- NULL
+    y <- matrix(y, tmp$dim[1], tmp$dim[2])
+    colnames(y) <- tmp$dimnames[[2]]
+    rownames(y) <- tmp$dimnames[[1]]
+    print(y)
+  }
+  cat("\n")
+  invisible()
+}
+
+
+
 
 
 fit1 <- fevd(TMX1, PORTw, units="deg C")

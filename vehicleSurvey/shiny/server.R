@@ -1,6 +1,5 @@
 library(shiny)
 library(survey)
-library(tables)
 source("helpers.R")
 
 shinyServer(function(input, output) {
@@ -10,23 +9,26 @@ shinyServer(function(input, output) {
            "1000" = 1000,
            "2000" = 2000)
   })
-  
+  x = reactive({ boot(n())})
+ 
   output$plot = renderPlot({
-    x = boot(n())
-    plot(density(x))
+    plot(density(x()), main = "Histrogram of Median Number of Annual Mile Driven in CA from Bootstrap")
   }) 
   
-  output$text1 = renderText({ 
-    mean(boot(n()))
+  output$text1 = renderText({    
+    mean(x())
   })
   
-  output$text2 = renderText({ 
-    var(boot(n()))
+output$text2 = renderText({ 
+    var(x())
   })
   
-  output$table = renderTable({
-    print(table)
+  output$CItable = renderTable({
+    df = data.frame(LowerBound = t(quantile(x(), c(0.025, 0.975)))[1], 
+               UpperBound = t(quantile(x(), c(0.025, 0.975)))[2])
+    rownames(df) = c("CI")
+    print(df)
   })
-  
-  
+
+
 })

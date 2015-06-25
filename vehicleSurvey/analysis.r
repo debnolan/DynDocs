@@ -15,7 +15,6 @@ for (i in 1:5){
 l = sapply(stratum, length)
 weights = unique(ca$TABTRUCKS)
 
-
 ## calcuate the estimated median (miles driven in 2002) using package survey
 library(survey)
 
@@ -103,7 +102,14 @@ plot(density(boot))
 quantile(boot, c(0.025, 0.975))
 var(boot)
 
+<<<<<<< HEAD
 system.time(replicate(500, med.vehical(straca)))
+=======
+data.frame(LowerBound = quantile(boot, c(0.025, 0.975))[1], 
+           UpperBound = quantile(boot, c(0.025, 0.975))[2])
+
+t(quantile(boot, c(0.025, 0.975)))
+>>>>>>> 3da7145d7f516e12c0f5cc4b81ca17db21fffb77
 
 cd
 git pull
