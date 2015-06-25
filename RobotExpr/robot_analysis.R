@@ -5,47 +5,6 @@ load("logs.rda")
 # which we will call a “look.”
 look <- logs[[1]][nrow(logs[[1]]), ]
 
-#Get a contiguous segment from the look.
-#segs is a list with two vectors, and each vector gives the 
-#indices of the elements of the range values for that segment/arc.
-segs <- getWrappedSegments(as.numeric(look[1, -(1:3)]))
-
-#Using segs, we can comput xi and yi values for the segment.
-i = segs[[2]]
-range = as.numeric(look[, -(1:3)])[i]
-theta = seq(0, 2*pi, length = 360) - pi/2
-xi = look$x + range * cos(theta[i])
-yi = look$y + range * sin(theta[i])
-
-plotLook <-
-  function(row, ...)
-  {
-    x = row[1, "x"]
-    y = row[1, "y"]
-    
-    theta = seq(0, 2*pi, length = 360) - pi/2
-    r = as.numeric(row[1, -c(1:3, 365)])
-    x1 = x + r*cos(theta)
-    y1 = y + r*sin(theta)
-    par(pty = 's')
-    plot(x + 2*cos(theta), y + 2*sin(theta), 
-         col = "dark green", type = "l", lty = 2, 
-         xlab = "x", ylab = "y", ...)    # 2 meter circle 
-    points(x1, y1, type = "l", col = "purple")           # what the robot sees
-}
-
-plotLook(look)
-
-
-#Sample Final Look
-plotLook(look)
-#This is the path/shape seen by the robot in the final look 
-#of the first log file, JRSPdata_2010_03_10_12_12_31. 
-#The robot is in the center of the circle. 
-#At the top right of the circle, we see a circular-like object 
-#that might be the target. A straight edge corresponding to a rectangular 
-#obstacle appears at the bottom of the circle.
-
 #To find the target, we are looking for a reasonably short sub-arc/segment 
 #of the 360 degree view, not the entire 360 degrees.
 getSegments <-
@@ -106,6 +65,39 @@ getWrappedSegments =
       segments
   }
 
+
+#Get a contiguous segment from the look.
+#segs is a list with two vectors, and each vector gives the 
+#indices of the elements of the range values for that segment/arc.
+segs <- getWrappedSegments(as.numeric(look[1, -(1:3)]))
+
+plotLook <-
+  function(row, ...)
+  {
+    x = row[1, "x"]
+    y = row[1, "y"]
+    
+    theta = seq(0, 2*pi, length = 360) - pi/2
+    r = as.numeric(row[1, -c(1:3, 365)])
+    x1 = x + r*cos(theta)
+    y1 = y + r*sin(theta)
+    par(pty = 's')
+    plot(x + 2*cos(theta), y + 2*sin(theta), 
+         col = "dark green", type = "l", lty = 2, 
+         xlab = "x", ylab = "y", ...)    # 2 meter circle 
+    points(x1, y1, type = "l", col = "purple")           # what the robot sees
+}
+
+#Sample Final Look
+plotLook(look)
+#This is the path/shape seen by the robot in the final look 
+#of the first log file, JRSPdata_2010_03_10_12_12_31. 
+#The robot is in the center of the circle. 
+#At the top right of the circle, we see a circular-like object 
+#that might be the target. A straight edge corresponding to a rectangular 
+#obstacle appears at the bottom of the circle.
+
+
 ################################### Objective ################################
 #We can compare the shape defined by each segment to an arc/part of a circle.
 #Essentially, we want to allow x0,y0, and r to vary    
@@ -125,6 +117,12 @@ circle.fit.nlm.funk <-
 
 #We’ll use the very simple approach of using the average of the xi values 
 #and the yi values in the arc as our initial guess.
+#Using segs, we can comput xi and yi values for the segment.
+i = segs[[2]]
+range = as.numeric(look[, -(1:3)])[i]
+theta = seq(0, 2*pi, length = 360) - pi/2
+xi = look$x + range * cos(theta[i])
+yi = look$y + range * sin(theta[i])
 x0 = mean(xi)
 y0 = mean(yi)
 
