@@ -14,10 +14,6 @@ h1 {
 	text-align: center;
 }
 
-select {
-	width: 190px;
-}
-
 table {
 	text-align: center;
 }
@@ -30,9 +26,10 @@ table {
 
 
 
-/* ----------------------------------*/
-/* -------->> CALCULATIONS <<--------*/
-/* ----------------------------------*/
+
+/*----------------------------------*/
+/*-------->> CALCULATIONS <<--------*/
+/*----------------------------------*/
 
 .calculations {
 	font-size: 80%;
@@ -78,9 +75,9 @@ div.calculations table.twoRows {
 
 
 
-/* ----------------------------------*/
-/* ---------->> TUTORIAL <<----------*/
-/* ----------------------------------*/
+/*----------------------------------*/
+/*---------->> TUTORIAL <<----------*/
+/*----------------------------------*/
 
 select {
 	margin-bottom: 8%;
@@ -102,16 +99,16 @@ select {
 	width: 55px;
 }
 
-.shiny-input-container {
-	width: 100%;
-}
-
 .main-panel {
 	display: inline-block;
 	float: left;
 	margin: 0%;
 	height: 200px;
 	width: 610px;
+}
+
+.shiny-input-container {
+	width: 100%;
 }
 
 .side-panel {
@@ -127,18 +124,22 @@ select {
 	height: 125px;
 }
 
-/* ----------------------------------*/
-/* ----->> HYPOTHESIS TESTING <<-----*/
-/* ----------------------------------*/
 
-.hypothesis-test {
+
+
+
+/*----------------------------------*/
+/*----->> HYPOTHESIS TESTING <<-----*/
+/*----------------------------------*/
+
+#chiSqPlot, #residPlot {
 	float: left;
 	height: 185px;
 	margin: 0%;
 	width: 305px;
 }
 
-.test-summary {
+#summary {
 	float: left;
 	height: 15px;
 	margin: 0%;
@@ -156,4 +157,3 @@ select {
 	float: left;
 	width: 25%;
 }
-

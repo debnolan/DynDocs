@@ -3,7 +3,8 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Statistics in the Courtroom</title>
-	<script src="//code.jquery.com/jquery-1.11.3.js"></script>
+	<script src="shared/jquery.js"></script>
+	 <script src="shared/shiny.js"></script>
 	<link href="shared/shiny.css" rel="stylesheet" />
 	<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
@@ -12,7 +13,7 @@
 </head>
 
 <body>
-	<div id="background">
+	<div class="background">
 		<h1>Statistics in the Courtroom</h1>
 		<p>
 			This article discusses the statistical method of hypothesis testing and its role in the 2001 federal court case that sentenced serial killer Kristen Heather Gilbert to life in prison without possibility for parole plus twenty years. We begin with a bit of background information on Gilbert and the crimes on which she was convicted.
@@ -29,7 +30,7 @@
 		</p>
 	</div>
 	
-	<div id="analysis">
+	<div class="analysis">
 		<h3>Analysis: Chi-Square Test for Independence</h3>
 		<p>
 			First off, we have to realize that the data we have to work with is <strong>categorical</strong>. That is, each datum takes on a value that is either a name or a label, as opposed to a measurable quantity. For instance, when asked whether or not Gilbert was assigned a shift on a particular evening, we simply answer with <em>yes</em> or <em>no</em>; we don't say she was <em>half</em>-assigned a shift or that she was <em>half</em>-present.
@@ -147,7 +148,7 @@
 		</p>
 	</div>
 	
-	<div id="tutorial">
+	<div class="tutorial">
 		<fieldset>
 			<legend><h3>Tutorial: Data Exploration, Hypothesis Testing, Residual Analysis</h3></legend>
 			
@@ -242,9 +243,22 @@
 			</div>
 			
 			<div class="main-panel">
-				<div name="chiSqPlot" id="chiSqPlot" class="hypothesis-test shiny-plot-output"></div>
-				<div name="residPlot" id="residPlot" class="hypothesis-test shiny-plot-output"></div>
-				<div name="summary" id="summary" class="test-summary shiny-plot-output"></div>
+				<div id="chiSqPlot" class="shiny-plot-output"></div>
+				<div id="residPlot" class="shiny-plot-output"></div>
+				<div id="summary" class="shiny-plot-output"></div>
+			</div>
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend><h3>Tutorial: --------------</h3></legend>
+
+			<div class="top-panel">
+			</div>
+
+			<div class="side-panel">
+			</div>
+
+			<div class="main-panel">
 			</div>
 		</fieldset>
 	</div>
@@ -252,6 +266,8 @@
 		<p>
 			Write some stuff here
 		</p>
+	</div>
+	<div class="references">
 	</div>
 </body>
 </html>

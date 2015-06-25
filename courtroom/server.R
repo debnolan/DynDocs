@@ -2,7 +2,7 @@ library(shiny)
 
 source("helpers.R")
 
-logic = function(input, output) {
+shinyServer(function(input, output) {
   
   # Computes table of observed values from from client input
   counts = reactive({
@@ -22,6 +22,4 @@ logic = function(input, output) {
   output$residPlot = renderPlot(residPlot(counts))
   output$summary = renderText(conclusion(counts))
   
-}
-
-shinyServer(logic)
+})
