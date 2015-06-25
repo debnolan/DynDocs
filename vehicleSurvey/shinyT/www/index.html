@@ -1,8 +1,31 @@
 <!DOCTYPE html>
 <html>
  <head>
- <script src="shared/jquery.js" type="text/javascript"></script>
-  <script src="shared/shiny.js" type="text/javascript"></script>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.1];jqueryui[1.10.4];showdown[0.3.1];highlight.js[6.2];selectize[0.11.2];bootstrap[3.3.1];font-awesome[4.2.0]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<script src="shared/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="shared/showdown/compressed/showdown.js"></script>
+<script src="shared/highlight/highlight.pack.js"></script>
+<link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="shared/selectize/js/es5-shim.min.js"></script>
+<![endif]-->
+<script src="shared/selectize/js/selectize.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+<link href="shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+  <script src="shared/shiny-showcase.js"></script>
+  <link rel="stylesheet" type="text/css" href="shared/highlight/rstudio.css"/>
+  <link rel="stylesheet" type="text/css" href="shared/shiny-showcase.css"/>
+  <script type="text/markdown" id="showcase-markdown-content"> </script>
  </head>
  <body>
 
@@ -21,14 +44,16 @@
   
   <p>
   Here are the list of all possible bootstrap samples.<br/>
-   <label> Number of Observations:<label><br/>
+   <label> Number of Combination display:<label><br/>
    <input type="number" name="obs" value="6" min="1" max="256" />
-   <pre id="table" class="shiny-table-output" > </pre>
+   <pre id="table" class="shiny-html-output" > </pre>
   </P>
    
    <p>
    Here is the summary of 256 means of the bootstrap samples .<br/>
+   <div class="col-sm-8">
    <pre id="summary" class="shiny-html-output" > </pre>
+   <div/>
    </p>
    
    <label>Number of Bins:</label><br/> 
