@@ -10,9 +10,13 @@ ca$STRATUM = factor(ca$STRATUM, levels = c(61,62,63,64,65),
                     labels = c("Pickups", "Vans", "Light", 
                                "Heavy", "Truck-Tractors"))
 library(tables)
-table = tabular(Heading("TruckTypes")*STRATUM ~ Heading("Sample_Size")*TABTRUCKS + 
+samTable = tabular(Heading("TruckTypes")*STRATUM ~ Heading("Sample_Size")*TABTRUCKS + 
                   Heading()*TABTRUCKS*Heading("Sampling_Weight")*mean +
                   Heading()*MILES_ANNL*Heading("Median")*median, data=ca )
+library(ggplot2)
+samPlot = qplot(STRATUM, MILES_ANNL, data=ca, geom=c("boxplot"), fill = STRATUM, 
+                main="Number of Miles Driven in 2002 ", 
+                xlab="", ylab="")
 library(survey)
 boot = function(n){
   

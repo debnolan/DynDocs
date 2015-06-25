@@ -38,6 +38,14 @@ shinyServer(function(input, output) {
     matrix(CI(), nrow = 1, 
            dimnames = list("CI", c("LowerBound", "UpperBound")))
   })
-
+  
+  output$sTable = renderPrint({
+    samTable
+    
+  })
+  
+  output$sPlot = renderPlot({
+    samPlot
+  })
 
 })
