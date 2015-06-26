@@ -1,12 +1,12 @@
 shinyUI(navbarPage("Rainfall in Colorado",
-
-# Analysis Tab                   
+                   
+                   # Analysis Tab                   
                    tabPanel("Analysis", 
                             div(class="outer",
-                                 tags$head(
-                                   # Include our custom CSS on this Panel
-                                   includeCSS("www/styles.css")
-                                 ),
+                                tags$head(
+                                  # Include our custom CSS on this Panel
+                                  includeCSS("www/styles.css")
+                                ),
                                 fluidPage(
                                   fluidRow(
                                     column(8,
@@ -36,20 +36,19 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                               sliderInput("threshold", "Threshold:", 
                                                           min = 80, max = 100, value = 95, step = 0.5),
                                               helpText("Note: this is the quantile at which the threshold is set. "),
-#                                               tags$div(class = "ZoomIt", 
-#                                                        tags$img, )
-imageOutput("mapImage")
+                                              
+                                              imageOutput("mapImage")
                                 ),
                                 tags$div(id="cite",
                                          'Summer project,', tags$em('by Wuji and Ryan.'))
                             )
                    ),
-
-
-
-#  Simulation Tab
-
-
+                   
+                   
+                   
+                   #  Simulation Tab
+                   
+                   
                    tabPanel("Simulation",
                             div(class="outer",
                                 tags$head(
@@ -86,7 +85,7 @@ imageOutput("mapImage")
                                                           min = 80, max = 100, value = 95),
                                               helpText("Note: this is the quantile at which the threshold is set. "),
                                               imageOutput("mapImage2"),
-                                              actionButton("goButton", "Re-run simulation", icon("random")),
+                                              actionButton("goButton", "Run simulation", icon("random")),
                                               helpText("Generate a QQ plot of quantiles from model-simulated data against the data.")
                                 ),
                                 tags$div(id="cite",
