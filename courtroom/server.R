@@ -18,8 +18,8 @@ shinyServer(function(input, output) {
   })
   
   # Generates plots and summary of test for display output
-  output$chiSqPlot = renderPlot(plotGen(counts))
-  output$residPlot = renderPlot(residPlot(counts))
-  output$summary = renderText(conclusion(counts))
+  output$chiSqPlot = renderPlot(plotGen(counts()))
+  output$residPlot = renderPlot(residGen(counts()))
+  output$summary = renderText(conclusion(counts()))
   
 })
