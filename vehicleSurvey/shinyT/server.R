@@ -13,11 +13,15 @@ shinyServer(function(input, output) {
     })
     
     output$table <- renderTable({ 
-      head(bootSamp, input$obs)
+      bootSamp[input$obs[1]:input$obs[2], ]
+     
     })
     
     output$plot <- renderPlot({ 
-      hist(bootMean, breaks = input$bins)
+      x = bootMean
+      bins = seq(min(x), max(x), length.out = input$bins + 1)
+      hist(x, breaks = bins, main = "Exact Bootstrap Sampling Distribution", 
+           xlab = "mean", col = 'turquoise', border = 'white')
     })
     
   }
