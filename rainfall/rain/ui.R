@@ -12,13 +12,13 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                     column(8,
                                            plotOutput("plots3"),
                                            hr(),
-                                           plotOutput("plots2")
+                                           plotOutput("plots2", height = "600px")
                                     )
                                   )
                                 ),
                                 tags$head(tags$style(
                                   type="text/css",
-                                  "#mapImage img {max-width: 100%; width: 100%; height: 93%}"
+                                  "#mapImage img {max-width: 100%; width: 100%; height: 100%}"
                                 )),
                                 absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
                                               draggable = FALSE, top = 80, left = "auto", right = 30, bottom = "auto",
@@ -34,9 +34,8 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                                                       "Weather station 51", "Weather station 52", "Weather station 53", "Weather station 54", "Weather station 55", "Weather station 56"),
                                                           selected = "Weather station 1"),
                                               sliderInput("threshold", "Threshold:", 
-                                                          min = 80, max = 100, value = 95, step = 0.5),
+                                                          min = 80, max = 100, value = 80),
                                               helpText("Note: this is the quantile at which the threshold is set. "),
-                                              
                                               imageOutput("mapImage")
                                 ),
                                 tags$div(id="cite",
@@ -82,7 +81,7 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                                                       "Weather station 51", "Weather station 52", "Weather station 53", "Weather station 54", "Weather station 55", "Weather station 56"),
                                                           selected = "Weather station 1"),
                                               sliderInput("threshold2", "Threshold:", 
-                                                          min = 80, max = 100, value = 95),
+                                                          min = 80, max = 100, value = 80),
                                               helpText("Note: this is the quantile at which the threshold is set. "),
                                               imageOutput("mapImage2"),
                                               actionButton("goButton", "Run simulation", icon("random")),
