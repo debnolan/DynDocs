@@ -100,7 +100,7 @@ shinyServer(function(input, output,session) {
               threshold = quantile(rainfall[[data()$data]]$precip, data()$thresh/100),
               type="GP", units = "mm"),
          "qq2")
-    title(paste("Simulation result (Weather station ", simParams$station, ")", sep = ""))
+    title(paste("Simulation result (Weather station ", data()$data, ")", sep = ""))
   })
   
   
