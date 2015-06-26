@@ -22,7 +22,8 @@ h1, h2, h3, h4 { font-weight: 400; }
 
 #controls {
   /* Appearance */
-  padding: 0 20px 0px 20px;
+  padding: 20px;
+ border-bottom: 1px;
   cursor: move;
   /* Fade out while not hovering */
   opacity: 0.4;
@@ -39,7 +40,7 @@ h1, h2, h3, h4 { font-weight: 400; }
 #cite {
   position: static;
   bottom: 10px;
-  right: 10px;
+  left: 10px;
   font-size: 11px;
   color: grey;
 }
