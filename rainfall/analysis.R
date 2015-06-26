@@ -52,8 +52,8 @@ myprint <- function (x, ...)
   invisible()
 }
 
-
-
+fit = fevd(precip, rainfall[[2]], threshold = quantile(rainfall[[2]]$precip, 95/100), type="GP", units = "mm")
+myprint(ci(fit, return.period=c(2,5,10,20,50,80,100,120,200)))
 
 
 fit1 <- fevd(TMX1, PORTw, units="deg C")

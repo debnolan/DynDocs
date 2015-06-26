@@ -36,11 +36,11 @@ myprint <- function (x, ...)
     cat(tmp$R, " iterations\n")
   cat("\n")
   if (!is.matrix(x)) {
-    print(paste(names(c(x))[2], ": ", round(x[2], digits = 3), 
+    print(paste(names(c(x))[2], ": ", round(x[2], digits = 2), 
                 sep = ""))
     cat("\n")
     print(paste(tmp$conf.level, "% Confidence Interval: (", 
-                round(x[1], digits = 4), ", ", round(x[3], digits = 4), 
+                round(x[1], digits = 2), ", ", round(x[3], digits = 2), 
                 ")", sep = ""))
   }
   else {
@@ -54,16 +54,8 @@ myprint <- function (x, ...)
   cat("\n")
   invisible()
 }
-plot_map <- function(x){
-  myMap <- get_googlemap(center = c(lon = -104.9477, lat = 39.29464), zoom = 7,
-                         size = c(640,640), scale = 2, maptype = "terrain")
-  ggmap(myMap, extent = "device") +
-    geom_point(aes(x = lon, y = lat), data = FR[["info"]][(1:56)[-x],],
-               alpha = 0.6, color="black", size = 4, shape = 21, fill = "white") +
-    geom_point(aes(x = lon, y = lat), data = FR[["info"]][x,],
-               alpha = 0.8, color="black", size = 6, shape = 23, fill = "red")  +
-    coord_fixed(ylim = c(36.52, 41)) 
-}
+
+
 
 
 

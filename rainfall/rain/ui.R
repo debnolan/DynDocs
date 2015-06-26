@@ -1,22 +1,28 @@
 shinyUI(navbarPage("Rainfall in Colorado",
-                   tabPanel("Analysis",
+                   
+                   # Analysis Tab                   
+                   tabPanel("Analysis", 
                             div(class="outer",
                                 tags$head(
-                                  # Include our custom CSS
-                                  includeCSS("styles.css")
+                                  # Include our custom CSS on this Panel
+                                  includeCSS("www/styles.css")
                                 ),
                                 fluidPage(
                                   fluidRow(
-                                    column(8, offset = 4,
+                                    column(8,
                                            plotOutput("plots3"),
                                            hr(),
                                            plotOutput("plots2")
                                     )
                                   )
                                 ),
+                                tags$head(tags$style(
+                                  type="text/css",
+                                  "#mapImage img {max-width: 100%; width: 100%; height: 93%}"
+                                )),
                                 absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
-                                              draggable = TRUE, top = 60, left = 20, right = "auto", bottom = "auto",
-                                              width = 330, height = "auto",
+                                              draggable = FALSE, top = 80, left = "auto", right = 30, bottom = "auto",
+                                              width = "30%", height = "auto",
                                               h2("Data input"),
                                               selectInput("station", 
                                                           label = "Choose a weather station:",
@@ -28,32 +34,43 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                                                       "Weather station 51", "Weather station 52", "Weather station 53", "Weather station 54", "Weather station 55", "Weather station 56"),
                                                           selected = "Weather station 1"),
                                               sliderInput("threshold", "Threshold:", 
-                                                          min = 80, max = 100, value = 95, step = 0.5, animate=animationOptions(interval=300, loop=TRUE)),
+                                                          min = 80, max = 100, value = 95, step = 0.5),
                                               helpText("Note: this is the quantile at which the threshold is set. "),
-                                              plotOutput("plots1", height = "185")
+                                              
+                                              imageOutput("mapImage")
                                 ),
                                 tags$div(id="cite",
-                                         'Summer project.', tags$em('by Wuji and Ryan'))
+                                         'Summer project,', tags$em('by Wuji and Ryan.'))
                             )
                    ),
+                   
+                   
+                   
+                   #  Simulation Tab
+                   
+                   
                    tabPanel("Simulation",
                             div(class="outer",
                                 tags$head(
-                                  # Include our custom CSS
-                                  includeCSS("styles.css")
+                                  # Include our custom CSS on this Panel
+                                  includeCSS("www/styles.css")
                                 ),
                                 fluidPage(
                                   fluidRow(
-                                    column(8, offset = 4,
+                                    column(8,
                                            plotOutput("plots4"),
                                            hr(),
                                            verbatimTextOutput("rl2")
                                     )
                                   )
                                 ),
+                                tags$head(tags$style(
+                                  type="text/css",
+                                  "#mapImage2 img {max-width: 100%; width: 100%; height: 93%}"
+                                )),
                                 absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
-                                              draggable = TRUE, top = 60, left = 20, right = "auto", bottom = "auto",
-                                              width = 330, height = "auto",
+                                              draggable = FALSE, top = 80, left = "auto", right = 30, bottom = "auto",
+                                              width = "30%", height = "auto",
                                               h2("Data input"),
                                               selectInput("station2", 
                                                           label = "Choose a weather station:",
@@ -67,12 +84,12 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                               sliderInput("threshold2", "Threshold:", 
                                                           min = 80, max = 100, value = 95),
                                               helpText("Note: this is the quantile at which the threshold is set. "),
-                                              plotOutput("plots5", height = "184"),hr(),
-                                              actionButton("goButton", "Re-run simulation", icon("random")),
+                                              imageOutput("mapImage2"),
+                                              actionButton("goButton", "Run simulation", icon("random")),
                                               helpText("Generate a QQ plot of quantiles from model-simulated data against the data.")
                                 ),
                                 tags$div(id="cite",
-                                         'Summer project.', tags$em('by Wuji and Ryan'))
+                                         'Summer project,', tags$em('by Wuji and Ryan.'))
                             )
                    )
 ))
