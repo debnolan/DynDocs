@@ -86,42 +86,40 @@ this data set, our estimator is median. By replicating a certain number
 of times, we are able to get the same number of medians.
 </p>
   
-<p>
-   <label>Number of Replication:</label>
-     <select name="n">
-      <option value="500">500</option>
-      <option value="1000">1000</option>
-      <option value="2000">2000</option>
-    </select>
-</p>
 <p>    
 <table id="showcase-app-code">
  <tr>
-  <td id="showcase-app-container" class="showcase-app-container-expanded">
+   <td id="showcase-app-container" class="showcase-app-container-expanded">
+     <form class="well">
+      <div class="form-group shiny-input-container" style="width: 220px; height: 30px">
+       <label>Number of Replication:</label>
+        <select name="n">
+         <option value="500">500</option>
+         <option value="1000">1000</option>
+         <option value="2000">2000</option>
+        </select> 
+       </div>
+      </form>
+
+      <form class="well">
+       <div class="form-group shiny-input-container" style="width: 220px; height: 200px">
+        <div id = "text1" class="shiny-text-output"></div> <br/>
+         The <input type="number" name="p" value="90" min="1" max="100" /> % confidence interval of bootstrap estimated sample median is
+        <div id = "CItable" class = "shiny-html-output"></div>
+      </div>
+     </form>          
+   </td> 
+   <td id="showcase-app-container" class="showcase-app-container-expanded">
     <div id="plot" class="shiny-plot-output" 
-     style="width: 600px; height: 400px"></div> <br/>
- </td>
-  <td id="showcase-app-container" class="showcase-app-container-expanded">
-              <form class="well">
-                <div class="form-group shiny-input-container">
-                The mean number of the estimated median of miles driven in 2002 from bootstrap is
-                 <div id = "text1" class="shiny-text-output"></div><br />
-                 The estimated variance of bootstrap median is
-                 <div id = "text2" class="shiny-text-output"></div><br />
-                 The <input type="number" name="p" value="90" min="1" max="100" /> % confidence interval of bootstrap estimated sample median is
-                 <div id = "CItable" class = "shiny-html-output"></div>
-                 </div>
-                </form>          
-     </td> 
-     <td id="showcase-app-container" class="showcase-app-container-expanded">
-     </td>
+     style="width: 600px; height: 420px"></div> <br/>
+   </td>
+   <td id="showcase-app-container" class="showcase-app-container-expanded">
+   </td>
   </tr>  
  </table>
 </p>      
   
-      
-  
-       
+          
   
 </body>
 </html>
