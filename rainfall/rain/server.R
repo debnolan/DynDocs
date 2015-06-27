@@ -57,21 +57,23 @@ shinyServer(function(input, output,session) {
   
   #The data plot
   output$plots3 <- renderPlot({
+    
     thresh = quantile(rainfall[[datasetInput()]]$precip, input$threshold/100)
     which(rainfall[[datasetInput()]]$precip>thresh)
-    par(bg = '#FAFAD2')
+    par(mfrow = c(1,1),bg = '#FAFAD2', mai = c(0.5,0.5,0.3,0.1))
     plot(rainfall[[datasetInput()]]$precip[which(rainfall[[datasetInput()]]$precip>thresh)]~rainfall[[datasetInput()]]$time[which(rainfall[[datasetInput()]]$precip>thresh)],
          ylim = range(rainfall[[datasetInput()]]$precip),
          xlab = "", ylab = "Precipitation (mm)", main = paste("Daily precipitation of weather station", datasetInput()), col = 'darkblue')
     points(rainfall[[datasetInput()]]$precip[which(rainfall[[datasetInput()]]$precip<=thresh)]~rainfall[[datasetInput()]]$time[which(rainfall[[datasetInput()]]$precip<=thresh)],
            col = 'black')
     abline(h = quantile(rainfall[[datasetInput()]]$precip, input$threshold/100), col = 'red', lwd = 2)
+    
   })
   
   #The 4 diagnostic plots
   output$plots2 <- renderPlot({
     fit = fevd(precip, rainfall[[datasetInput()]], threshold = quantile(rainfall[[datasetInput()]]$precip, input$threshold/100), type="GP", units = "mm")
-    par(mfrow = c(2,2), bg = '#FAFAD2')
+    par(mfrow = c(2,2), bg = '#FAFAD2',mai = c(0.45,0.45,0.3,0.1))
     plot(fit, "probprob", main ="Probability Plot")
     plot(fit, "qq", main ="Quantile Plot")
     plot(fit, type = "rl", rperiods= c(2,5,10,20,50,80,100,120,200), main ="Return Level Plot")
@@ -89,7 +91,7 @@ shinyServer(function(input, output,session) {
   
   # Simulation QQ plot
   output$plots4 <-  renderPlot({
-    par(bg = '#FAFAD2')
+    par(mfrow = c(1,1),bg = '#FAFAD2', mai = c(0.5,0.5,0.3,0.1))
     plot(fevd(precip, rainfall[[datasetInput2()]],
               threshold = quantile(rainfall[[datasetInput2()]]$precip, input$threshold2/100),
               type="GP", units = "mm"),

@@ -11,7 +11,7 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                   fluidRow(
                                     column(8,
                                            h1("Extrem Value Theory"),
-                                           plotOutput("plots3", height = "300px"),
+                                           plotOutput("plots3", height = "200px"),
                                            plotOutput("plots2", height = "400px"),
                                            verbatimTextOutput("rl")
                                     )
@@ -58,7 +58,8 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                 fluidPage(
                                   fluidRow(
                                     column(8,
-                                           plotOutput("plots4"),
+                                           h1("Simulation"),
+                                           plotOutput("plots4", height = "300px"),
                                            actionButton("goButton", "Re-Run simulation", icon("random")),
                                            helpText("Generate a QQ plot of quantiles from model-simulated data against the data.")
                                     )
