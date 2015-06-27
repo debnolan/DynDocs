@@ -99,14 +99,12 @@
                 <div id="dist" class="form-group shiny-input-radiogroup shiny-input-container">
                   <label class="control-label" for="dist">Distribution type:</label>
                   <div class="shiny-options-group">
-                    
                     <div class="radio">
                       <label>
                         <input type="radio" name="dist" value="unif" checked="checked"/>
                         <span>Uniform</span>
                       </label>
                     </div>
-                   
                     <div class="radio">
                       <label>
                         <input type="radio" name="dist" value="exp"/>
@@ -117,18 +115,17 @@
                 </div>
                 <br/>
                 <div class="form-group shiny-input-container">
-                 <label>Sample Size:</label><br /> 
-                 <input type="number" name="n" value="20" min="1" max = "10000"/><br /> 
-                 <label>Replication:</label><br /> 
-                 <input type="number" name="B" value="1000" min="1" /><br /> 
-                 <label>Statistic:</label><br />
-                   <select name="stat">
+                 <label>Sample Size:</label> <br /> 
+                 <input type="number" name="n" value="20" min="1" max = "10000"/> <br /> 
+                 <label>Replication:</label> <br /> 
+                 <input type="number" name="B" value="1000" min="1" /> <br />   
+                 <label>Statistic:</label> <br />
+                 <select name="stat">
           			<option value="mean">Mean</option>
       				<option value="median">Median</option>
-  				   </select> 
-  				   <br/>
+  				 </select> <br/><br/>
                  <button id="runSim" type="button" class="btn btn-default action-button">Simulate </button>
-                </div>
+                </div> 
               </form>
             </div>
             <div class="col-sm-8">
@@ -136,10 +133,16 @@
                 <div class="checkbox">
                  <label>
                   <input id="population" type="checkbox"/>
-                  <span>Show Population</span>
+                  <span>Population Distribution</span>
                  </label>
                 </div>
                 <div id="plot3" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                <div class="checkbox">
+                 <label>
+                  <input id="true" type="checkbox"/>
+                  <span> Simple Random Sampling Distribution</span>
+                 </label>
+                </div>
             </div>
           </div>
         </div>

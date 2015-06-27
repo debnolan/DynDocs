@@ -39,14 +39,18 @@ shinyServer(function(input, output) {
       pop = dist(10000)
       samp = sample(pop, input$n)
       boot = replicate(input$B, sample(samp, input$n, replace = T))
-      
+      srs = replicate(input$B, sample(pop, input$n, replace = T))
+     
       type = switch(input$stat,
                     "mean" = mean,
                     "median" = median,
                     mean)  
-      stat = apply(boot, 2, type)
+      boot_stat = apply(boot, 2, type)
+      true_stat = apply(srs, 2, type)
+      
       list(pop = pop, samp = samp, boot = boot, 
-           name = input$dist, n = input$n, stat = stat )
+           name = input$dist, n = input$n,
+           boot_stat = boot_stat, true_stat = true_stat )
       })
     })
      
@@ -54,18 +58,29 @@ shinyServer(function(input, output) {
     output$plot1 <- renderPlot({
       
       if (input$population) {
-        hist(data()$pop,
+        hist(data()$pop, xlab = "Population Distribution",
              main=paste('r', data()$name, '(10000)', sep=''))
+       
       }
       else {
-        hist(data()$samp,
+        hist(data()$samp, xlab = "Sample Distribution",
              main=paste('r', data()$name, '(', data()$n, ')', sep=''))
+       
       }
     })
     
     output$plot3 <- renderPlot({
-      hist(data()$stat)
-      abline(v = mean(data()$stat), col = "blue")
+      if (input$true) {
+        hist(data()$boot_stat, main = "Bootstrap Sampling Distribution")
+        abline(v = mean(data()$boot_stat), col = "red")
+        text(mean(data()$boot_stat), input$B / 5, sprintf("%.2f", mean(data()$boot_stat)))
+      }
+      else {
+        hist(data()$true_stat, main = "Sampling Distribution" )
+        abline(v = mean(data()$true_stat), col = "red")
+        text(mean(data()$true_stat), input$B / 5, sprintf("%.2f", mean(data()$true_stat)))
+      }
+      
     })
     
    
