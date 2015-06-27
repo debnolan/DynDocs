@@ -10,6 +10,7 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                 fluidPage(
                                   fluidRow(
                                     column(8,
+                                           h1("Extrem Value Theory"),
                                            plotOutput("plots3", height = "300px"),
                                            plotOutput("plots2", height = "400px"),
                                            verbatimTextOutput("rl")
