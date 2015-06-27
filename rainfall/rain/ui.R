@@ -59,7 +59,7 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                   fluidRow(
                                     column(8,
                                            h1("Simulation"),
-                                           plotOutput("plots4", height = "300px"),
+                                           plotOutput("plots4", height = "3a00px"),
                                            actionButton("goButton", "Re-Run simulation", icon("random")),
                                            helpText("Generate a QQ plot of quantiles from model-simulated data against the data.")
                                     )
