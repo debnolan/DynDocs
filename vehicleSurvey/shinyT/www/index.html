@@ -30,8 +30,8 @@
   <link rel="stylesheet" type="text/css" href="shared/highlight/rstudio.css"/>
   <link rel="stylesheet" type="text/css" href="shared/shiny-showcase.css"/>
   <script type="text/markdown" id="showcase-markdown-content"> </script>
-
-
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
 
 </head>
 <body>
@@ -43,29 +43,17 @@
   make confidence intervals and carry out hypothese tests. But what if we dont know the data generator? We
   create a bootstrap population from the sample. We know the bootstrap population so we can figure out the 
   bootstrap sampling distribution of the statistic. <br/>
-  Let  y = (-4, 3, 5, 7) be the sample. The sample mean = (-4 + 3 + 5+ 7)/4 = 2.75 <br/>
+  Let  y = (-4, 3, 5, 7) be the sample. The sample mean = (-4 + 3 + 5 + 7)/4 = 2.75 <br/>
   Now we take a bootstrap sample of size 4 with replacement from the bootstrap population. There are 4^4 = 256 
   distinct bootstrap samples.(You can consider each sample as a vector, so (-4, 3, 3, 3) is different from (3, -4, 3, 3))
+  test $\hat{θ}$.
+  $$P(X_t|X_{t-1}, X_{t-2}... X_1) = P(X_t|X_{t-1})$$
 </p>
 
-<table id="showcase-app-code">
-    <tr>
-      <td id="showcase-app-container" class="showcase-app-container-expanded">
+
         <div class="container-fluid">
           <div class="row">
-            <div class="col-sm-4">
-              <form class="well">
-                <div class="form-group shiny-input-container">
-                  <label class="control-label" for="obs">Number of Combination:</label>
-                  <input class="js-range-slider" id = "obs" data-type="double" data-min="1" data-max="256" data-from="20" data-to="27" data-step="1" data-grid="true" data-grid-num="9.99" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.1001001001001"/>
-                </div>
-                <div class="form-group shiny-input-container">
-                  <label class="control-label" for="bins">Number of Bins:</label>
-                  <input class="js-range-slider" id="bins" data-min="0" data-max="100" data-from="50" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="5" />
-                </div>
-              </form>
-            </div>
-            <div class="col-sm-8">
+            <div class="col-sm-8" style="overflow: auto;">
               <div class="tabbable tabs-above">
                 <ul class="nav nav-tabs">
                   <li class="active">
@@ -78,14 +66,18 @@
                     <a href="#tab-3778-3" data-toggle="tab" data-value="Plot">Plot</a>
                   </li>
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content" >
                   <div class="tab-pane" data-value="Table" id="tab-3778-1">
-                    <pre id="table" class="shiny-html-output"></pre>
+                    <pre id="table" class="shiny-html-output" style="width: 100% ; height: 400px"></pre>
                   </div>
                   <div class="tab-pane" data-value="Table" id="tab-3778-2">
-                    <pre id="summary" class="shiny-html-output"></pre>
+                    <pre id="summary" class="shiny-html-output" style="width: 100% ; height: 400px"></pre>
                   </div>
                   <div class="tab-pane active" data-value="Plot" id="tab-3778-3">
+                    <div class="form-group shiny-input-container">
+                     <label class="control-label" for="bins">Number of Bins:</label>
+                     <input class="js-range-slider" id="bins" data-min="0" data-max="100" data-from="50" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="5" />
+                    </div>
                     <pre id="plot" class="shiny-plot-output" style="width: 100% ; height: 400px"></pre>
                   </div>
                 </div>
@@ -93,13 +85,81 @@
             </div>
           </div>
         </div>
-        <td id="showcase-sxs-code" class="showcase-sxs-code-collapsed"></td>
-      </td>
-    </tr>
-  </table>
+
 
 <p>
 <h2> Bootstrap Estimation </h2>
+ <table id="showcase-app-code">
+    <tr>
+      <td id="showcase-app-container" class="showcase-app-container-expanded">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-4">
+              <form class="well">
+                <div id="dist" class="form-group shiny-input-radiogroup shiny-input-container">
+                  <label class="control-label" for="dist">Distribution type:</label>
+                  <div class="shiny-options-group">
+                    
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="dist" value="unif" checked="checked"/>
+                        <span>Uniform</span>
+                      </label>
+                    </div>
+                   
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="dist" value="exp"/>
+                        <span>Exponential</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <br/>
+                <div class="form-group shiny-input-container">
+                 <label>Sample Size:</label><br /> 
+                 <input type="number" name="n" value="20" min="1" max = "10000"/><br /> 
+                 <label>Replication:</label><br /> 
+                 <input type="number" name="B" value="1000" min="1" /><br /> 
+                 <label>Statistic:</label><br />
+                   <select name="stat">
+          			<option value="mean">Mean</option>
+      				<option value="median">Median</option>
+  				   </select> 
+  				   <br/>
+                 <button id="runSim" type="button" class="btn btn-default action-button">Simulate </button>
+                </div>
+              </form>
+            </div>
+            <div class="col-sm-8">
+                <div id="plot1" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                <div class="checkbox">
+                 <label>
+                  <input id="population" type="checkbox"/>
+                  <span>Show Population</span>
+                 </label>
+                </div>
+                <div id="plot3" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+            </div>
+          </div>
+        </div>
+        <td id="showcase-sxs-code" class="showcase-sxs-code-collapsed"></td>
+      </td>
+    </tr>
+  </table> 
+        
+                
+                
+                
+                
+                
+                
+    
+
+
+
+
+
 </p>
 
 <p>
