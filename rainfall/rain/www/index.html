@@ -4,11 +4,16 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <script type="application/shiny-singletons"></script>
-  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];selectize[0.11.2];ionrangeslider[2.0.6];bootstrap[3.3.1]</script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];bootstrap[3.3.1];selectize[0.11.2];ionrangeslider[2.0.6];font-awesome[4.2.0]</script>
 <script src="shared/json2-min.js"></script>
 <script src="shared/jquery.min.js"></script>
 <link href="shared/shiny.css" rel="stylesheet" />
 <script src="shared/shiny.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
 <link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
 <!--[if lt IE 9]>
 <script src="shared/selectize/js/es5-shim.min.js"></script>
@@ -18,12 +23,104 @@
 <link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
 <link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
 <script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-<script src="shared/bootstrap/js/bootstrap.min.js"></script>
-<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
-<script src="shared/bootstrap/shim/respond.min.js"></script>
+<link href="shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
   <title>Rainfall in Colorado</title>
+  <style type="text/css">input[type="number"] {
+  max-width: 80%;
+}
+
+div.outer {
+  position: fixed;
+  top: 41px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: scroll;
+  padding: 0;
+  background-color: lightblue;
+}
+
+/* Customize fonts */
+body, label, input, button, select { 
+  font-family: 'Helvetica Neue', Helvetica;
+  font-weight: 200;
+}
+h1, h2, h3, h4 { font-weight: 400; }
+
+#controls {
+  /* Appearance */
+  padding: 0 20px 0px 20px;
+  cursor: move;
+  /* Fade out while not hovering */
+  opacity: 0.4;
+  zoom: 0.9;
+  transition: opacity 500ms 300ms;
+}
+#controls:hover {
+  /* Fade in while hovering */
+  opacity: 1;
+  transition-delay: 0;
+}
+
+/* Position and style citation */
+#cite {
+  position: static;
+  bottom: 10px;
+  right: 10px;
+  font-size: 11px;
+  color: grey;
+}
+</style>
+  <style type="text/css">#mapImage img {max-width: 100%; width: 100%; height: 93%}</style>
+  <style type="text/css">input[type="number"] {
+  max-width: 80%;
+}
+
+div.outer {
+  position: fixed;
+  top: 41px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: scroll;
+  padding: 0;
+  background-color: lightblue;
+}
+
+/* Customize fonts */
+body, label, input, button, select { 
+  font-family: 'Helvetica Neue', Helvetica;
+  font-weight: 200;
+}
+h1, h2, h3, h4 { font-weight: 400; }
+
+#controls {
+  /* Appearance */
+  padding: 0 20px 0px 20px;
+  cursor: move;
+  /* Fade out while not hovering */
+  opacity: 0.4;
+  zoom: 0.9;
+  transition: opacity 500ms 300ms;
+}
+#controls:hover {
+  /* Fade in while hovering */
+  opacity: 1;
+  transition-delay: 0;
+}
+
+/* Position and style citation */
+#cite {
+  position: static;
+  bottom: 10px;
+  right: 10px;
+  font-size: 11px;
+  color: grey;
+}
+</style>
+  <style type="text/css">#mapImage2 img {max-width: 100%; width: 100%; height: 93%}</style>
 </head>
 <body>
   <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -33,21 +130,33 @@
       </div>
       <ul class="nav navbar-nav">
         <li class="active">
-          <a href="#tab-3122-1" data-toggle="tab" data-value="Analysis">Analysis</a>
+          <a href="#tab-5907-1" data-toggle="tab" data-value="Analysis">Analysis</a>
+        </li>
+        <li>
+          <a href="#tab-5907-2" data-toggle="tab" data-value="Simulation">Simulation</a>
         </li>
       </ul>
     </div>
   </nav>
   <div class="container-fluid">
     <div class="tab-content">
-      <div class="tab-pane active" data-value="Analysis" id="tab-3122-1">
-        <div class="row">
-          <div class="col-sm-4">
-            <form class="well">
-              <div class="form-group shiny-input-container">
-                <label class="control-label" for="station">Choose a weather station:</label>
-                <div>
-                  <select id="station"><option value="Weather station 1" selected>Weather station 1</option>
+      <div class="tab-pane active" data-value="Analysis" id="tab-5907-1">
+        <div class="outer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-8">
+                <div id="plots3" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                <hr/>
+                <div id="plots2" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+              </div>
+            </div>
+          </div>
+          <div style="top:80px;left:auto;right:30px;bottom:auto;width:30%;height:auto;position:fixed;cursor:inherit;" id="controls" class="panel panel-default">
+            <h2>Data input</h2>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="station">Choose a weather station:</label>
+              <div>
+                <select id="station"><option value="Weather station 1" selected>Weather station 1</option>
 <option value="Weather station 2">Weather station 2</option>
 <option value="Weather station 3">Weather station 3</option>
 <option value="Weather station 4">Weather station 4</option>
@@ -103,30 +212,112 @@
 <option value="Weather station 54">Weather station 54</option>
 <option value="Weather station 55">Weather station 55</option>
 <option value="Weather station 56">Weather station 56</option></select>
-                  <script type="application/json" data-for="station" data-nonempty="">{}</script>
-                </div>
+                <script type="application/json" data-for="station" data-nonempty="">{}</script>
               </div>
-              <div class="form-group shiny-input-container">
-                <label class="control-label" for="threshold">Threshold:</label>
-                <input class="js-range-slider" id="threshold" data-min="90" data-max="100" data-from="95" data-step="0.5" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="5"/>
-                <div class="slider-animate-container">
-                  <a href="#" class="slider-animate-button" data-target-id="threshold" data-interval="1000" data-loop="FALSE">
-                    <span class="play">
-                      <i class="glyphicon glyphicon-play"></i>
-                    </span>
-                    <span class="pause">
-                      <i class="glyphicon glyphicon-pause"></i>
-                    </span>
-                  </a>
-                </div>
-              </div>
-              <span class="help-block">Note: this is the quantile at which the threshold is set. </span>
-            </form>
+            </div>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="threshold">Threshold:</label>
+              <input class="js-range-slider" id="threshold" data-min="80" data-max="100" data-from="95" data-step="0.5" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="2.5"/>
+            </div>
+            <span class="help-block">Note: this is the quantile at which the threshold is set. </span>
+            <div id="mapImage" class="shiny-image-output" style="width: 100% ; height: 400px"></div>
           </div>
-          <div class="col-sm-8">
-            <div id="plots1" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
-            <br/>
-            <div id="plots2" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+          <div id="cite">
+            Summer project,
+            <em>by Wuji and Ryan.</em>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" data-value="Simulation" id="tab-5907-2">
+        <div class="outer">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-8">
+                <div id="plots4" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                <hr/>
+                <pre id="rl2" class="shiny-text-output"></pre>
+              </div>
+            </div>
+          </div>
+          <div style="top:80px;left:auto;right:30px;bottom:auto;width:30%;height:auto;position:fixed;cursor:inherit;" id="controls" class="panel panel-default">
+            <h2>Data input</h2>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="station2">Choose a weather station:</label>
+              <div>
+                <select id="station2"><option value="Weather station 1" selected>Weather station 1</option>
+<option value="Weather station 2">Weather station 2</option>
+<option value="Weather station 3">Weather station 3</option>
+<option value="Weather station 4">Weather station 4</option>
+<option value="Weather station 5">Weather station 5</option>
+<option value="Weather station 6">Weather station 6</option>
+<option value="Weather station 7">Weather station 7</option>
+<option value="Weather station 8">Weather station 8</option>
+<option value="Weather station 9">Weather station 9</option>
+<option value="Weather station 10">Weather station 10</option>
+<option value="Weather station 11">Weather station 11</option>
+<option value="Weather station 12">Weather station 12</option>
+<option value="Weather station 13">Weather station 13</option>
+<option value="Weather station 14">Weather station 14</option>
+<option value="Weather station 15">Weather station 15</option>
+<option value="Weather station 16">Weather station 16</option>
+<option value="Weather station 17">Weather station 17</option>
+<option value="Weather station 18">Weather station 18</option>
+<option value="Weather station 19">Weather station 19</option>
+<option value="Weather station 20">Weather station 20</option>
+<option value="Weather station 21">Weather station 21</option>
+<option value="Weather station 22">Weather station 22</option>
+<option value="Weather station 23">Weather station 23</option>
+<option value="Weather station 24">Weather station 24</option>
+<option value="Weather station 25">Weather station 25</option>
+<option value="Weather station 26">Weather station 26</option>
+<option value="Weather station 27">Weather station 27</option>
+<option value="Weather station 28">Weather station 28</option>
+<option value="Weather station 29">Weather station 29</option>
+<option value="Weather station 30">Weather station 30</option>
+<option value="Weather station 31">Weather station 31</option>
+<option value="Weather station 32">Weather station 32</option>
+<option value="Weather station 33">Weather station 33</option>
+<option value="Weather station 34">Weather station 34</option>
+<option value="Weather station 35">Weather station 35</option>
+<option value="Weather station 36">Weather station 36</option>
+<option value="Weather station 37">Weather station 37</option>
+<option value="Weather station 38">Weather station 38</option>
+<option value="Weather station 39">Weather station 39</option>
+<option value="Weather station 40">Weather station 40</option>
+<option value="Weather station 41">Weather station 41</option>
+<option value="Weather station 42">Weather station 42</option>
+<option value="Weather station 43">Weather station 43</option>
+<option value="Weather station 44">Weather station 44</option>
+<option value="Weather station 45">Weather station 45</option>
+<option value="Weather station 46">Weather station 46</option>
+<option value="Weather station 47">Weather station 47</option>
+<option value="Weather station 48">Weather station 48</option>
+<option value="Weather station 49">Weather station 49</option>
+<option value="Weather station 50">Weather station 50</option>
+<option value="Weather station 51">Weather station 51</option>
+<option value="Weather station 52">Weather station 52</option>
+<option value="Weather station 53">Weather station 53</option>
+<option value="Weather station 54">Weather station 54</option>
+<option value="Weather station 55">Weather station 55</option>
+<option value="Weather station 56">Weather station 56</option></select>
+                <script type="application/json" data-for="station2" data-nonempty="">{}</script>
+              </div>
+            </div>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="threshold2">Threshold:</label>
+              <input class="js-range-slider" id="threshold2" data-min="80" data-max="100" data-from="95" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="5"/>
+            </div>
+            <span class="help-block">Note: this is the quantile at which the threshold is set. </span>
+            <div id="mapImage2" class="shiny-image-output" style="width: 100% ; height: 400px"></div>
+            <button id="goButton" type="button" class="btn btn-default action-button">
+              <i class="fa fa-random"></i>
+              Re-run simulation
+            </button>
+            <span class="help-block">Generate a QQ plot of quantiles from model-simulated data against the data.</span>
+          </div>
+          <div id="cite">
+            Summer project,
+            <em>by Wuji and Ryan.</em>
           </div>
         </div>
       </div>

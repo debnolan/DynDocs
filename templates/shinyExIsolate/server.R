@@ -1,11 +1,6 @@
-library(shiny)
-
 # Define server logic for random distribution application
 shinyServer(function(input, output) {
   
-  # Reactive expression to generate the requested distribution. This is 
-  # called whenever the inputs change. The output expressions defined 
-  # below then all used the value computed from this expression
   data <- reactive({
 
     input$runSim
@@ -22,9 +17,8 @@ shinyServer(function(input, output) {
   })
   
   # Generate a plot of the data. Also uses the inputs to build the 
-  # plot label. Note that the dependencies on both the inputs and
-  # the data reactive expression are both tracked, and all expressions 
-  # are called in the sequence implied by the dependency graph
+  # plot label.
+  
   output$plot <- renderPlot({
     
     if (input$cdf) {
