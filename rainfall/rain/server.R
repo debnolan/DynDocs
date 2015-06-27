@@ -17,7 +17,7 @@ shinyServer(function(input, output,session) {
            "Weather station 29" =29, "Weather station 30" =30, "Weather station 31" =31, "Weather station 32" =29,
            "Weather station 33" =33, "Weather station 34" =34, "Weather station 35" =35, "Weather station 36" =36,
            "Weather station 37" =37, "Weather station 38" =38, "Weather station 39" =39, "Weather station 40" =40,
-           "Weather station 41" =41, "Weather station 42" =42, "Weather station 43" =43, "Weather station 44"= 44,
+           "Weather station 41" =41, "Weather station 42" =42, "Weather station 43" =43, "Weather station 44"= 44, 
            "Weather station 45" =45, "Weather station 46" =46, "Weather station 47" =47, "Weather station 48"= 48,
            "Weather station 49" =49, "Weather station 50" =50, "Weather station 51" =51, "Weather station 52" =52,
            "Weather station 53"= 53, "Weather station 54" =54, "Weather station 55" =55, "Weather station 56" =56)
