@@ -31,7 +31,7 @@ tabGen22 = function(cell22) {
 }
 
 # Static counts of expected counts.
-expCounts = c(11.58927, 62.41073, 245.4107, 1321.5893)
+expCounts = c(11.59, 62.41, 245.41, 1321.59)
 
 # Function to compute chi-square statistic. 
 chiSqStat = function(obsCounts) {
@@ -41,27 +41,32 @@ chiSqStat = function(obsCounts) {
 # Function to make a density plot of the chi-square distribution.
 plotGen = function(counts) {
   myChiSq = chiSqStat(counts)
-  chiSq = seq(.025, max(8, ceiling(myChiSq)), length.out = 300)
-  density = dgamma(chiSq, shape = 1/2, rate = 1/2)
-  plot(density ~ chiSq, cex.axis = .8, cex.lab = .8, cex.main = .8,
-       col = "#838996", col.axis = "#838996", col.lab = "#838996",
-       col.main = "#838996", fg = "#838996", tcl = -.3, type = "l",
-       main = expression(paste(chi[1]^2, " Distribution")),
-       xlab = expression(chi^2), ylab = "Density", ylim = c(0, 2.5))
+  chiSq = seq(.05, max(8, ceiling(myChiSq)), length.out = 300)
+  density = dchisq(chiSq, df = 1)
+  par(cex = .8, col = "#838996", col.axis = "#838996", fg = "#838996",
+      mar = c(4, 4, 1, .5) - .25, xpd = FALSE)
+  plot(density ~ chiSq, bty = "n", tcl = -.3, type = "l",
+       xlab = "", ylab = "", ylim = c(0, 1.75))
   abline(v = myChiSq, col = "#838996", lty = "dashed")
+  clip(-420, 420, -1, 2)
+  text(median(chiSq), 1.8, expression(paste(chi[1]^2, " Distribution")))
+  text(median(chiSq), -.4, expression(chi^2))
+  text(-chiSq[300] / 6, .875, "Density", srt = 90)
 }
 
 # Function to make a chi-square residual plot.
 residGen = function(counts) {
   myChiSq = chiSqStat(counts)
   Residuals = (counts - expCounts) / sqrt(expCounts)
-  plot(Residuals ~ seq(1, 4), cex.axis = .8, cex.lab = .8, col = "#838996",
-       col.axis = "#838996", col.lab = "#838996", fg = "#838996", pch = 20,
-       tcl = -.3, xaxt = "n", xlim = c(.5, 4.5), main = "", xlab = "")
-  abline(h = 0, col = "#838996")
-  text(seq(1, 4), rep(0, 4), cex = .8, col = "#838996",
+  par(cex = .8, col = "#838996", col.axis = "#838996", fg = "#838996",
+      mar = c(.5, 3, 0, 0) + .5, xpd = NA)
+  plot(Residuals ~ seq(1, 4), bty = "n", pch = 20, tcl = -.3, xaxt = "n",
+       xlab = "", xlim = c(.75, 4.25), ylab = "")
+  abline(h = 0, xpd = FALSE)
+  text(1:4, 0, cex = .8, col = "#838996",
        labels = c("Gilbert present\nDeath", "Gilbert absent\nDeath",
                   "Gilbert present\nNo death", "Gilbert absent\nNo death"))
+  text(.15, 2, "Residuals", srt = 90, xpd = TRUE)
 }
 
 # Function to generate conclusion statement to be displayed in tutorial.

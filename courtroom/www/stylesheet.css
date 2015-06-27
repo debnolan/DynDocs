@@ -3,7 +3,7 @@ body {
 	background-color: #C7D0D5;
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: 94% 97%;
+	background-size: 96% 96%;
 	color: #838996;
 	font-family: Baskerville, serif;
 	margin: 6%;
@@ -19,7 +19,7 @@ table {
 }
 
 .block {
-	display: block;
+	display: inline-block;
 	margin: auto;
 }
 
@@ -86,19 +86,6 @@ select {
 	width: 98%;
 }
 
-#cellCount {
-	background-color: #F5F5F5;
-	border: 1px #F5F5F5 solid;
-	color: #838996;
-	font-family: inherit;
-	font-size: inherit;
-	font-weight: bold;
-	margin-bottom: 8%;
-	padding: 0%;
-	text-align: right;
-	width: 55px;
-}
-
 .main-panel {
 	display: inline-block;
 	float: left;
@@ -116,7 +103,7 @@ select {
 	float: left;
 	margin: 0%;
 	height: 200px;
-	width: 190px;
+	width: 200px;
 }
 
 .top-panel {
@@ -147,13 +134,80 @@ select {
 }
 
 .top-top-left {
-	border: 1px solid #F5F5F5;
+	border: 1px solid #FFFFFF;
 	float: left;
 	width: 74%;
 }
 
 .top-top-right {
-	border: 1px solid #F5F5F5;
+	border: 1px solid #FFFFFF;
 	float: left;
 	width: 25%;
+}
+
+
+
+
+/*----------------------------------*/
+/*-------->> SLIDER INPUT <<--------*/
+/*----------------------------------*/
+
+#cell-count {
+	-webkit-appearance: none;
+	background: #C7D0D5;
+	border-radius: 3px;
+	box-shadow: 3px 3px 3px #F5F5F5, 0px 0px 3px #FFFFFF;
+	height: 10px;
+	margin-bottom: 8%;
+	margin-left: -.5%;
+	margin-top: 2%;
+	padding: 0%;
+	width: 150px;
+}
+
+#cell-count::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	background: #838996;
+	border-radius: 3px;
+	box-shadow: 3px 3px 3px #F5F5F5, 0px 0px 3px #FFFFFF;
+	cursor: pointer;
+	height: 17px;
+	width: 12px;
+	-webkit-transition: background .15s ease-in-out;
+	transition: background .15s ease-in-out;
+}
+
+#cell-count::-moz-range-thumb {
+	background: #838996;
+	border-radius: 3px;
+	box-shadow: 3px 3px 3px #F5F5F5, 0px 0px 3px #FFFFFF;
+	cursor: pointer;
+	height: 17px;
+	width: 12px;
+	-webkit-transition: background .15s ease-in-out;
+	transition: background .15s ease-in-out;
+}
+
+#cell-count::-ms-thumb {
+	background: #838996;
+	border-radius: 3px;
+	box-shadow: 3px 3px 3px #F5F5F5, 0px 0px 3px #FFFFFF;
+	cursor: pointer;
+	height: 17px;
+	width: 12px;
+}
+
+.range-value {
+	background: #282828;
+	border-radius: 3px;
+	color: #F5F5F5;
+	display: inline-block;
+	font-family: Baskerville;
+	font-size: 80%;
+	line-height: 15px;
+	padding: 2px 2px;
+	position: relative;
+	margin-left: 0px;
+	text-align: center;
+	width: 35px;
 }

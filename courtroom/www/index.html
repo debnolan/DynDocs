@@ -8,6 +8,8 @@
 	<link href="shared/shiny.css" rel="stylesheet" />
 	<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+	<link rel="stylesheet" href="dist/rangeSlider.css">
+	<script src="dist/rangeSlider.js"></script>
 	<link rel="stylesheet" href="stylesheet.css" />
 	<script src="script.js"></script>
 </head>
@@ -122,7 +124,7 @@
 				<td>$\chi ^{ 2 } = 86.48$</td>
 			</tr>
 			<tr>
-				<td><!--$P \operatorname{ - } value = 9.33 \times 10 ^{ -7 }$--></td>
+				<td>$P \operatorname{ - } value \approx 0$</td>
 			</tr>
 		</table>
 	</div>
@@ -141,10 +143,11 @@
 			Below is a visual representation of how the P-value was determined: the area under the curve and to the right of the chi-square statistic is the corresponding P-value. Notice that our chi-square test statistic is far off to the right, nowhere near the bulk of the density in our distribution. This is analogous to our miniscule P-value.
 		</p>
 		<p>
-			<img src="content/plot.gif" class="block" alt="content/plot.gif" />
+			<img src="content/chiSqPlot.gif" class="block" alt="chiSqPlot.gif" />
+			<img src="content/residPlot.gif" class="block" alt="residPlot.gif" />
 		</p>
 		<p>
-			Our P-value indicates that we would only see this about once in a million times under the assumption of H<sub>0</sub>. Because we have gathered data that is so deviant from what we would expect to see under that assumption, the responsible course of action is to reject the null hypothesis; the instance of death on a shift was not independent of whether or not Gilbert was present.
+			Our P-value indicates that we would probably never see this under the assumption of H<sub>0</sub>. Because we have gathered data that is so deviant from what we would expect to see under that assumption, the responsible course of action is to reject the null hypothesis; the instance of death on a shift was not independent of whether or not Gilbert was present.
 		</p>
 	</div>
 	
@@ -203,8 +206,9 @@
 				</div>
 				
 				<div class="shiny-input-container">
-					<label for="cellCount">Specify a cell count:</label>
-					<input type="number" name="cellCount" id="cellCount" min="0" max="74" value="40" />
+					<label for="cell-count">Specify a cell count:</label><br />
+					<input type="range" name="cell-count" id="cell-count" min="0" max="74" value="40" />
+					<span class="range-value"></span>
 				</div>
 				
 				<div>
@@ -262,12 +266,15 @@
 			</div>
 		</fieldset>
 	</div>
+
 	<div class="concluding-remarks">
 		<p>
 			Write some stuff here
 		</p>
 	</div>
+	
 	<div class="references">
+			<!--ADD HYPERLINKS FROM WITHIN ANALYSIS-->
 	</div>
 </body>
 </html>
