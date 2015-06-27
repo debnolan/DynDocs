@@ -10,9 +10,9 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                 fluidPage(
                                   fluidRow(
                                     column(8,
-                                           plotOutput("plots3"),
-                                           hr(),
-                                           plotOutput("plots2", height = "600px")
+                                           plotOutput("plots3", height = "300px"),
+                                           plotOutput("plots2", height = "400px"),
+                                           verbatimTextOutput("rl")
                                     )
                                   )
                                 ),
@@ -34,7 +34,7 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                                                       "Weather station 51", "Weather station 52", "Weather station 53", "Weather station 54", "Weather station 55", "Weather station 56"),
                                                           selected = "Weather station 1"),
                                               sliderInput("threshold", "Threshold:", 
-                                                          min = 80, max = 100, value = 80),
+                                                          min = 80, max = 100, value = 95),
                                               helpText("Note: this is the quantile at which the threshold is set. "),
                                               imageOutput("mapImage")
                                 ),
@@ -58,14 +58,14 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                   fluidRow(
                                     column(8,
                                            plotOutput("plots4"),
-                                           hr(),
-                                           verbatimTextOutput("rl2")
+                                           actionButton("goButton", "Re-Run simulation", icon("random")),
+                                           helpText("Generate a QQ plot of quantiles from model-simulated data against the data.")
                                     )
                                   )
                                 ),
                                 tags$head(tags$style(
                                   type="text/css",
-                                  "#mapImage2 img {max-width: 100%; width: 100%; height: 93%}"
+                                  "#mapImage2 img {max-width: 100%; width: 100%; height: 100%}"
                                 )),
                                 absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
                                               draggable = FALSE, top = 80, left = "auto", right = 30, bottom = "auto",
@@ -81,11 +81,9 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                                                       "Weather station 51", "Weather station 52", "Weather station 53", "Weather station 54", "Weather station 55", "Weather station 56"),
                                                           selected = "Weather station 1"),
                                               sliderInput("threshold2", "Threshold:", 
-                                                          min = 80, max = 100, value = 80),
+                                                          min = 80, max = 100, value = 95),
                                               helpText("Note: this is the quantile at which the threshold is set. "),
-                                              imageOutput("mapImage2"),
-                                              actionButton("goButton", "Run simulation", icon("random")),
-                                              helpText("Generate a QQ plot of quantiles from model-simulated data against the data.")
+                                              imageOutput("mapImage2")
                                 ),
                                 tags$div(id="cite",
                                          'Summer project,', tags$em('by Wuji and Ryan.'))
