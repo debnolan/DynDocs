@@ -11,6 +11,14 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                   fluidRow(
                                     column(8,
                                            h1("Extrem Value Theory"),
+                                           h2("Introduction"),
+                                           h2("Asymptootic Model Characterization"),
+                                           h3("The Generalized Pareto Distribution"),
+                                           h3("Outline Justification for the Generalized Pareto Model"),
+                                           h2("Modeling Threshold Excesses"),
+                                           h3("Threshold Selection"),
+                                           h3("Parameter Estimation"),
+                                           h3("Return Levels"),
                                            plotOutput("plots3", height = "200px"),
                                            plotOutput("plots2", height = "400px"),
                                            verbatimTextOutput("rl")
@@ -59,7 +67,7 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                   fluidRow(
                                     column(8,
                                            h1("Simulation"),
-                                           plotOutput("plots4", height = "3a00px"),
+                                           plotOutput("plots4", height = "300px"),
                                            actionButton("goButton", "Re-Run simulation", icon("random")),
                                            helpText("Generate a QQ plot of quantiles from model-simulated data against the data.")
                                     )
