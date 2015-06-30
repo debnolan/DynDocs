@@ -1,19 +1,19 @@
 #server.R for shinyAR
 library(shiny)
 
-AR1 = function(c , rho, sigma){
-  noise = rnorm(300, 0 , sigma)
-  AR = c()
-  AR[1] = c + noise[1]
-  for(i in 2:length(noise)){
-    AR[i] = c + rho * AR[i-1] + noise[i]
+AR1 = function(const , rho, sigma, n = 300){
+  noise = rnorm(n, 0 , sigma)
+  AR = numeric(length = n)
+  AR[1] = const + noise[1]
+  for(i in 2:n){
+    AR[i] = const + rho * AR[i-1] + noise[i]
   }
 return(AR)
 }
 
-plotAR = function(c,rho, sigma){
-  par(mfrow = c(3,3))
-  a = replicate(9, plot(AR1(c,rho, sigma), type = "l" , main = "AR curve"))
+plotAR = function(const,rho, sigma){
+  par(mfrow = c(3,3), mar = c(2,2,1,1))
+  a = replicate(9, plot(AR1(const, rho, sigma), type = "l", main = ""))
 }
 
 
