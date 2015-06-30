@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html>
  <head>
- <script src="shared/jquery.js" type="text/javascript"></script>
-  <script src="shared/shiny.js" type="text/javascript"></script>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.1];jqueryui[1.10.4];showdown[0.3.1];highlight.js[6.2];selectize[0.11.2];bootstrap[3.3.1];font-awesome[4.2.0]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<script src="shared/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="shared/showdown/compressed/showdown.js"></script>
+<script src="shared/highlight/highlight.pack.js"></script>
+<link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="shared/selectize/js/es5-shim.min.js"></script>
+<![endif]-->
+<script src="shared/selectize/js/selectize.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+<link href="shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+  <script src="shared/shiny-showcase.js"></script>
+  <link rel="stylesheet" type="text/css" href="shared/highlight/rstudio.css"/>
+  <link rel="stylesheet" type="text/css" href="shared/shiny-showcase.css"/>
+  <script type="text/markdown" id="showcase-markdown-content"> </script>
  </head>
 
  <body>
   <h1>Bootstrap Analysis</h1>
   <p>
-  The Vehicle Inventory and Use Survey (VIUS) has been conducted by
+ The Vehicle Inventory and Use Survey (VIUS) has been conducted by
   the U.S. government to provide information on the number of private
   and commercial trucks in each state. In the 2002 VIUS-CA survey,
   2192 trucks were surveyed and 5 strata were formed from the sampling
@@ -33,7 +56,26 @@
 </div><br/>
 Based on these five strata and their weights, the median number of
   miles driven in 2002 in California was 10254 miles. 
-</p>
+  
+  <div class="col-sm-8">
+              <div class="tabbable tabs-above">
+                <ul class="nav nav-tabs">
+                  <li class="active">
+                    <a href="#tab-3106-1" data-toggle="tab" data-value="Plot">Plot</a>
+                  </li>
+                  <li>
+                    <a href="#tab-3106-2" data-toggle="tab" data-value="Sumary">Summary</a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" data-value="Plot" id="tab-3106-1">
+                    <div id="sPlot" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+                  </div>
+                <div class="tab-pane" data-value="Summary" id="tab-3106-2">
+                  <pre id="sTable" class="shiny-html-output"></pre>
+            </div>
+  </div>
+
 
 <p>
 To bootstrap, we resample the data from survey samples with
@@ -44,31 +86,40 @@ this data set, our estimator is median. By replicating a certain number
 of times, we are able to get the same number of medians.
 </p>
   
-  <div id="table" class="shiny-html-output"></div>
+<p>    
+<table id="showcase-app-code">
+ <tr>
+   <td id="showcase-app-container" class="showcase-app-container-expanded">
+     <form class="well">
+      <div class="form-group shiny-input-container" style="width: 220px; height: 30px">
+       <label>Number of Replication:</label>
+        <select name="n">
+         <option value="500">500</option>
+         <option value="1000">1000</option>
+         <option value="2000">2000</option>
+        </select> 
+       </div>
+      </form>
+
+      <form class="well">
+       <div class="form-group shiny-input-container" style="width: 220px; height: 200px">
+        <div id = "text1" class="shiny-text-output"></div> <br/>
+         The <input type="number" name="p" value="90" min="1" max="100" /> % confidence interval of bootstrap estimated sample median is
+        <div id = "CItable" class = "shiny-html-output"></div>
+      </div>
+     </form>          
+   </td> 
+   <td id="showcase-app-container" class="showcase-app-container-expanded">
+    <div id="plot" class="shiny-plot-output" 
+     style="width: 600px; height: 420px"></div> <br/>
+   </td>
+   <td id="showcase-app-container" class="showcase-app-container-expanded">
+   </td>
+  </tr>  
+ </table>
+</p>      
   
-  <p>
-    <label>Number of Replication:</label><br /> 
-    <select name="n">
-      <option value="500">500</option>
-      <option value="1000">1000</option>
-      <option value="2000">2000</option>
-    </select> <br /> 
-  </p>
+          
   
-   
-   <div id="plot" class="shiny-plot-output" 
-     style="width: 100%; height: 400px"></div>
-     
- <p>
-   <div />
-   The mean number of the estimated median of miles driven in 2002 from bootstrap is
-   <div id = "text1" class="shiny-text-output"></div><br />
-   The estimated variance of bootstrap median is
-   <div id = "text2" class="shiny-text-output"></div><br />
-   The 95% confidence interval of bootstrap is
-   <div id = "CItable" class = "shiny-html-output"></div>
-  </p>
-       
-   
 </body>
 </html>

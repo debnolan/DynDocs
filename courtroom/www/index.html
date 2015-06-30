@@ -3,16 +3,19 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Statistics in the Courtroom</title>
-	<script src="//code.jquery.com/jquery-1.11.3.js"></script>
+	<script src="shared/jquery.js"></script>
+	 <script src="shared/shiny.js"></script>
 	<link href="shared/shiny.css" rel="stylesheet" />
 	<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+	<link rel="stylesheet" href="dist/rangeSlider.css">
+	<script src="dist/rangeSlider.js"></script>
 	<link rel="stylesheet" href="stylesheet.css" />
 	<script src="script.js"></script>
 </head>
 
 <body>
-	<div id="background">
+	<div class="background">
 		<h1>Statistics in the Courtroom</h1>
 		<p>
 			This article discusses the statistical method of hypothesis testing and its role in the 2001 federal court case that sentenced serial killer Kristen Heather Gilbert to life in prison without possibility for parole plus twenty years. We begin with a bit of background information on Gilbert and the crimes on which she was convicted.
@@ -29,7 +32,7 @@
 		</p>
 	</div>
 	
-	<div id="analysis">
+	<div class="analysis">
 		<h3>Analysis: Chi-Square Test for Independence</h3>
 		<p>
 			First off, we have to realize that the data we have to work with is <strong>categorical</strong>. That is, each datum takes on a value that is either a name or a label, as opposed to a measurable quantity. For instance, when asked whether or not Gilbert was assigned a shift on a particular evening, we simply answer with <em>yes</em> or <em>no</em>; we don't say she was <em>half</em>-assigned a shift or that she was <em>half</em>-present.
@@ -61,13 +64,13 @@
 				<td class="tdeath">Total</td>
 			</tr>
 			<tr>
-				<td class="tgilbert">present</td>
+				<td class="tgilbert">Present</td>
 				<td>40</td>
 				<td>217</td>
 				<td>257</td>
 			</tr>
 			<tr>
-				<td class="tgilbert">absent</td>
+				<td class="tgilbert">Absent</td>
 				<td>34</td>
 				<td>1350</td>
 				<td>1384</td>
@@ -88,12 +91,12 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>11.58927</td>
-					<td>245.4107</td>
+					<td>11.59</td>
+					<td>245.41</td>
 				</tr>
 				<tr>
-					<td>62.41073</td>
-					<td>1321.5893</td>
+					<td>62.41</td>
+					<td>1321.59</td>
 				</tr>
 			</tbody>
 		</table>
@@ -106,22 +109,22 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>69.64796</td>
-					<td>3.2890547</td>
+					<td>69.65</td>
+					<td>3.29</td>
 				</tr>
 				<tr>
-					<td>12.93318</td>
-					<td>0.6107565</td>
+					<td>12.93</td>
+					<td>0.61</td>
 				</tr>
 			</tbody>
 		</table>
 		<div>$\leadsto$</div>
 		<table class="twoRows">
 			<tr>
-				<td>$\chi ^{ 2 } = 86.48095$</td>
+				<td>$\chi ^{ 2 } = 86.48$</td>
 			</tr>
 			<tr>
-				<td>$P \operatorname{ - } value = 9.33 \times 10 ^{ -7 }$</td>
+				<td>$P \operatorname{ - } value \approx 0$</td>
 			</tr>
 		</table>
 	</div>
@@ -140,14 +143,15 @@
 			Below is a visual representation of how the P-value was determined: the area under the curve and to the right of the chi-square statistic is the corresponding P-value. Notice that our chi-square test statistic is far off to the right, nowhere near the bulk of the density in our distribution. This is analogous to our miniscule P-value.
 		</p>
 		<p>
-			<img src="content/plot.gif" class="block" alt="content/plot.gif" />
+			<img src="content/chiSqPlot.gif" class="block" alt="chiSqPlot.gif" />
+			<img src="content/residPlot.gif" class="block" alt="residPlot.gif" />
 		</p>
 		<p>
-			Our P-value indicates that we would only see this about once in a million times under the assumption of H<sub>0</sub>. Because we have gathered data that is so deviant from what we would expect to see under that assumption, the responsible course of action is to reject the null hypothesis; the instance of death on a shift was not independent of whether or not Gilbert was present.
+			Our P-value indicates that we would probably never see this under the assumption of H<sub>0</sub>. Because we have gathered data that is so deviant from what we would expect to see under that assumption, the responsible course of action is to reject the null hypothesis; the instance of death on a shift was not independent of whether or not Gilbert was present.
 		</p>
 	</div>
 	
-	<div id="tutorial">
+	<div class="tutorial">
 		<fieldset>
 			<legend><h3>Tutorial: Data Exploration, Hypothesis Testing, Residual Analysis</h3></legend>
 			
@@ -169,14 +173,14 @@
 							</tr>
 							<tr>
 								<td class="tgilbert">Present</td>
-								<td>11.58927</td>
-								<td>245.4107</td>
+								<td>11.59</td>
+								<td>245.41</td>
 								<td>257</td>
 							</tr>
 							<tr>
 								<td class="tgilbert">Absent</td>
-								<td>62.41073</td>
-								<td>1321.5893</td>
+								<td>62.41</td>
+								<td>1321.59</td>
 								<td>1384</td>
 							</tr>
 							<tr>
@@ -202,8 +206,9 @@
 				</div>
 				
 				<div class="shiny-input-container">
-					<label for="cellCount">Specify a cell count:</label>
-					<input type="number" name="cellCount" id="cellCount" min="0" max="74" value="40" />
+					<label for="cell-count">Specify a cell count:</label><br />
+					<input type="range" name="cell-count" id="cell-count" min="0" max="74" value="40" />
+					<span class="range-value"></span>
 				</div>
 				
 				<div>
@@ -242,16 +247,34 @@
 			</div>
 			
 			<div class="main-panel">
-				<div name="chiSqPlot" id="chiSqPlot" class="hypothesis-test shiny-plot-output"></div>
-				<div name="residPlot" id="residPlot" class="hypothesis-test shiny-plot-output"></div>
-				<div name="summary" id="summary" class="test-summary shiny-plot-output"></div>
+				<div id="chiSqPlot" class="shiny-plot-output"></div>
+				<div id="residPlot" class="shiny-plot-output"></div>
+				<div id="summary" class="shiny-text-output"></div>
+			</div>
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend><h3>Tutorial: --------------</h3></legend>
+
+			<div class="top-panel">
+			</div>
+
+			<div class="side-panel">
+			</div>
+
+			<div class="main-panel">
 			</div>
 		</fieldset>
 	</div>
+
 	<div class="concluding-remarks">
 		<p>
 			Write some stuff here
 		</p>
+	</div>
+	
+	<div class="references">
+			<!--ADD HYPERLINKS FROM WITHIN ANALYSIS-->
 	</div>
 </body>
 </html>

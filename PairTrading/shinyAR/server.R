@@ -19,9 +19,18 @@ plotAR = function(const,rho, sigma){
 
 shinyServer(function(input, output) {
   
+  data <- reactive({
+    
+    input$runSim
+    
+    isolate({
+      list(c = input$c, rho = input$rho, sigma = input$sigma)
+    })
+  })
+  
   output$plot <- renderPlot({
       
-   plotAR(input$c,input$rho,input$sigma)
+   plotAR(data()$c,data()$rho,data()$sigma)
   }
 )
 }
