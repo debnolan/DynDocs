@@ -1,13 +1,12 @@
 <html>
 
 <head>
-<title>Extreme Value Distributions</title>
+<title>Generalized Extreme Value distribution</title>
 </head>
 
 <body >
 <h1>Extreme Value Distributions</h1>
 <hr />
-<h2>Introduction</h2>
 
 <p> The classical asymptotically model for excesses above a high
 threshold is the generalised Pareto distribution. It is often useful to look 
@@ -15,11 +14,34 @@ at the exceedances over a given threshold instead of the maximum or minimum of t
 However, selection of a threshold that is too low will give biased parameter estimates,
 but a threshold that is too high will result in large variance of the parameter estimates.
 Specifically, we will look at the probability plot, quantile plot, return level plot, and density
-plot which involves the fitting of data to a GPD several times using a range of
+plot which involves the fitting of data to a GPD using a range of
 different thresholds and estimate its return values.  </p>
 
-<h2></h2>
+<h2>The Generalized Pareto Distribution </h2>
+<p> 
+Suppose X<SUB><FONT size=-1>1</font></sub>,X<SUB><FONT size=-1>2</font></sub>,... be a sequence of i.i.d. random variables with distribution function, <I>F</i>, and let M<SUB><FONT size=-1>n</font></sub> =
+<TT>max</tt>{X<SUB><FONT size=-1>1</font></sub>,...,X<SUB><FONT size=-1>n</font></sub>}.  Now,
+assuming that <I>F</i> satisfies certain conditions, then we have that Pr{M<SUB><FONT size=-1>n</font></sub><SUB><img src="leq.png"></sub> z}<img src="approx.png"> G(z), where
+<br>
+<br>
+<img src="GPDderivation2.png">
+<br>
+<br>
+for some <img src="mu.png">, <img src="sigma.png"> <img src="greaterthan.png"> 0 and <img src="xi.png">.  Then for a large
+enough threshold, <I>u</i>, the distribution function of (X-u), conditional on X <img src="greaterthan.png"> u, is approximately
+</p>
 
+<p> The resulting probability distribution function (PDF) is:
+
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="http://www.mathwave.com/img/f/f_076.gif" width="320" height="93" alt="GEV Distribution PDF" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</br>
+
+where z=(x-&mu;)/&sigma;, and k, &sigma;, &mu; are the shape, scale, and location parameters respectively. The scale must be positive (<em>sigma</em>&gt;0), the shape and location can take on any real value.
+
+</p>
+
+<h3>Application of GEV distribution</h3>
+<p>
+Based on the extreme value theory that derives the GEV distribution, we can fit a sample of extremes to the GEV distribution to obtain the parameters that best explains the probability distribution of the extremes. In our present work, we first pick a weather station in Colorado and calculate daily maximum precipitation and the number of heavy rainfall events. These extremes-related quantities are, respectively, fitted to the GEV distribution. From the fitted distribution, we can estimate how often the extreme quantiles occur with a certain return level. The return value is defined as a value that is expected to be equaled or exceeded on average once every interval of time (T) (with a probability of 1/T). Therefore, we obtain the equation, CDF of the GEV distribution (i.e., equation (1)) = 1-1/T. We call "T" on the right hand side of this equation as a return period, and "x" in equation (1) (left hand side) is the return value. The return value can be calculated by solving this equation (i.e., by inverting the GEV distribution). In our current work, We calculated return values for 2-, 5-, 10-, and 20-yr return period at each grid point.
 </p>
 
 
