@@ -24,13 +24,24 @@ shinyServer(function(input, output) {
     input$runSim
     
     isolate({
-      list(c = input$c, rho = input$rho, sigma = input$sigma)
+      if(input$rho > 1 | input$rho < -1){
+        list(err = TRUE)
+      }
+        else{
+      list(const = input$c, rho = input$rho, sigma = input$sigma, err = FALSE)}
     })
   })
   
+  output$warn <- renderText({
+  if(!data()$err){""
+  }else{
+    "&rho; must be value between 1 and -1."
+    }
+    })
   output$plot <- renderPlot({
-      
-   plotAR(data()$c,data()$rho,data()$sigma)
+    if(data()$err){ return(NULL)} 
+      else{
+      plotAR(data()$const,data()$rho,data()$sigma)}
   }
 )
 }
