@@ -3,6 +3,9 @@ library("shiny")
 #load data sets and functions for computing/vizualizing permutations tests
 source("helpers.R")
 
+#load HTML interactive choices
+load("htmlChoices.rda")
+
 # Define server logic required to summarize and view the selected dataset
 shinyServer(
   function(input, output) {
@@ -10,7 +13,7 @@ shinyServer(
     dataSet <- reactive({ 
       drugData(input$var)
       })
-    output$intro <- renderText({paste(intros, collapse = "")})
+    output$intro <- renderText({paste(intros[[input$var]], collapse = "")})
     #vizualize selected data with a table
       output$data <- renderTable({
         data.frame(dataSet())
@@ -19,7 +22,7 @@ shinyServer(
     output$mean <- renderTable({
       data.frame("mean1" = mean(dataSet()[,1], na.rm = TRUE), 
                  "mean2" = mean(dataSet()[,2]))
-    })
+    })gig
     #allow user to select repetitions of sample from the selected data
     #plot a distribution of the means of the sample populations
     #compute p-Value for the sample set of population means
@@ -52,6 +55,8 @@ shinyServer(
     paste("Median of Drug Data = ", 
           as.character(median(c(dataSet()[,1], dataSet()[,2]), na.rm = TRUE)))
   })
+  
+  output$threshold <- renderText({paste(choices[[input$var]], collapse = "")})
   #allow user to select repetitions of sample from the dichotomized data
   #plot a distribution of the sums of the sample populations
   #compute p-Value for the sample set of population sums

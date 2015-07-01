@@ -12,7 +12,9 @@
 
 <h4>The Original Population</h4>
 <p>Let us assume we are analyzing data from a drug trial that is testing the efficacy of some drug A. The research methodology is to take some general population P, and randomly select N1 participants from P to take the drug A (pop1), and N2 participants from P to take a placebo (pop2); and then compare some measure of the drugs effect in P1 and P2. The higher the measure (M), the more effective the drug is in the body.</p>
-<!--begin.rcode
+
+
+<!--begin.rcode,
 pop1 = c(10, 16, 12)
 pop2 = c(5, 9, 12, 8)
 pop1
@@ -36,8 +38,8 @@ for (i in 1:dim(m)[1]) {
   avg[i] = mean(m[i,])
 }
 combos = cbind(m, avg)
-combos
 end.rcode-->
+
 <p>Notice that we have 35 possible combinations of sampling 3 values from the population of 7. Also notice that only 3 of the possible combinations have mean values greater than or equal to that of the original drug population. In a dataset this small, we can actually estimate the probability that our discrepancy is due to chance. Can you estimate the p-value?</p>
 <p>Also note that it is VERY IMPORTANT FOR THE ORIGINAL DATA TO BE RANDOMLY ASSIGNED!! When populations in a two-sample trial are random, any differences in the two populations are either due to chance, or due to difference between the two populations. In this case, the difference between the two populations is that one took a drug and one took a placebo; if our data was not random from the start we would be unable to conclude that the drug caused the effect!</p>
 
