@@ -13,8 +13,9 @@
 <p>This evidence is somewhat counterintuitive to the idea that paying school teachers more will result in better grades as a result of improved quality of instruction and teaching talent. However, as we will see, the negative correlation does in fact exist! Does this mean that we should reduce public high school teachers’ salaries in order to best improve the academic futures of their students? In this document, we will examine the relationship between teachers’ salary and academic performance using SAT scores and introduce the idea of confounding variables.</p>
 
 <!--begin.rcode echo = FALSE
+setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/sat_analysis_0.1")
 # satDF = read.csv("http://www.stat.berkeley.edu/users/nolan/data/sat.csv")
-load("satDF.rda")
+load("../rda_data/satDF.rda")
 library(lattice)
 end.rcode-->
 
@@ -103,9 +104,16 @@ for(i in 1:6){
 end.rcode-->
 
 
-<!--begin.rcode fig.width=7, fig.height=6
-
+<!--begin.rcode fig.width=7, fig.height=6 
+library(shiny)
+runApp("../shiny_html_table1/show_data_app/")
 end.rcode-->
+
+<!--begin.rcode
+library(shiny)
+runApp("../shiny_html_plot1/side_by_side_scatterplot/")
+end.rcode-->
+
 
 </body>
 </html>
