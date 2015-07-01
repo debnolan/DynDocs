@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];selectize[0.11.2];ionrangeslider[2.0.6];bootstrap[3.3.1]</script>
+  <script src="shared/json2-min.js"></script>
+  <script src="shared/jquery.min.js"></script>
+  <link href="shared/shiny.css" rel="stylesheet" />
+  <script src="shared/shiny.min.js"></script>
+  <link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+  <!--[if lt IE 9]>
+  <script src="shared/selectize/js/es5-shim.min.js"></script>
+  <![endif]-->
+  <script src="shared/selectize/js/selectize.min.js"></script>
+  <link href="shared/ionrangeslider/css/normalize.css" rel="stylesheet" />
+  <link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+  <link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+  <script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="shared/bootstrap/js/bootstrap.min.js"></script>
+  <script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+  <script src="shared/bootstrap/shim/respond.min.js"></script>
+  <title>Permutations Test</title>
+  </head>
+  
+<body>
+  <div class="container-fluid">
+    <h2>Permutations Test Analysis</h2>
+    <div class="row">
+      <div class="col-sm-5">
+        <form class="well">
+          <span class="help-block">Run three permutations tests on drug trial data.</span>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="var">Choose a data set to analyze.</label>
+            <div>
+              <select id="var">
+<option value="Calcium">Calcium Trial</option>
+<option value="Alcohol">Alcohol Trial</option>
+  <option value="HIV">HIV Treatment Trial</option>
+</select>
+              <script type="application/json" data-for="var" data-nonempty="">{}</script>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+<p>
+
+<p>This data is from <a href="#Cobb" >Cobb</a>Manuscript</p>
+
+<div id="intro" class="shiny-html-output"></div>
+  <label>Data</label><br />
+	  <div id="data" class="shiny-html-output"></div>
+    <label>Average Value for Trial Data:</label><br />
+  	<div id="mean" class="shiny-html-output"></div>
+</p>
+<p>
+    <label>Number of repetitions:</label><br /> 
+    <input type="number" name="NRep1" value="1000" min="1" max="10000" step = "100"/>
+</p>
+<p> 
+<div id="permPlot" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+         
+</p>
+
+<p>
+    <div class="container-fluid">
+    <label>pValue Convergence</label>
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <span class="help-block">Plot the pValues for the permutations test with different numbers of repetitions.</span>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="range">Logarithmic range of interest:</label>
+            <input class="js-range-slider" id="range" data-type="double" data-min="0.5" data-max="5" data-from="0" data-to="100" data-step="0.5" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+        <div id="plot" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+      </div>
+    </div>
+  </div>
+</p>
+</body>
+
+<body>
+<h2>Fisher's Exact Test on Dichotomized Data</h2>
+    <label>Number of repetitions:</label><br /> 
+    <input type="number" name="NRep2" value="1000" min="1" max="10000" step="100"/>
+
+  </p>
+
+<p>  
+    <div id="median" class="shiny-text-output"></div>
+	<label>Threshold Value:</label><br /> 
+    <input type="number" name="thresh2" value="0" min="0" max="10" />
+ <p>
+	<label>Dichotomized Drug Data:</label><br />
+	  <div id="dataDich" class="shiny-html-output"></div>
+  </p>
+  <p>
+  <label>Sum of Dichotomized Data:</label>
+    <div id="sum" class="shiny-html-output"></div>
+  </p>
+</p>
+
+<p>
+  
+  <div id="dichPlot" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+</p>
+</body>
+
+<body>
+<h2>Wilcoxon Rank-Sum Test</h2>	
+    <label>Number of repetitions:</label><br /> 
+    <input type="number" name="NRep3" value="1000" min="1" max="10000" step = "100"/>
+
+ <p>
+	<label>Ranked Drug Data:</label><br />
+	  <div id="rank" class="shiny-html-output"></div>
+    <div id="rankSum" class="shiny-text-output"></div>
+  </p>
+</p>
+  
+  <div id="wilcox" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div>
+
+<h4>References</h4>
+<a name="Cobb">George Cobb</a>Statistics Manuscript
+<br/>
+
+</body>
+</html> 

@@ -1,0 +1,100 @@
+<html>
+
+<head>
+<title>Permutations Test Tutorial</title>
+</head>
+
+<body>
+<h1>Permutations Test Tutorial</h1>
+
+<h2>Introduction</h2>
+<p>Permutations tests are a method from the general area of statistics called hypothesis testing; more specifically randomization testing. We will be using data from two-population drug efficacy trials to demonstrate the method, but the permutations testing model can be applied to a wide variety of situations for testing hypotheses about populations. The basic process involves simulating sample populations from the original population, comparing each of these populations to the original, and estimating the probability of refuting the null hypothesis. Let us explore each of these steps separately: </p>
+
+<h4>The Original Population</h4>
+<p>Let us assume we are analyzing data from a drug trial that is testing the efficacy of some drug A. The research methodology is to take some general population P, and randomly select N1 participants from P to take the drug A (pop1), and N2 participants from P to take a placebo (pop2); and then compare some measure of the drugs effect in P1 and P2. The higher the measure (M), the more effective the drug is in the body.</p>
+
+
+<!--begin.rcode,
+pop1 = c(10, 16, 12)
+pop2 = c(5, 9, 12, 8)
+pop1
+pop2
+mean(pop1)
+mean(pop2)
+pop = c(pop1, pop2)
+end.rcode-->
+<p>We ultimately want to compare our test statistic's mean value to the mean value pop1; the N1 participants who took drug A. It is interesting to note the difference in the mean between pop1 and pop2, which seems to suggest that the drug is effective. However, the discrepency in the two means could be due to chance! Perhaps the N1 participants were more susceptible to the drug than the general population would be, or perhaps the N2 participants had abnormally low values of M. This is where the permutations test comes in. Before generating our sample data, we want to combine the two populations to test whether the difference in the mean is due to chance.</p>
+
+<h4>Step 1: Combine the two populations</h4>
+<h4>Step 2: Randomly sample values from the combined population</h4>
+<!--begin.rcode
+library("gtools")
+n = length(pop1)
+#We usually remove the same number of values from the combined population as we have in our original population of interest; drug A. 
+sample(pop, n)
+m = combinations(n = length(pop), r = length(pop1), v = pop, set = FALSE)
+avg = numeric()
+for (i in 1:dim(m)[1]) {
+  avg[i] = mean(m[i,])
+}
+combos = cbind(m, avg)
+end.rcode-->
+
+<p>Notice that we have 35 possible combinations of sampling 3 values from the population of 7. Also notice that only 3 of the possible combinations have mean values greater than or equal to that of the original drug population. In a dataset this small, we can actually estimate the probability that our discrepancy is due to chance. Can you estimate the p-value?</p>
+<p>Also note that it is VERY IMPORTANT FOR THE ORIGINAL DATA TO BE RANDOMLY ASSIGNED!! When populations in a two-sample trial are random, any differences in the two populations are either due to chance, or due to difference between the two populations. In this case, the difference between the two populations is that one took a drug and one took a placebo; if our data was not random from the start we would be unable to conclude that the drug caused the effect!</p>
+
+<h4>Step 3: Generate a large number of randomly sampled data sets</h4>
+
+<p>We repeat the random sampling process 1000 times, and take the mean of each of our random data sets. Let us vizualize this process with a plot.</p>
+<!--begin.rcode
+plotPerm = function(pop1, pop2, NRep, comp = mean(pop1)) {
+  simPop = replicate(NRep, mean(sample(c(pop1, pop2), length(pop1))))
+  plot(table(unique(simPop, simPop)), type = "h",
+       xlab = "Average of Sample",
+       ylab = "Number of Times")
+  abline(v = comp, col = "red")
+}
+
+rep = 1000
+plotPerm(pop1, pop2, 1000)
+end.rcode-->
+<p>From this plot, we can see that the mean values of the simulation are roughly normal. In fact, as we increase the number of repetitions, we will create a more and more normal distribution of values. Try it yourself! (add variable user input for NRep).</p>
+
+<h5>Step 4: Compare each random data set with the actual data.</h5>
+
+<p>Notice the red line in the plot; it corresponds to the mean of the original data. It seems that most of the values have means below the original. Once again, can you estimate a probability from this graph? To compute an accurate p-value, we must first compare the mean of each of our subsets of 3 values with that of the original mean. If the simulated mean is greater than or equal to the original, we attribute a "TRUE" value to the data set, and if it is less than the original we call it "FALSE".</p>
+
+<!--begin.rcode
+perm = replicate(rep, mean(sample(pop, length(pop1))))
+permtest = data.frame(perm, perm >= mean(pop1))
+head(permtest)
+end.rcode-->
+
+<h4>Step 5: Estimate the probability pHat with the observed proportion of "TRUE" data.</h4>
+
+<p>We compute a p-value (pHat) for our original data based on our simulation as follows; count the number of randomly-sampled means that are greater than the original, and divide it by the total number of random samples.</p>
+
+<!--begin.rcode
+compare = sum(permtest[,2])
+compare
+compare/rep
+end.rcode-->
+
+<p>We will not conclude that this p-value refutes the null hypothesis here, but we will observe that the probability is quite low. This makes sense; if we divide the 3 possible permutations by the possible 35, we get ~0.086. If we run our permutations test enough times, the probability will eventually converge to this value. We will explore how many repetitions are "enough" in our data analysis. However, note that here we were provided a relatively small data set. What if we had a trial on 20 patients, with 9 randomly selected drug participants? The number of possible combinations would balloon to 167,960!</p>
+
+<!--begin.rcode
+3/35
+
+permTest = function(pop1, pop2, NRep, comp = mean(pop1)) {
+  pop = c(pop1, pop2)
+  simAvg = replicate(NRep, mean(sample(pop, length(pop1))))
+  compare = simAvg >= comp
+  return(sum(compare)/NRep)
+}
+
+permTest(pop1, pop2, 10000)
+
+choose(20, 9)
+end.rcode-->
+</body>
+</html>

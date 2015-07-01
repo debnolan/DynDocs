@@ -1,0 +1,198 @@
+<html>
+
+<head>
+<style type="text/css">
+.knitr .inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage .left {
+  text-align: left;
+}
+.rimage .right {
+  text-align: right;
+}
+.rimage .center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>Permutations Test Tutorial</title>
+</head>
+
+<body>
+<h1>Permutations Test Tutorial</h1>
+
+<h2>Introduction</h2>
+<p>Permutations tests are a method from the general area of statistics called hypothesis testing; more specifically randomization testing. We will be using data from two-population drug efficacy trials to demonstrate the method, but the permutations testing model can be applied to a wide variety of situations for testing hypotheses about populations. The basic process involves simulating sample populations from the original population, comparing each of these populations to the original, and estimating the probability of refuting the null hypothesis. Let us explore each of these steps separately: </p>
+
+<h4>The Original Population</h4>
+<p>Let us assume we are analyzing data from a drug trial that is testing the efficacy of some drug A. The research methodology is to take some general population P, and randomly select N1 participants from P to take the drug A (pop1), and N2 participants from P to take a placebo (pop2); and then compare some measure of the drugs effect in P1 and P2. The higher the measure (M), the more effective the drug is in the body.</p>
+
+
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">pop1</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">10</span><span class="hl std">,</span> <span class="hl num">16</span><span class="hl std">,</span> <span class="hl num">12</span><span class="hl std">)</span>
+<span class="hl std">pop2</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">5</span><span class="hl std">,</span> <span class="hl num">9</span><span class="hl std">,</span> <span class="hl num">12</span><span class="hl std">,</span> <span class="hl num">8</span><span class="hl std">)</span>
+<span class="hl std">pop1</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 10 16 12
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">pop2</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  5  9 12  8
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">mean</span><span class="hl std">(pop1)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 12.66667
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">mean</span><span class="hl std">(pop2)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 8.5
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">pop</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(pop1, pop2)</span>
+</pre></div>
+</div></div>
+<p>We ultimately want to compare our test statistic's mean value to the mean value pop1; the N1 participants who took drug A. It is interesting to note the difference in the mean between pop1 and pop2, which seems to suggest that the drug is effective. However, the discrepency in the two means could be due to chance! Perhaps the N1 participants were more susceptible to the drug than the general population would be, or perhaps the N2 participants had abnormally low values of M. This is where the permutations test comes in. Before generating our sample data, we want to combine the two populations to test whether the difference in the mean is due to chance.</p>
+
+<h4>Step 1: Combine the two populations</h4>
+<h4>Step 2: Randomly sample values from the combined population</h4>
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(</span><span class="hl str">&quot;gtools&quot;</span><span class="hl std">)</span>
+<span class="hl std">n</span> <span class="hl kwb">=</span> <span class="hl kwd">length</span><span class="hl std">(pop1)</span>
+<span class="hl com">#We usually remove the same number of values from the combined population as we have in our original population of interest; drug A. </span>
+<span class="hl kwd">sample</span><span class="hl std">(pop, n)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 12 12  5
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">m</span> <span class="hl kwb">=</span> <span class="hl kwd">combinations</span><span class="hl std">(</span><span class="hl kwc">n</span> <span class="hl std">=</span> <span class="hl kwd">length</span><span class="hl std">(pop),</span> <span class="hl kwc">r</span> <span class="hl std">=</span> <span class="hl kwd">length</span><span class="hl std">(pop1),</span> <span class="hl kwc">v</span> <span class="hl std">= pop,</span> <span class="hl kwc">set</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span>
+<span class="hl std">avg</span> <span class="hl kwb">=</span> <span class="hl kwd">numeric</span><span class="hl std">()</span>
+<span class="hl kwa">for</span> <span class="hl std">(i</span> <span class="hl kwa">in</span> <span class="hl num">1</span><span class="hl opt">:</span><span class="hl kwd">dim</span><span class="hl std">(m)[</span><span class="hl num">1</span><span class="hl std">]) {</span>
+  <span class="hl std">avg[i]</span> <span class="hl kwb">=</span> <span class="hl kwd">mean</span><span class="hl std">(m[i,])</span>
+<span class="hl std">}</span>
+<span class="hl std">combos</span> <span class="hl kwb">=</span> <span class="hl kwd">cbind</span><span class="hl std">(m, avg)</span>
+</pre></div>
+</div></div>
+
+<p> <code class="knitr inline">10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 12, 12, 12, 12, 12, 12, 5, 5, 5, 9, 16, 16, 16, 16, 16, 12, 12, 12, 12, 5, 5, 5, 9, 9, 12, 12, 12, 12, 12, 5, 5, 5, 9, 9, 12, 5, 5, 5, 9, 9, 12, 9, 9, 12, 12, 12, 5, 9, 12, 8, 5, 9, 12, 8, 9, 12, 8, 12, 8, 8, 5, 9, 12, 8, 9, 12, 8, 12, 8, 8, 9, 12, 8, 12, 8, 8, 12, 8, 8, 8, 12.6666667, 10.3333333, 11.6666667, 12.6666667, 11.3333333, 9, 10.3333333, 11.3333333, 10, 8, 9, 7.6666667, 10.3333333, 9, 10, 11, 12.3333333, 13.3333333, 12, 10, 11, 9.6666667, 12.3333333, 11, 12, 8.6666667, 9.6666667, 8.3333333, 11, 9.6666667, 10.6666667, 8.6666667, 7.3333333, 8.3333333, 9.6666667</code></p>
+
+<p>Notice that we have 35 possible combinations of sampling 3 values from the population of 7. Also notice that only 3 of the possible combinations have mean values greater than or equal to that of the original drug population. In a dataset this small, we can actually estimate the probability that our discrepancy is due to chance. Can you estimate the p-value?</p>
+<p>Also note that it is VERY IMPORTANT FOR THE ORIGINAL DATA TO BE RANDOMLY ASSIGNED!! When populations in a two-sample trial are random, any differences in the two populations are either due to chance, or due to difference between the two populations. In this case, the difference between the two populations is that one took a drug and one took a placebo; if our data was not random from the start we would be unable to conclude that the drug caused the effect!</p>
+
+<h4>Step 3: Generate a large number of randomly sampled data sets</h4>
+
+<p>We repeat the random sampling process 1000 times, and take the mean of each of our random data sets. Let us vizualize this process with a plot.</p>
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">plotPerm</span> <span class="hl kwb">=</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">pop1</span><span class="hl std">,</span> <span class="hl kwc">pop2</span><span class="hl std">,</span> <span class="hl kwc">NRep</span><span class="hl std">,</span> <span class="hl kwc">comp</span> <span class="hl std">=</span> <span class="hl kwd">mean</span><span class="hl std">(pop1)) {</span>
+  <span class="hl std">simPop</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(NRep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(</span><span class="hl kwd">c</span><span class="hl std">(pop1, pop2),</span> <span class="hl kwd">length</span><span class="hl std">(pop1))))</span>
+  <span class="hl kwd">plot</span><span class="hl std">(</span><span class="hl kwd">table</span><span class="hl std">(</span><span class="hl kwd">unique</span><span class="hl std">(simPop, simPop)),</span> <span class="hl kwc">type</span> <span class="hl std">=</span> <span class="hl str">&quot;h&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">xlab</span> <span class="hl std">=</span> <span class="hl str">&quot;Average of Sample&quot;</span><span class="hl std">,</span>
+       <span class="hl kwc">ylab</span> <span class="hl std">=</span> <span class="hl str">&quot;Number of Times&quot;</span><span class="hl std">)</span>
+  <span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">v</span> <span class="hl std">= comp,</span> <span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">&quot;red&quot;</span><span class="hl std">)</span>
+<span class="hl std">}</span>
+
+<span class="hl std">rep</span> <span class="hl kwb">=</span> <span class="hl num">1000</span>
+<span class="hl kwd">plotPerm</span><span class="hl std">(pop1, pop2,</span> <span class="hl num">1000</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div></div>
+<p>From this plot, we can see that the mean values of the simulation are roughly normal. In fact, as we increase the number of repetitions, we will create a more and more normal distribution of values. Try it yourself! (add variable user input for NRep).</p>
+
+<h5>Step 4: Compare each random data set with the actual data.</h5>
+
+<p>Notice the red line in the plot; it corresponds to the mean of the original data. It seems that most of the values have means below the original. Once again, can you estimate a probability from this graph? To compute an accurate p-value, we must first compare the mean of each of our subsets of 3 values with that of the original mean. If the simulated mean is greater than or equal to the original, we attribute a "TRUE" value to the data set, and if it is less than the original we call it "FALSE".</p>
+
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">perm</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(rep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(pop,</span> <span class="hl kwd">length</span><span class="hl std">(pop1))))</span>
+<span class="hl std">permtest</span> <span class="hl kwb">=</span> <span class="hl kwd">data.frame</span><span class="hl std">(perm, perm</span> <span class="hl opt">&gt;=</span> <span class="hl kwd">mean</span><span class="hl std">(pop1))</span>
+<span class="hl kwd">head</span><span class="hl std">(permtest)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##       perm perm....mean.pop1.
+## 1 11.00000              FALSE
+## 2 12.00000              FALSE
+## 3 10.33333              FALSE
+## 4 12.66667               TRUE
+## 5 12.00000              FALSE
+## 6  9.00000              FALSE
+</pre></div>
+</div></div>
+
+<h4>Step 5: Estimate the probability pHat with the observed proportion of "TRUE" data.</h4>
+
+<p>We compute a p-value (pHat) for our original data based on our simulation as follows; count the number of randomly-sampled means that are greater than the original, and divide it by the total number of random samples.</p>
+
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">compare</span> <span class="hl kwb">=</span> <span class="hl kwd">sum</span><span class="hl std">(permtest[,</span><span class="hl num">2</span><span class="hl std">])</span>
+<span class="hl std">compare</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 94
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">compare</span><span class="hl opt">/</span><span class="hl std">rep</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.094
+</pre></div>
+</div></div>
+
+<p>We will not conclude that this p-value refutes the null hypothesis here, but we will observe that the probability is quite low. This makes sense; if we divide the 3 possible permutations by the possible 35, we get ~0.086. If we run our permutations test enough times, the probability will eventually converge to this value. We will explore how many repetitions are "enough" in our data analysis. However, note that here we were provided a relatively small data set. What if we had a trial on 20 patients, with 9 randomly selected drug participants? The number of possible combinations would balloon to 167,960!</p>
+
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl num">3</span><span class="hl opt">/</span><span class="hl num">35</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.08571429
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">permTest</span> <span class="hl kwb">=</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">pop1</span><span class="hl std">,</span> <span class="hl kwc">pop2</span><span class="hl std">,</span> <span class="hl kwc">NRep</span><span class="hl std">,</span> <span class="hl kwc">comp</span> <span class="hl std">=</span> <span class="hl kwd">mean</span><span class="hl std">(pop1)) {</span>
+  <span class="hl std">pop</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(pop1, pop2)</span>
+  <span class="hl std">simAvg</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(NRep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(pop,</span> <span class="hl kwd">length</span><span class="hl std">(pop1))))</span>
+  <span class="hl std">compare</span> <span class="hl kwb">=</span> <span class="hl std">simAvg</span> <span class="hl opt">&gt;=</span> <span class="hl std">comp</span>
+  <span class="hl kwd">return</span><span class="hl std">(</span><span class="hl kwd">sum</span><span class="hl std">(compare)</span><span class="hl opt">/</span><span class="hl std">NRep)</span>
+<span class="hl std">}</span>
+
+<span class="hl kwd">permTest</span><span class="hl std">(pop1, pop2,</span> <span class="hl num">10000</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.0876
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">choose</span><span class="hl std">(</span><span class="hl num">20</span><span class="hl std">,</span> <span class="hl num">9</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 167960
+</pre></div>
+</div></div>
+</body>
+</html>

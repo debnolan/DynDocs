@@ -1,0 +1,116 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];selectize[0.11.2];ionrangeslider[2.0.6];bootstrap[3.3.1]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="shared/selectize/js/es5-shim.min.js"></script>
+<![endif]-->
+<script src="shared/selectize/js/selectize.min.js"></script>
+<link href="shared/ionrangeslider/css/normalize.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+</head> 
+
+<body> 
+
+<div class="header">
+  <h1> Pairs Trading and Autoregressive Model </h1>
+</div>
+
+<h2> Introduction </h2>
+<p> Pairs Trading is a market trading strategy to compare two different stocks via computer-intensive analysis of stock performance in the past, specifically by looking at their ratios. The key idea underlying pairs trading is that the movement of the ratio away from its historical average represents an opportunity to make money. Such movement is mostly determined by optimal k, which is the spread of the ratio distribution and is believed to bring maximum profit.
+As we make a time series of the ratio, we find the open and close positions such that the prior indicates a good time to buy stocks and the latter indicates a good time to sell stocks. Lastly, with the already determined optimal K value, we can find the maximum profit of one trading. 
+</p>
+<p>
+Below is an example of comparing the AT&T and VERIZON stocks and finding the max profit via Pairs Trading . 
+</p>
+
+
+<p>
+<div id="plot" class="shiny-plot-output" 
+     style="width: 100% ; height: 400px"></div>
+
+</p>
+
+<p> After doing some computation, the optimal K for the AT&T and VERIZON data appears to be 0.28392, and the corresponding best profit is 3.142893.<br/> 
+Yet, the optimal K is unique to whichever selected pair of stocks . To support this, we ran another pair of stocks ( Toyota and Southwest airline) and compare the best profit found via 
+1)the previous optimal K value and 2)an optimal K found by performing a series of computations. 
+For previous K (0.28392), profit is 3.4909.   
+For optimal K found by computation, K is 0.5403, profit is 6.3725.<br/>
+Such analysis supports the optimal K is unique and special to ratio distribution, and it plays an important role in determining best profit. 
+</p>
+
+<h3> Pairs Trading Interactive Activity </h3>
+<p> In this activity, you will select two pairs of stocks and click on the following features to see 1) the relationship between two stocks, 
+2) the ratio distribution on the time series, and 3) the importance of optimal K.<br/>
+Check the following boxes and see what happens.</p>
+
+<div class="form-group shiny-input-container" >
+<p>
+  <label>Select two stocks:</label>
+</br>
+  <select id = "a">
+    <option>-- Select --</option>
+    <option value="southwest">Southwest</option>
+    <option value="united">United</option>
+    <option value="hilton">Hilton</option>
+    <option value="hyatt">Hyatt</option>
+    <option value="kellog">Kellog</option>
+    <option value="hershey">Hershey</option>
+    <option value="toyota">Toyota</option>
+    <option value="inc">INC</option>
+    <option value="gm">GM</option>
+    <option value="ibm">IBM</option>
+  </select>  
+  <select id = "b"  name="select">
+    <option>-- Select --</option>
+    <option value="southwest">Southwest</option>
+    <option value="united">United</option>
+    <option value="hilton">Hilton</option>
+    <option value="hyatt">Hyatt</option>
+    <option value="kellog">Kellog</option>
+    <option value="hershey">Hershey</option>
+    <option value="toyota">Toyota</option>
+    <option value="inc">INC</option>
+    <option value="gm">GM</option>
+    <option value="ibm">IBM</option>
+   </select>
+</p>
+<p>
+<button id="graph" type="button" class="btn btn-default action-button">Get Time Series </button>
+</p>
+
+<br/>
+<div class="form-group shiny-input-container">
+<div class="checkbox">
+  <label> 
+    <input id="circle" type="checkbox"/>
+    <span>Show all Open and Close positions</span>
+  </label> 
+</div>
+
+<p>
+<div id="plot2" class="shiny-plot-output" 
+     style="width: 200% ; height: 400px"></div>
+
+</p>
+
+<div id="best" class="shiny-text-output"> </div>
+</br>
+<div id="besp" class="shiny-text-output"> </div>
+
+
+</body>
+</html>

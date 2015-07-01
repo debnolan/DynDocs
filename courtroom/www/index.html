@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Statistics in the Courtroom</title>
+	<script src="shared/jquery.js"></script>
+	 <script src="shared/shiny.js"></script>
+	<link href="shared/shiny.css" rel="stylesheet" />
+	<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+	<link rel="stylesheet" href="dist/rangeSlider.css">
+	<script src="dist/rangeSlider.js"></script>
+	<link rel="stylesheet" href="stylesheet.css" />
+	<script src="script.js"></script>
+</head>
+
+<body>
+	<div class="background">
+		<h1>Statistics in the Courtroom</h1>
+		<p>
+			This article discusses the statistical method of hypothesis testing and its role in the 2001 federal court case that sentenced serial killer Kristen Heather Gilbert to life in prison without possibility for parole plus twenty years. We begin with a bit of background information on Gilbert and the crimes on which she was convicted.
+		</p>
+		<h3>Background Information</h3>
+		<p>
+			In 1989, Gilbert began her career as a registered nurse in Ward C of Veterans Affairs Medical Center (VAMC) in Northhampton, Massachusetts. By April of the following year, she had made a name for herself as an expert in recognising and responding to patients in need of emergency medical attention.
+		</p>
+		<p>
+			While a few other nurses had taken notice of increases in the number of hospital crises and deaths while Gilbert was on duty, many passed it off as mere coincidence and even jokingly nicknamed her the "Angel of Death." It wasn't until late 1996 when three nurses finally reported their concerns regarding an unmistakably high number of deaths resulting from cardiac arrest as well as a mysterious deficit in the hospital supply of synthetic epinephrine, a heart stimulant.
+		</p>
+		<p>
+			This prompted the hospital to launch an investigation, amid which Gilbert resigned from her position as a nurse. A preliminary analysis directed attention back to the fact that these deaths occurred more frequently during Gilbert's assigned shifts. Let's now discuss hypothesis testing and how it was used to show that this was more than mere speculation.
+		</p>
+	</div>
+	
+	<div class="analysis">
+		<h3>Analysis: Chi-Square Test for Independence</h3>
+		<p>
+			First off, we have to realize that the data we have to work with is <strong>categorical</strong>. That is, each datum takes on a value that is either a name or a label, as opposed to a measurable quantity. For instance, when asked whether or not Gilbert was assigned a shift on a particular evening, we simply answer with <em>yes</em> or <em>no</em>; we don't say she was <em>half</em>-assigned a shift or that she was <em>half</em>-present.
+		</p>
+		<p>
+			Next, we ask what we wish to learn from our test. Specifically, we want to know whether or not there is an <em>association</em> between our two variables: the instance of Gilbert's presense and the instance of a death during a shift. In addition to the large sample size, these facts justify the use of a chi-square test for <em>independence</em>.
+		</p>
+		<p>
+			The use of a chi-square test for independence involves several steps, the first of which is to state clearly the hypotheses we wish to test. We begin with a <strong>null hypothesis</strong>, which we will attempt to disprove in favor of an <strong>alternative hypothesis</strong>:
+		</p>
+		<ul>
+			<li>H<sub>0</sub>: The instance of death on a shift was independent of whether or not Gilbert was present.</li>
+			<li>H<sub>A</sub>: The instance of death on a shift was somehow associated with whether or not Gilbert was present.</li>
+		</ul>
+		<p>
+			Our test assumes the null hypothesis is true, and the <strong>P-value</strong> produced later on is the probability of observing data that is as deviant or more so from what we <em>expect</em> to see under this assumption. At this point, we will also choose our <strong>significance level</strong>, a predetermined cut-off for the P-value below which we reject H<sub>0</sub>. We'll use the standard 0.05 significance level, meaning we will reject the null hypothesis if the probability of finding such deviant data under H<sub>0</sub> is less than 5%.
+		</p>
+		<p>
+			Once we have the marginal row and column sums, we can compute the table of expected frequencies for each cell using the formula $\frac{ n_{ row } \thinspace \cdot \thinspace n_{ column } }{ n_{ total } }$. We define the chi-square <strong>test statistic</strong> to be $\chi ^{ 2 } = \sum { \frac { \left( Observed \thinspace - \thinspace Expected \right) ^{ 2 } }{ Expected } }$, and from there we can calculate our P-value. Please take a moment out to verify and convince yourself that the calculations below are correct.
+		</p>
+	</div>
+	
+	<div class="calculations">
+		<table class="fourRows">
+			<tr>
+				<td class="tgilbert"><u>Gilbert</u></td>
+				<td class="tdeath">Death</td>
+				<td class="tdeath">No death</td>
+				<td class="tdeath">Total</td>
+			</tr>
+			<tr>
+				<td class="tgilbert">Present</td>
+				<td>40</td>
+				<td>217</td>
+				<td>257</td>
+			</tr>
+			<tr>
+				<td class="tgilbert">Absent</td>
+				<td>34</td>
+				<td>1350</td>
+				<td>1384</td>
+			</tr>
+			<tr>
+				<td class="tgilbert">Total</td>
+				<td>74</td>
+				<td>1567</td>
+				<td>1641</td>
+			</tr>
+		</table>
+		<div>$\leadsto$</div>
+		<table class="threeRows">
+			<thead>
+				<tr>
+					<th colspan="2">Expected</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>11.59</td>
+					<td>245.41</td>
+				</tr>
+				<tr>
+					<td>62.41</td>
+					<td>1321.59</td>
+				</tr>
+			</tbody>
+		</table>
+		<div>$\leadsto$</div>
+		<table class="threeRows">
+			<thead>
+				<tr>
+					<th colspan="2">$\chi ^{ 2 }$ "Contributors"</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>69.65</td>
+					<td>3.29</td>
+				</tr>
+				<tr>
+					<td>12.93</td>
+					<td>0.61</td>
+				</tr>
+			</tbody>
+		</table>
+		<div>$\leadsto$</div>
+		<table class="twoRows">
+			<tr>
+				<td>$\chi ^{ 2 } = 86.48$</td>
+			</tr>
+			<tr>
+				<td>$P \operatorname{ - } value \approx 0$</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="analysis2">
+		<p>
+			At this point, it may seem completely arbitrary how we arrived at this P-value, but we assure you that there in fact exists a chi-square <em>distribution</em> to consult. If you own a statistics textbook, it is almost certain that a table for this distribution is included among the appendices. For those of you studying probability theory, it may be useful to know that the chi-square distribution with $n$ degrees of freedom is equivalent to the gamma distribution with shape parameter $\frac{ n }{ 2 }$ and rate parameter $\frac{ 1 }{ 2 }$. And to state it simply for those completely new to the idea of probability distributions: a probability distribution assigns each selectable element in a given sample space a probability of selection. A hypothesis (like our H<sub>0</sub>) necessarily defines a probability distribution, so the P-value is the probability of selecting an element or set of elements, <em>if</em> in fact our null hypothesis is true.
+		</p>
+		<p>
+			You may also be wondering what <strong>degrees of freedom</strong> are, and one of the most general and most commonly cited answers to that question is that it is a count of the number of values in the final calculation of a statistic that are <em>free to vary</em>. Now, let's slow down for a moment. In this example, there are <em>four</em> values involved in the calculation of our chi-square test statistic (one for each of the four cells), but <em>only one</em> is <em>free to vary</em>. This means, for instance, that given the constraints of our study (for one, the fact that there were exactly 74 shifts during which a death occurred and exactly 1567 during which a death did not occur, and exactly 257 shifts that Gilbert was assigned and exactly 1384 shifts that Gilbert was not assigned), we only need to know one of the four cell counts before the other three are already determined. You can explore this concept in our tutorial below. The important thing to know is that the number of degrees of freedom in a chi-square test involving a contingency table is given by
+		</p>
+		<p>
+			\[df = \left( number \thinspace of \thinspace rows - 1 \right) \left( number \thinspace of \thinspace columns - 1\right).\]
+		</p>
+		<p>
+			Below is a visual representation of how the P-value was determined: the area under the curve and to the right of the chi-square statistic is the corresponding P-value. Notice that our chi-square test statistic is far off to the right, nowhere near the bulk of the density in our distribution. This is analogous to our miniscule P-value.
+		</p>
+		<p>
+			<img src="content/chiSqPlot.gif" class="block" alt="chiSqPlot.gif" />
+			<img src="content/residPlot.gif" class="block" alt="residPlot.gif" />
+		</p>
+		<p>
+			Our P-value indicates that we would probably never see this under the assumption of H<sub>0</sub>. Because we have gathered data that is so deviant from what we would expect to see under that assumption, the responsible course of action is to reject the null hypothesis; the instance of death on a shift was not independent of whether or not Gilbert was present.
+		</p>
+	</div>
+	
+	<div class="tutorial">
+		<fieldset>
+			<legend><h3>Tutorial: Data Exploration, Hypothesis Testing, Residual Analysis</h3></legend>
+			
+			<div class="top-panel">
+				<div class="top-top-left">
+					These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. 
+				</div>
+				<div class="top-top-right">
+					<table class="fourRows">
+						<thead>
+							<th colspan="4">Expected counts</th>
+						</thead>
+						<tbody class="calculations">
+							<tr>
+								<td class="tgilbert"><u>Gilbert</u></td>
+								<td class="tdeath">Death</td>
+								<td class="tdeath">No death</td>
+								<td class="tdeath">Total</td>
+							</tr>
+							<tr>
+								<td class="tgilbert">Present</td>
+								<td>11.59</td>
+								<td>245.41</td>
+								<td>257</td>
+							</tr>
+							<tr>
+								<td class="tgilbert">Absent</td>
+								<td>62.41</td>
+								<td>1321.59</td>
+								<td>1384</td>
+							</tr>
+							<tr>
+								<td class="tgilbert">Total</td>
+								<td>74</td>
+								<td>1567</td>
+								<td>1641</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			<div class="side-panel">
+				<div class="shiny-input-container">
+					<label for="whichCell">Select a subset of shifts:</label>
+					<select name="whichCell" id="whichCell">
+						<option value="cell11" selected="selected">Gilbert present &amp; Death</option>
+						<option value="cell21">Gilbert absent &amp; Death</option>
+						<option value="cell12">Gilbert present &amp; No death</option>
+						<option value="cell22">Gilbert absent &amp; No death</option>
+					</select>
+				</div>
+				
+				<div class="shiny-input-container">
+					<label for="cell-count">Specify a cell count:</label><br />
+					<input type="range" name="cell-count" id="cell-count" min="0" max="74" value="40" />
+					<span class="range-value"></span>
+				</div>
+				
+				<div>
+					<table class="fourRows">
+						<thead>
+							<th colspan="4">Observed counts</th>
+						</thead>
+						<tbody class="calculations">
+							<tr>
+								<td class="tgilbert"><u>Gilbert</u></td>
+								<td class="tdeath">Death</td>
+								<td class="tdeath">No death</td>
+								<td class="tdeath">Total</td>
+							</tr>
+							<tr>
+								<td class="tgilbert">Present</td>
+								<td id="n11">40</td>
+								<td id="n12">217</td>
+								<td>257</td>
+							</tr>
+							<tr>
+								<td class="tgilbert">Absent</td>
+								<td id="n21">34</td>
+								<td id="n22">1350</td>
+								<td>1384</td>
+							</tr>
+							<tr>
+								<td class="tgilbert">Total</td>
+								<td>74</td>
+								<td>1567</td>
+								<td>1641</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			<div class="main-panel">
+				<div id="chiSqPlot" class="shiny-plot-output"></div>
+				<div id="residPlot" class="shiny-plot-output"></div>
+				<div id="summary" class="shiny-text-output"></div>
+			</div>
+		</fieldset>
+		<br />
+		<fieldset>
+			<legend><h3>Tutorial: --------------</h3></legend>
+
+			<div class="top-panel">
+			</div>
+
+			<div class="side-panel">
+			</div>
+
+			<div class="main-panel">
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="concluding-remarks">
+		<p>
+			Write some stuff here
+		</p>
+	</div>
+	
+	<div class="references">
+			<!--ADD HYPERLINKS FROM WITHIN ANALYSIS-->
+	</div>
+</body>
+</html>
