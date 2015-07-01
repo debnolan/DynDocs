@@ -13,16 +13,24 @@ funx = function( a ,b , o) {
 
 
 funi = function( a ,b) {
+  if (identical(a,b)==TRUE) {
+    "ERROR: Optimal K value applicable only if two different stocks are selected."
+  } else {
   data=combine2Stocks(a,b)
   bes= getBestK( x= data[,2], y=data[,3])
   print(bes)
+  }  
 }
 
 funh = function( a ,b) {
+  if (identical(a,b)==TRUE) {
+    "ERROR: Best profit only application when two different stocks are selected."
+  } else {
   data=combine2Stocks(a,b)
   k = getBestK( x= data[,2], y=data[,3])
   tt= getProfit.K(k=k, x=data[,2], y=data[,3])
   print(tt)
+  }
 }
 
 shinyServer( function( input,output) {
@@ -62,7 +70,7 @@ shinyServer( function( input,output) {
     
   })
   
-  output$best <-renderPrint({
+  output$best <-renderText({
     arg.a <- switch(input$a,
                     "ibm" = ibm,
                     "gm" = gm,
@@ -91,7 +99,8 @@ shinyServer( function( input,output) {
     
   })
   
-  output$besp <-renderPrint({
+  output$besp <-renderText({
+        
     arg.a <- switch(input$a,
                     "ibm" = ibm,
                     "gm" = gm,
