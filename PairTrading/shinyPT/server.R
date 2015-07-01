@@ -14,61 +14,73 @@ funx = function( a ,b , o) {
 
 funi = function( a ,b) {
   if (identical(a,b)==TRUE) {
-    "ERROR: Optimal K value applicable only if two different stocks are selected."
+   paste( "The optimal K value is:", "ERROR: Optimal K value only applicable when two different stocks are selected.") 
   } else {
   data=combine2Stocks(a,b)
   bes= getBestK( x= data[,2], y=data[,3])
-  print(bes)
+  paste("The optimal K value of this pair of stocks is", sprintf("%1.4f", bes))
   }  
 }
 
 funh = function( a ,b) {
   if (identical(a,b)==TRUE) {
-    "ERROR: Best profit only application when two different stocks are selected."
+  paste(" The best profit is:", "ERROR: Best profit only applicaticable when two different stocks are selected.")
   } else {
   data=combine2Stocks(a,b)
   k = getBestK( x= data[,2], y=data[,3])
   tt= getProfit.K(k=k, x=data[,2], y=data[,3])
-  print(tt)
+  paste( "The best profit possible is", sprintf("%1.4f", tt))
   }
 }
 
 shinyServer( function( input,output) {
   
+  
   output$plot <- renderPlot({
     funx (att,verizon, FALSE)
   })
   
-  output$plot2 <- renderPlot({
-    arg.a <- switch(input$a,
-                    "ibm" = ibm,
-                    "gm" = gm,
-                    "inc" = inc,
-                    "toyota" = toyota,
-                    "hershey" = hershey,
-                    "kellog" = kellog,
-                    "hyatt" = hyatt,
-                    "hilton" = hilton,
-                    "united" = united,
-                    "southwest" = southwest)
+  data <- reactive({
     
+    input$graph
     
-    arg.b <- switch(input$b,
-                    "ibm" = ibm,
-                    "gm" = gm,
-                    "inc" = inc,
-                    "toyota" = toyota,
-                    "hershey" = hershey,
-                    "kellog" = kellog,
-                    "hyatt" = hyatt,
-                    "hilton" = hilton,
-                    "united" = united,
-                    "southwest" = southwest)
-    
-    
-    funx (arg.a,arg.b, input$circle)
-    
+    isolate({
+      arg.a <- switch(input$a,
+                      "ibm" = ibm,
+                      "gm" = gm,
+                      "inc" = inc,
+                      "toyota" = toyota,
+                      "hershey" = hershey,
+                      "kellog" = kellog,
+                      "hyatt" = hyatt,
+                      "hilton" = hilton,
+                      "united" = united,
+                      "southwest" = southwest)
+      
+      arg.b <- switch(input$b,
+                      "ibm" = ibm,
+                      "gm" = gm,
+                      "inc" = inc,
+                      "toyota" = toyota,
+                      "hershey" = hershey,
+                      "kellog" = kellog,
+                      "hyatt" = hyatt,
+                      "hilton" = hilton,
+                      "united" = united,
+                      "southwest" = southwest)
+      
+      list( arga = input$a, argb = input$b)
+      
+    })
   })
+  
+  output$plot2 <- renderPlot({
+    if(input$graph) {
+      funx( data()$arga, data()$argb, input$circle)
+    } else {  frame()
+    }   
+  })
+  
   
   output$best <-renderText({
     arg.a <- switch(input$a,
