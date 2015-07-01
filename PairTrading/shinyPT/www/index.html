@@ -62,18 +62,20 @@ Check the following boxes and see what happens.</p>
   <label>Select two stocks:</label>
 </br>
   <select id = "a">
-    <option value="ibm">IBM</option>
-    <option value="gm">GM</option>
-    <option value="inc">INC</option>
-    <option value="toyota">Toyota</option>
-    <option value="hershey">Hershey</option>
-    <option value="kellog">Kellog</option>
-    <option value="hyatt">Hyatt</option>
-    <option value="hilton">Hilton</option>
-    <option value="united">United</option>
+    <option>-- Select --</option>
     <option value="southwest">Southwest</option>
+    <option value="united">United</option>
+    <option value="hilton">Hilton</option>
+    <option value="hyatt">Hyatt</option>
+    <option value="kellog">Kellog</option>
+    <option value="hershey">Hershey</option>
+    <option value="toyota">Toyota</option>
+    <option value="inc">INC</option>
+    <option value="gm">GM</option>
+    <option value="ibm">IBM</option>
   </select>  
-  <select id = "b">
+  <select id = "b"  name="select">
+    <option>-- Select --</option>
     <option value="southwest">Southwest</option>
     <option value="united">United</option>
     <option value="hilton">Hilton</option>
@@ -85,6 +87,9 @@ Check the following boxes and see what happens.</p>
     <option value="gm">GM</option>
     <option value="ibm">IBM</option>
    </select>
+</p>
+<p>
+<button id="graph" type="button" class="btn btn-default action-button">Get Time Series </button>
 </p>
 
 <br/>
@@ -102,11 +107,10 @@ Check the following boxes and see what happens.</p>
 
 </p>
 
-<p> This pair of stocks has an optimal K value of: 
 <div id="best" class="shiny-text-output"> </div>
-And the best profit possible is: 
+</br>
 <div id="besp" class="shiny-text-output"> </div>
-</p> 
+
 
 </body>
 </html>
