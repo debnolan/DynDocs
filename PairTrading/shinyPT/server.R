@@ -68,19 +68,27 @@ shinyServer( function( input,output) {
                       "hilton" = hilton,
                       "united" = united,
                       "southwest" = southwest)
+      if(input$a == input$b){same = TRUE}else{same = FALSE}
       
-      list( arga = input$a, argb = input$b)
+      list( arga = arg.a, argb = arg.b, noShow = same)
       
     })
   })
   
   output$plot2 <- renderPlot({
-    if(input$graph) {
+    if(!data()$noShow) {
       funx( data()$arga, data()$argb, input$circle)
-    } else {  frame()
+    } else {  return(NULL)
     }   
   })
   
+  output$choosetwo = renderText({
+    if(data()$noShow){
+      "Please select two different stocks"
+    }else{
+      ""
+    }
+  })
   
   output$best <-renderText({
     arg.a <- switch(input$a,
