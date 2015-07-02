@@ -13,24 +13,18 @@ funx = function( a ,b , o) {
 
 
 funi = function( a ,b) {
-  if (identical(a,b)==TRUE) {
-   paste( "The optimal K value is:", "ERROR: Optimal K value only applicable when two different stocks are selected.") 
-  } else {
+ 
   data=combine2Stocks(a,b)
   bes= getBestK( x= data[,2], y=data[,3])
-  paste("The optimal K value of this pair of stocks is", sprintf("%1.4f", bes))
-  }  
+  paste("The optimal K value of this pair of stocks is", sprintf("%1.4f", bes))  
 }
 
 funh = function( a ,b) {
-  if (identical(a,b)==TRUE) {
-  paste(" The best profit is:", "ERROR: Best profit only applicaticable when two different stocks are selected.")
-  } else {
   data=combine2Stocks(a,b)
   k = getBestK( x= data[,2], y=data[,3])
   tt= getProfit.K(k=k, x=data[,2], y=data[,3])
   paste( "The best profit possible is", sprintf("%1.4f", tt))
-  }
+  
 }
 
 shinyServer( function( input,output) {
@@ -91,63 +85,19 @@ shinyServer( function( input,output) {
   })
   
   output$best <-renderText({
-    arg.a <- switch(input$a,
-                    "ibm" = ibm,
-                    "gm" = gm,
-                    "inc" = inc,
-                    "toyota" = toyota,
-                    "hershey" = hershey,
-                    "kellog" = kellog,
-                    "hyatt" = hyatt,
-                    "hilton" = hilton,
-                    "united" = united,
-                    "southwest" = southwest)
-    
-    
-    arg.b <- switch(input$b,
-                    "ibm" = ibm,
-                    "gm" = gm,
-                    "inc" = inc,
-                    "toyota" = toyota,
-                    "hershey" = hershey,
-                    "kellog" = kellog,
-                    "hyatt" = hyatt,
-                    "hilton" = hilton,
-                    "united" = united,
-                    "southwest" = southwest)
-    funi (arg.a, arg.b)
-    
+   if(data()$noShow){
+     paste("Please select two differnet stocks in order to find optimal K.")
+   } else {
+     funi(data()$arga, data()$argb)
+   }
   })
   
   output$besp <-renderText({
-        
-    arg.a <- switch(input$a,
-                    "ibm" = ibm,
-                    "gm" = gm,
-                    "inc" = inc,
-                    "toyota" = toyota,
-                    "hershey" = hershey,
-                    "kellog" = kellog,
-                    "hyatt" = hyatt,
-                    "hilton" = hilton,
-                    "united" = united,
-                    "southwest" = southwest)
-    
-    
-    arg.b <- switch(input$b,
-                    "ibm" = ibm,
-                    "gm" = gm,
-                    "inc" = inc,
-                    "toyota" = toyota,
-                    "hershey" = hershey,
-                    "kellog" = kellog,
-                    "hyatt" = hyatt,
-                    "hilton" = hilton,
-                    "united" = united,
-                    "southwest" = southwest)
-    funh (arg.a, arg.b)
-    
-  })
-  
+    if(data()$noShow){
+      paste(" Please select two different stocks in order to find best profit.")
+    } else {
+      funh(data()$arga, data()$argb)
+    }
 })
 
+})
