@@ -10,6 +10,7 @@ shinyServer(
     dataSet <- reactive({ 
       drugData(input$var)
       })
+    output$intro <- renderText({paste(intros, collapse = "")})
     #vizualize selected data with a table
       output$data <- renderTable({
         data.frame(dataSet())

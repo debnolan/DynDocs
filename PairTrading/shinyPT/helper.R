@@ -99,10 +99,9 @@ showPosition =
     if(is.list(days))
       days = unlist(days)
     
-    symbols(days, ratio[days], 
-            circles = rep(radius, length(days)), 
-            fg = c("darkgreen", "red"),
-            add = TRUE, inches = FALSE)
+    points(days, ratio[days], 
+            pch=19, cex = 2,
+            col = c("darkgreen", "red"))
   }
 
 positionProfit =
@@ -162,15 +161,15 @@ getBestK =
   }
 
 
-att = readData("~/Rproject/DynDocs/PairTrading/ATT.csv")
-verizon = readData("~/Rproject/DynDocs/PairTrading/VERIZON.csv")
-southwest = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/southwest.csv")
-united = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/united.csv")
-hilton = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/hilton.csv")
-hyatt = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/hyatt.csv")
-kellog = readData("http://www.stat.berkeley.edu/users/nolan/data/stocks/kellog.csv")
-hershey = readData("http://real-chart.finance.yahoo.com/table.csv?s=HSY&d=2&e=13&f=2015&g=d&a=6&b=1&c=1985&ignore=.csv")
-toyota = readData( "http://real-chart.finance.yahoo.com/table.csv?s=TM&d=2&e=13&f=2015&g=d&a=7&b=18&c=1976&ignore=.cs")
-inc = readData( "http://real-chart.finance.yahoo.com/table.csv?s=INTC&amp;d=5&amp;e=6&amp;f=2015&amp;g=d&amp;a=2&amp;b=17&amp;c=1980&amp;ignore=.csv")
-ibm = readData( "http://real-chart.finance.yahoo.com/table.csv?s=IBM&amp;d=5&amp;e=9&amp;f=2015&amp;g=d&amp;a=0&amp;b=2&amp;c=1962&amp;ignore=.csv")
-gm = readData( "http://real-chart.finance.yahoo.com/table.csv?s=GM&amp;d=5&amp;e=9&amp;f=2015&amp;g=d&amp;a=10&amp;b=18&amp;c=2010&amp;ignore=.csv")
+att = readData("../Data/ATT.csv")
+verizon = readData("../Data/VERIZON.csv")
+southwest = readData("../Data/southwest.csv")
+united = readData("../Data/united.csv")
+hilton = readData("../Data/hilton.csv")
+hyatt = readData("../Data/hyatt.csv")
+hershey = readData( "../Data/hershey.csv")
+kellog = readData("../Data/kellog.csv")
+toyota = readData( "../Data/toyota.csv")
+inc = readData( "../Data/inc.csv")
+ibm = readData( "../Data/ibm.csv")
+gm = readData( "../Data/gm.csv")

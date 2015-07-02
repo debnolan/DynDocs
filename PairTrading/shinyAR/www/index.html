@@ -25,18 +25,20 @@ Below are 9 AR(p = 1) graphs that have same parameters. Even though they have th
 </p>
   <p>
  
-    <label>Constant:</label><br /> 
-    <input type="number" name="c" value="10" min="1" /><br /> 
-    <label>&rho;:</label><br /> 
-    <input type="number" name="rho" value="0.1" min="0" max = "1" /><br /> 
-    <label>&sigma;:</label><br /> 
-    <input type="number" name="sigma" value="1" min="0" /><br /> 
+    <label>&nbsp;Constant:&nbsp;</label>
+	<input type="number" name="c" value="10" min="1" />
+    <label>&nbsp;&nbsp;&nbsp;&nbsp;&rho;:&nbsp;</label>
+    	<input type="number" name="rho" value="0.1" min="0" max = "1.00" />
+    <label>&nbsp;&nbsp;&nbsp;&nbsp;&sigma;:&nbsp;</label>
+	<input type="number" name="sigma" value="1" min="0" /><br /> 
   </p>
- 
-  
-  <div id="plot" class="shiny-plot-output" 
-       style="width: 100%; height: 400px"></div> 
-  
+ <p>
+ <button id="runSim" type="button" class="btn btn-default action-button">Simulate </button>
+<div id="warn" class="shiny-html-output"></div>
+          </p>  
+  <p>
+	<div id="plot" class="shiny-plot-output" style="width: 100%; height: 400px"></div> 
+  </p>
  
 </body>
 </html>

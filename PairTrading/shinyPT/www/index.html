@@ -62,18 +62,20 @@ Check the following boxes and see what happens.</p>
   <label>Select two stocks:</label>
 </br>
   <select id = "a">
-    <option value="ibm">IBM</option>
-    <option value="gm">GM</option>
-    <option value="inc">INC</option>
-    <option value="toyota">Toyota</option>
-    <option value="hershey">Hershey</option>
-    <option value="kellog">Kellog</option>
-    <option value="hyatt">Hyatt</option>
-    <option value="hilton">Hilton</option>
-    <option value="united">United</option>
+    <option selected="selected">-- Select --</option>
     <option value="southwest">Southwest</option>
+    <option value="united">United</option>
+    <option value="hilton">Hilton</option>
+    <option value="hyatt">Hyatt</option>
+    <option value="kellog">Kellog</option>
+    <option value="hershey">Hershey</option>
+    <option value="toyota">Toyota</option>
+    <option value="inc">INC</option>
+    <option value="gm">GM</option>
+    <option value="ibm">IBM</option>
   </select>  
-  <select id = "b">
+  <select id = "b"  name="select">
+    <option selected="selected">-- Select --</option>
     <option value="southwest">Southwest</option>
     <option value="united">United</option>
     <option value="hilton">Hilton</option>
@@ -86,6 +88,9 @@ Check the following boxes and see what happens.</p>
     <option value="ibm">IBM</option>
    </select>
 </p>
+<p>
+<button id="graph" type="button" class="btn btn-default action-button">Get Time Series </button>
+</p>
 
 <br/>
 <div class="form-group shiny-input-container">
@@ -95,18 +100,17 @@ Check the following boxes and see what happens.</p>
     <span>Show all Open and Close positions</span>
   </label> 
 </div>
+</div>
 
+<div id="choosetwo" class="shiny-html-output"></div>
 <p>
 <div id="plot2" class="shiny-plot-output" 
-     style="width: 200% ; height: 400px"></div>
-
+     style="width: 300% ; height: 400px"></div>
 </p>
+<p><div id="best" class="shiny-text-output" style="width: 300%" > </div>
+</br>
+<div id="besp" class="shiny-html-output" style="width: 300%"> </div></p>
 
-<p> This pair of stocks has an optimal K value of: 
-<div id="best" class="shiny-text-output"> </div>
-And the best profit possible is: 
-<div id="besp" class="shiny-text-output"> </div>
-</p> 
 
 </body>
 </html>

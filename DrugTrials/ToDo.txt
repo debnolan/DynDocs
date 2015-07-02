@@ -1,0 +1,8 @@
+1) Input citations and references
+2) Clean up code for tutorial
+3) Faster interactive text
+4) Write a conclusion about the data analyses (?)
+5) Scrolling tables
+6) "Pretty-up" document with CSS and reformat HTML
+7) Edit for grammar
+8) Find and provide explanation of ranking process (?)

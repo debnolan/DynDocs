@@ -1,0 +1,46 @@
+input[type="number"] {
+  max-width: 80%;
+}
+
+div.outer {
+  position: fixed;
+  top: 41px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: scroll;
+  padding: 0;
+  background-color: LightGoldenRodYellow;
+}
+
+/* Customize fonts */
+body, label, input, button, select { 
+  font-family: 'Helvetica Neue', Helvetica;
+  font-weight: 200;
+}
+h1, h2, h3, h4 { font-weight: 400; }
+
+#controls {
+  /* Appearance */
+  padding: 0px 5px 5px 5px;
+  cursor: move;
+  /* Fade out while not hovering */
+  opacity: 0.4;
+  zoom: 0.9;
+  transition: opacity 500ms 300ms;
+}
+#controls:hover {
+  /* Fade in while hovering */
+  opacity: 0.8;
+  transition-delay: 0;
+}
+
+/* Position and style citation */
+#cite {
+  position: static;
+  bottom: 10px;
+  left: 10px;
+  font-size: 11px;
+  color: grey;
+}
+

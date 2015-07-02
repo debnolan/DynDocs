@@ -1,3 +1,5 @@
+intros = readLines("www/introCal.html")
+
 #function for reactive widget to create dataSet used in analysis
 drugData = function(char) {
   if(char == "Calcium") {
