@@ -203,8 +203,7 @@ shinyServer(function(input, output) {
       ranges$x <- c(1, 2)
       ranges$y <- c(-1, 0)
     }else{
-      ranges$y = c(min(as.numeric(data_temp[1, dim(data_temp)[2]]), 
-                       as.numeric(data_temp[2,dim(data_temp)[2]])), 0)
+      ranges$y = c(min(as.numeric(data_temp[1:2, ])), 0)
       ranges$x = c(1, length(unlist(strsplit(evibio$data, split = ";"))) + 1)
     }
     data_temp    
@@ -225,8 +224,7 @@ shinyServer(function(input, output) {
         ranges$y <- c(-1, 0)
       }else{
         ranges$x = c(1, length(unlist(strsplit(evibio$data, split = ";"))) + 1)
-        ranges$y = c(min(as.numeric(databio()[1, dim(databio())[2]]), 
-                         as.numeric(databio()[2,dim(databio())[2]])), 0)
+        ranges$y = c(min(as.numeric(data_temp[1:2, ])), 0)
       }
     }
   })
