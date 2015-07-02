@@ -16,7 +16,7 @@ funi = function( a ,b) {
  
   data=combine2Stocks(a,b)
   bes= getBestK( x= data[,2], y=data[,3])
-  paste("The optimal K value of this pair of stocks is", sprintf("%1.4f", bes))  
+  paste("The optimal K  value of this pair of stocks is", sprintf("%.4f", bes))  
 }
 
 funh = function( a ,b) {
