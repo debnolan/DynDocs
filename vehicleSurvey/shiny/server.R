@@ -29,8 +29,8 @@ shinyServer(function(input, output) {
   }) 
   
   output$text1 = renderText({    
-    paste("The bootstrap estimated median of miles driven in 2002 is",
-          sprintf("%.0f", median(x()), sep = ""))
+    
+          sprintf("%.0f", median(x()))
   })
   
   output$CItable = renderTable({

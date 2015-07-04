@@ -43,11 +43,15 @@
   make confidence intervals and carry out hypothese tests. But what if we dont know the data generator? We
   create a bootstrap population from the sample. We know the bootstrap population so we can figure out the 
   bootstrap sampling distribution of the statistic. <br/>
-  Let  y = (-4, 3, 5, 7) be the sample. The sample mean = (-4 + 3 + 5 + 7)/4 = 2.75 <br/>
-  Now we take a bootstrap sample of size 4 with replacement from the bootstrap population. There are 4^4 = 256 
+  Let  y = (-4, 3, 5, 7)  with n = 4 be the sample. The sample mean is 2.75, standard error is 4.79 <br/>
+  We can use the bootstrap distribution of $y^*$ to estimate the standard error of y.
+  $y^*$ is an observation drawn from the sample with $$ \Bbb {E}^*(y^*)= (-4)\Bbb {P}^*(-4) + (3)\Bbb {P}^*(3)
+  + (5)\Bbb {P}^*(5)+ (7)\Bbb {P}^*(7) = {-4+3+5+7 \over 4} = 2.75 = \bar{y}$$
+  $$ Var^*(y^*) = \sum_{i={y^*}}(y^* - \Bbb {E}^*(y^*))^2\Bbb {P}^*(y^*) = {(-4 - 2.75)^2+
+  (3 - 2.75)^2+(5 - 2.75)^2+(7 - 2.75)^2 \over 4} = 17.1875 = {3\over 4} S_y^2 $$
+  $Var^*(y^*) = {n-1\over n}S_y^2 $ in general.
+  Now we take a bootstrap sample of size 4 with replacement from the bootstrap population. There are $4^4$ = 256 
   distinct bootstrap samples.(You can consider each sample as a vector, so (-4, 3, 3, 3) is different from (3, -4, 3, 3))
-  test $\hat{θ}$.
-  $$P(X_t|X_{t-1}, X_{t-2}... X_1) = P(X_t|X_{t-1})$$
 </p>
 
 

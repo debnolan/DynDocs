@@ -26,6 +26,12 @@
   <link rel="stylesheet" type="text/css" href="shared/highlight/rstudio.css"/>
   <link rel="stylesheet" type="text/css" href="shared/shiny-showcase.css"/>
   <script type="text/markdown" id="showcase-markdown-content"> </script>
+<link href="shared/ionrangeslider/css/normalize.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script> 
+
+
  </head>
 
  <body>
@@ -91,7 +97,7 @@ of times, we are able to get the same number of medians.
  <tr>
    <td id="showcase-app-container" class="showcase-app-container-expanded">
      <form class="well">
-      <div class="form-group shiny-input-container" style="width: 220px; height: 30px">
+      <div class="form-group shiny-input-container" style="width: 230px; height: 30px">
        <label>Number of Replication:</label>
         <select name="n">
          <option value="500">500</option>
@@ -100,11 +106,12 @@ of times, we are able to get the same number of medians.
         </select> 
        </div>
       </form>
-
       <form class="well">
-       <div class="form-group shiny-input-container" style="width: 220px; height: 200px">
-        <div id = "text1" class="shiny-text-output"></div> <br/>
-         The <input type="number" name="p" value="90" min="1" max="100" /> % confidence interval of bootstrap estimated sample median is
+       <div class="form-group shiny-input-container" style="width: 230px; height: 230px">
+       <label class="control-label" for="text1">The bootstrap estimated median of miles driven in 2002 is:</label>
+        <div id = "text1" class="shiny-text-output">.</div><br/>
+        <label class="control-label" for="p">The percentage of confidence interval:</label>
+        <input class="js-range-slider" id="p" data-min="0" data-max="100" data-from="50" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="5" />  
         <div id = "CItable" class = "shiny-html-output"></div>
       </div>
      </form>          
