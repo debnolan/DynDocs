@@ -1,20 +1,54 @@
+# Load the Data
 load(url("http://www.stat.berkeley.edu/users/nolan/data/Projects/election.rda"))
 rm(countyUS)
 rm(precintPBC)
 
+# Binomial Regression
+
+# We use two ways to do the regression.
+
+# Method #1
+
 # The dependent variable is whether the voter cast a vote for 
-# Buchanan or voted for another candidate. 
+# Buchanan(Ref) or voted for another candidate. 
 # In addition to the constant, the regressors are two dummy variables
 # that respectively indicate whether the ballot records a vote for 
 # Nelson (D) or a vote for Deckard (Ref).
 
-summary(glm(ibuchanan ~ inelson + ideckard, family = "binomial", weights = Freq,
-       subset = isabs==0, data = ballotPBC))
+fit.elecday = glm(ibuchanan ~ inelson + ideckard, family = "binomial", weights = Freq,
+                  subset = isabs == 0, data = ballotPBC)
+summary(fit.elecday)
 
-summary(glm(ibuchanan ~ inelson + ideckard, family = "binomial", weights = Freq,
-        subset = isabs==1, data = ballotPBC))
+fit.abs = glm(ibuchanan ~ inelson + ideckard, family = "binomial", weights = Freq,
+              subset = isabs == 1, data = ballotPBC)
+summary(fit.abs)
 
 # The above output should match Table 3 in the paper.
+
+# Method 2
+
+# Do a complete binomial regression instead of doing separately.
+# Remember to consider the interaction terms.
+
+fit = glm(ibuchanan ~ inelson + ideckard + isabs + inelson:isabs + ideckard:isabs,
+          family = "binomial", weights = Freq, data = ballotPBC)
+summary(fit)
+
+# Compare Coefficients Fitted by Two Ways
+
+coef(fit)[1:3]
+coef(fit.elecday)
+
+c(coef(fit)["(Intercept)"] + coef(fit)["isabs"], 
+  coef(fit)["inelson1"] + coef(fit)["inelson1:isabs"], 
+  coef(fit)["ideckard1"] + coef(fit)["ideckard1:isabs"])
+coef(fit.abs)
+
+# We can find that the coefficients are equal by these two fitting method.
+
+# In addition, we can tell the difference between the election day and
+# absentee fitted formula, which means the ballot format may affect 
+# the vote for Buchanan.
 
 # The confidence intervals of the Nelson coefficients for the two 
 # ballot formats do not overlap. Therefore, we reject the hypothesis
@@ -38,82 +72,99 @@ xtabs(Freq ~ inelson + ideckard + isabs, data = ballotPBC ,
 # those who vote for Deckard. 
 
 
-# Analyze PBC data in precinct-level
+# Analyze PBC data in ballot-level
+data.elecday = c(sum(ballotPBC$Freq[ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 0
+                                    & ballotPBC$ideckard == 0 & ballotPBC$isabs == 0]),
+                 sum(ballotPBC$Freq[ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 0
+                                    & ballotPBC$ideckard == 0 & ballotPBC$isabs == 0]),
+                 sum(ballotPBC$Freq[ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 1
+                                    & ballotPBC$ideckard == 0 & ballotPBC$isabs == 0]),
+                 sum(ballotPBC$Freq[ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 1
+                                    & ballotPBC$ideckard == 0 & ballotPBC$isabs == 0]),
+                 sum(ballotPBC$Freq[ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 0
+                                    & ballotPBC$ideckard == 1 & ballotPBC$isabs == 0]),
+                 sum(ballotPBC$Freq[ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 0
+                                    & ballotPBC$ideckard == 1 & ballotPBC$isabs == 0]))
 
-precinct = unique(as.character(ballotPBC$precinct))
-comb = sapply(1:length(precinct), 
-           function(i) nrow(ballotPBC[ballotPBC$precinct == precinct[i],]))
-table(comb)
+data.abs = c(sum(ballotPBC$Freq[ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 0 
+                                & ballotPBC$ideckard == 0 & ballotPBC$isabs == 1]),
+             sum(ballotPBC$Freq[ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 0
+                                & ballotPBC$ideckard == 0 & ballotPBC$isabs == 1]),
+             sum(ballotPBC$Freq[ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 1
+                                & ballotPBC$ideckard == 0 & ballotPBC$isabs == 1]),
+             sum(ballotPBC$Freq[ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 1
+                                & ballotPBC$ideckard == 0 & ballotPBC$isabs == 1]),
+             sum(ballotPBC$Freq[ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 0
+                                & ballotPBC$ideckard == 1 & ballotPBC$isabs == 1]),
+             sum(ballotPBC$Freq[ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 0
+                                & ballotPBC$ideckard == 1 & ballotPBC$isabs == 1]))
 
-data = data.frame()
-for (i in 1:length(precinct)) {
-  data[i, 1] = ballotPBC$precinct[ballotPBC$precinct == precinct[i]][1]
-  
-  data[i, 2] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
-                                      ballotPBC$ibuchanan == 0 & 
-                                      ballotPBC$inelson == 0 & 
-                                      ballotPBC$ideckard == 0], 0)
-  data[i, 3] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
-                                      ballotPBC$ibuchanan == 1 & 
-                                      ballotPBC$inelson == 0 &
-                                      ballotPBC$ideckard == 0], 0)
-  data[i, 4] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
-                                      ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 1 &
-                                      ballotPBC$ideckard == 0], 0)
-  data[i, 5] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
-                                      ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 1 &
-                                      ballotPBC$ideckard == 0], 0)
-  data[i, 6] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
-                                      ballotPBC$ibuchanan == 0 & ballotPBC$inelson == 0 &
-                                      ballotPBC$ideckard == 1], 0)
-  data[i, 7] = max(ballotPBC$Freq[ballotPBC$precinct == precinct[i] & 
-                                      ballotPBC$ibuchanan == 1 & ballotPBC$inelson == 0 &
-                                      ballotPBC$ideckard == 1], 0)
-  data[i, 8] = mean(ballotPBC$isabs[ballotPBC$precinct == precinct[i]])
-}
+data = rbind(data.elecday, data.abs)
+colnames(data) = c("!B, !N, !D", "B, !N, !D", "!B, N, !D", 
+                   "B, N, !D", "!B, !N, D", "B, !N, D")
 
-colnames(data) = c("precinct", "-B,-N,-D", "B,-N,-D", "-B,N,-D", "B,N,-D", "-B,-N,D", 
-                   "B,-N,D", "isabs")
-
-pair.precinct1 = unique(as.character(ballotPBC$precinct[ballotPBC$isabs == 1]))
-pair.precinct0 = substr(pair.precinct1, 2, 4)
-pair.precinct0 = paste0(0, pair.precinct0)
-pair.index = pair.precinct0 %in% precinct
-pair.precinct0 = pair.precinct0[pair.index]
-pair.precinct1 = pair.precinct1[pair.index]
-
-data.pair0 = sapply(1:length(pair.precinct0), 
-                    function(i) data[data$precinct == pair.precinct0[i], 2:7])
-data.pair0 = data.frame(pair.precinct0, t(data.pair0))
-
-data.pair1 = sapply(1:length(pair.precinct1), 
-                    function(i) data[data$precinct == pair.precinct1[i], 2:7])
-data.pair1 = data.frame(pair.precinct1, t(data.pair1))
-
-class(data.pair0[, 2]) = "numeric"; class(data.pair0[, 3]) = "numeric"
-class(data.pair0[, 4]) = "numeric"; class(data.pair0[, 5]) = "numeric"
-class(data.pair0[, 6]) = "numeric"; class(data.pair0[, 7]) = "numeric"
-
-class(data.pair1[, 2]) = "numeric"; class(data.pair1[, 3]) = "numeric"
-class(data.pair1[, 4]) = "numeric"; class(data.pair1[, 5]) = "numeric"
-class(data.pair1[, 6]) = "numeric"; class(data.pair1[, 7]) = "numeric"
-
-data.prob0 = data.frame(data.pair0[, 1], data.pair0[, -1] / rowSums(data.pair0[, -1]))
-data.prob1 = data.frame(data.pair1[, 1], data.pair1[, -1] / rowSums(data.pair1[, -1]))
+# Now we have the number of votes for each combination of voting in two ballot formats.
 
 # Chi-square Test
-chisq.test(data.prob0[, 2], data.prob1[, 2])
-chisq.test(data.prob0[, 3], data.prob1[, 3])
-chisq.test(data.prob0[, 4], data.prob1[, 4])
-chisq.test(data.prob0[, 5], data.prob1[, 5])
-chisq.test(data.prob0[, 6], data.prob1[, 6])
-chisq.test(data.prob0[, 7], data.prob1[, 7])
+
+chisq.test(data)
+
+# Note that the p-value is smaller than 2.2e-16, hence we will reject the null hypothesis.
+# There is difference between the election-day ballots and absentee ballots. 
 
 
-# Binomial Regression Fit
-summary(glm(ibuchanan ~ inelson + ideckard + isabs, family = "binomial", 
-            weights = Freq, data = ballotPBC))
+# Mosaic Plots
 
-# Simulation
-sample = rchisq(n = 1000, df = )
+# Create Three Factors
 
+senator = factor(levels = c("Nelson", "Deckard", "Others"))
+for (i in 1:nrow(ballotPBC)){
+  if (ballotPBC$inelson[i] == 1) senator[i] = "Nelson"
+  else {
+    if (ballotPBC$ideckard[i] == 1) senator[i] = "Deckard"
+    else senator[i] = "Others"
+  }
+}
+
+president = factor(levels = c("Buchanan", "Others"))
+for (i in 1:nrow(ballotPBC)){
+  if (ballotPBC$ibuchanan[i] == 1) president[i] = "Buchanan"
+  else president[i] = "Others"
+}
+
+day = factor(levels = c("Election Day", "Absentee"))
+for (i in 1:nrow(ballotPBC)){
+  if (ballotPBC$isabs[i] == 1) day[i] = "Absentee"
+  else day[i] = "Election Day"
+}
+
+# Make Two-Variable Tables and Mosaic Plots
+
+mos.table = table(senator, president, day)
+mos.table1 = table(senator, president)
+mos.table2 = table(senator, day)
+mos.table3 = table(president, day)
+mosaicplot(mos.table1)
+mosaicplot(mos.table2)
+mosaicplot(mos.table3)
+
+# Line Plot
+
+# Calculate the percents of vote for Buchanan for each senator's voters
+# in different ballot types
+
+vote.pct = rbind(mos.table[, 1, 1] / rowSums(mos.table[, , 1]),
+                 mos.table[, 1, 2] / rowSums(mos.table[, , 2]))
+rownames(vote.pct) = c("Election Day", "Absentee")
+
+plot(vote.pct[1, ], type = "l", col = "gold", xaxt = "n", ylim = c(0.1, 0.55),
+     main = "Percents of Vote for Buchanan for Each Senator's Supporters\n in Different Ballot Types",
+     xlab = "Senator", ylab = "Percents of Vote for Buchanan")
+lines(vote.pct[2, ], col = "royalblue", xaxt = "n")
+axis(side = 1, at = seq_along(vote.pct[1, ]), labels = colnames(vote.pct))
+legend(x = "topright", legend = rownames(vote.pct), fill = c("gold", "royalblue"))
+
+# It seems that for absentee ballots the percents of vote for Buchanan 
+# for different senator's supporters are similar 
+# while for election-day ballots the percents of vote for Buchanan 
+# for different senator's supporters are distinctly different.

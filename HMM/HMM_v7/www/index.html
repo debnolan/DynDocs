@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];selectize[0.11.2];ionrangeslider[2.0.6];bootstrap[3.3.1]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="shared/selectize/js/es5-shim.min.js"></script>
+<![endif]-->
+<script src="shared/selectize/js/selectize.min.js"></script>
+<link href="shared/ionrangeslider/css/normalize.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>  
+<style>
+table, th, td {
+    border: 1px solid black;
+    
+}
+th, td {
+    padding: 15px;
+    text-align: center;
+}
+
+#container {margin: 0 auto; width:1080px;}
+
+</style>
+</head>
+<body id="container">
+  <div >
+  <h1>Hidden Markov Models</h1>
+  <p>
+    The idea of Hidden Markov Model (HMM) is developed based on Markov Model. HMM is used when the system being modeled is assumed to be a Markov process with
+    unobserved (hidden) states.
+  </p>
+
+  <p>
+    So, let us talk a little bit about simple Markov Model first before we dig into HMM. 
+  </p>
+
+  <h2>Markov Chain</h2>
+
+  <p>
+    One typical example of Markov Model is the <a href="#refMC">Markov Chain</a>. A Markov Chain is a random process that undergoes transitions from one state to another on a state space. It must possess a property that is usually characterized as "memoryless": the probability distribution of the next state depends only on the current state and not on the sequence of events that preceded it, which can be shown as:
+  </p>
+
+  <p>
+    $$P(X_t|X_{t-1}, X_{t-2}... X_1) = P(X_t|X_{t-1})$$
+  </p>
+
+  <p>
+    A Markov Chain can be graphically represented as:
+  </p>
+
+  <img src="markov_chain.png" width="500" height="80" style="padding-left: 100px;"/>
+
+  <p>
+    Where $X_1$, $X_2$, $X_3$... are called the <b>state</b>.
+  </p>
+
+  <p>
+    It has the following parameters:
+  </p>
+
+  <p>
+    <LI><b>Initial distribution</b>: $P(X_1)$
+  </p>
+
+  <p>
+    <LI><b>Transition probabilities</b>: $P(X_t|X_{t-1})$
+  </p>
+
+  <h3>Real Life Markov Chain Example: Weather</h3>
+
+  <p>
+    Suppose we want to estimate weather. Build a model that each day's weather is depended on the previous day's weather. Also, in order to simlify the problem, we assume there are only two types of weather: sun and rain. In this way, the initial distribution is the first day's weather, and the transition probability is the relation between 2 consecutive days' weather.
+  </p>
+
+  <p>
+    Firstly, let us consider a simple condition with the following default paramerters:
+  </p> 
+
+  <p>
+    <LI>Initial distribution $P(X_1)$: 1.0 Sun [i.e. $P(X_1=sun) = 1$ & $P(X_1=rain) = 0$]
+  </p>
+
+  <p>
+    <LI>Transition probabilities $P(X_t|X_{t-1})$: 
+  </p>
+  <div style="padding-left: 180px;">
+    <table border="1">
+    <tr>
+    <td>&nbsp;</td>
+    <td>Sun</td>
+    <td>Rain</td>
+    </tr>
+    <tr>
+    <td>Sun</td>
+    <td>0.9</td>
+    <td>0.1</td>
+    </tr>
+    <tr>
+    <td>Rain</td>
+    <td>0.3</td>
+    <td>0.7</td>
+    </tr>
+    </table>
+  </div>
+
+  <p>
+    Or more Intuitively,
+  </P>
+
+
+  <img src="mc_simple.png" width="400" height="150" style="padding-left: 120px;"/>
+
+
+
+
+
+
+  
+
+  <p>
+    <br></br>
+    Now a completed model has been built up, so we can do the mathematical simulation.
+  </P>
+
+  <p>
+    The probability distribution after one step: 
+    \begin{align}
+    P(X_2 = sun)& = P(X_2 = sun|X_1 = sun)P(X_1 = sun) + P(X_2 = sun|X_1 = rain)P(X_1 = rain)\\
+     & = 0.9 * 1.0 + 0.3 * 0.0\\
+     & = 0.9  
+
+    \end{align}
+
+    \begin{align}
+    P(X_2 = rain)& = P(X_2 = rain|X_1 = sun)P(X_1 = sun) + P(X_2 = rain|X_1 = rain)P(X_1 = rain)\\
+     & = 0.1 * 1.0 + 0.7 * 0.0\\
+     & = 0.1  
+
+    \end{align}
+
+  </P>
+
+  <p>
+    Similiarly, we can apply this algorithm to further days and then get their weather condition probability distributions, here is a example for the first 5 days:
+  </p>
+  <center>
+  <table border="1">
+  <tr>
+  <td>&nbsp;</td>
+  <td>Day 1</td>
+  <td>Day 2</td>
+  <td>Day 3</td>
+  <td>Day 4</td>
+  <td>Day 5</td>
+  </tr>
+  <tr>
+  <td>Sun</td>
+  <td>1</td>
+  <td>0.9</td>
+  <td>0.84</td>
+  <td>0.804</td>
+  <td>0.7824</td>
+  </tr>
+  <tr>
+  <td>Rain</td>
+  <td>0</td>
+  <td>0.1</td>
+  <td>0.16</td>
+  <td>0.195</td>
+  <td>0.2176</td> 
+  </tr>
+  </table>
+  </center>
+  <p>
+
+  </p>
+
+
+  <p>
+    <br></br>
+    In addition to the simple case, this problem can be visulized by setting different parameters and the number of steps (days):
+  </p>
+
+<p>
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <div class="form-group shiny-input-container">
+          <h4><b>Parameters</b></h4> 
+          <div>
+          <label for="initr">Initial Probability of Rain:</label><br /> 
+          <input class="js-range-slider" id="initr" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <div>
+          <label for="tranrr">Transition Probability from Rain to Rain:</label><br /> 
+          <input class="js-range-slider" id="tranrr" data-min="0" data-max="1" data-from="0.7" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <div>
+          <label for="transs">Transition Probability from Sun to Sun:</label><br /> 
+          <input class="js-range-slider" id="transs" data-min="0" data-max="1" data-from="0.9" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+          <span class="help-block">Note that the rest of the probabilities corresponding to the above ones are just 1 - above probabilities respectively.</span>
+          <div>
+          <label>Number of steps:</label><br /> 
+          <input type="number" name="n" value="5" min="0" max="50" />
+          </div>    
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+         <div id="plot" class="shiny-plot-output"
+       style="width: 100%; height: 500px"></div> 
+      </div>
+    </div>
+  </div>
+
+
+</p>
+
+  <p>
+    According to the graph, the probability distribution will converge to the transition probability no matter what the initial distribution is.
+    <br></br>
+  </p>
+
+  
+
+  <h2>Hidden Markov Models</h2>
+
+  <p>
+    However, in real life, markov chain is not very useful for most of the problems since there always have some hidden states such that people cannot get their exact distribution. In this case, we are trying to find some other patterns that are able to observe and have relation with the hidden states. Then, at each time step, use the observation to update the beliefs.
+  </p>
+  
+  <p>
+    A typical HMM's graphical representation is a markov chain plus an observer $E_i$ to each state $X_i$:
+  </p>
+
+  <img src="hmm.png" width="550" height="150" style="padding-left: 180px;"/>
+
+  <p>
+    The parameters for HMMs are:
+  </p>
+
+    <p>
+    <LI><b>Initial distribution</b>: $P(X_1)$
+  </p>
+
+  <p>
+    <LI><b>Transition probabilities</b>: $P(X_t|X_{t-1})$
+  </p>
+
+  <p>
+    <LI><b>Observations</b>: $E_i$
+  </p>
+
+  <p>
+    <LI><b>Emission probabilities</b>: $P(E_t|X_t)$
+  </P>
+
+
+  <p>
+    The process of an HMM is based on simple Markov models. In addition to each <b>transition update</b>, which is what we have done in the previous weather example, it has another <b>emission update</b> that modifies the distribution of $P(X_i)$ according to $E_i$.
+  <p>
+
+  <h2>Weather Example in Hidden Markov Model</h2>
+
+  <p>
+    Continue with the weather problem above. All the existing assumptions stay the same. But this time we keep staying in a building so we are not able to look at the weather outside. However, we still have a piece of clue--there is a person who comes to the building everyday and he is more likely to carry an umbrella when it is rainy. Therefore we can use if the person carries umbrella (+u, -u) as an observer to predict if the weather is rainy (+r, -r).
+  </p>
+
+  <p>
+    Similiar to the Markov Chain problem, let us firstly consider a simple setup of these default parameters:
+  </p>
+
+  <p>
+    <LI>Initial distribution: &nbsp;&nbsp;  $P(R_0= +r) = 0.5$ &nbsp;&nbsp; $P(R_0= -r) = 0.5$</LI>
+  </p>
+
+  <p>
+    <LI>Transition probabilities:</LI>
+  </p>
+
+  <div style="padding-left: 180px;">
+    <table border="1">
+    <tr>
+    <td>&nbsp;</td>
+    <td>+r</td>
+    <td>-r</td>
+    </tr>
+    <tr>
+    <td>+r</td>
+    <td>0.7</td>
+    <td>0.3</td>
+    </tr>
+    <tr>
+    <td>-r</td>
+    <td>0.3</td>
+    <td>0.7</td>
+    </tr>
+    </table>
+  </div>
+
+  <p>
+    <LI>Observations: &nbsp;&nbsp; $U_1 = +u$, $U_2 = +u$ ...</LI>
+  </p>
+
+  <p>
+    <LI>Emission probabilities:</LI>
+  </p>
+
+  <div style="padding-left: 180px;">
+    <table border="1">
+    <tr>
+    <td>&nbsp;</td>
+    <td>+u</td>
+    <td>-u</td>
+    </tr>
+    <tr>
+    <td>+r</td>
+    <td>0.9</td>
+    <td>0.1</td>
+    </tr>
+    <tr>
+    <td>-r</td>
+    <td>0.2</td>
+    <td>0.8</td>
+    </tr>
+    </table>
+  </div>
+
+  <p>
+    <br></br>
+  Now the problem setup is complete. According to the "Transition update-Emission update-Transition update..." rule, the beliefs changed in the following way:
+  </p>
+
+  <img  src="hmm_eg_3.png" width="650" height="320" style="padding-left: 120px;"/>
+
+
+  <p>
+    <br></br>
+    There is also a visualizer for this problem in general cases. Determine all the parameters and then it will give a correspounding simulation:
+  </p>
+  
+   
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <div class="form-group shiny-input-container">
+            <h4><b>Parameters</b></h4> 
+            <div>
+            <label for="initrhmm">Initial Probability of Rain:</label><br /> 
+            <input class="js-range-slider" id="initrhmm" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <div>
+            <label for="tranrrhmm">Transition Probability from Rain to Rain:</label><br /> 
+            <input class="js-range-slider" id="tranrrhmm" data-min="0" data-max="1" data-from="0.7" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <div>
+            <label for="transshmm">Transition Probability from Sun to Sun:</label><br /> 
+            <input class="js-range-slider" id="transshmm" data-min="0" data-max="1" data-from="0.7" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <div>
+            <label for="emru">Emission Probability from Rain to Umbrella:</label><br /> 
+            <input class="js-range-slider" id="emru" data-min="0" data-max="1" data-from="0.9" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <div>
+            <label for="emsu">Emission Probability from Sun to Umbrella:</label><br /> 
+            <input class="js-range-slider" id="emsu" data-min="0" data-max="1" data-from="0.2" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <span class="help-block">Note that the rest of the probabilities corresponding to the above ones are just 1 - above probabilities respectively.</span>
+            <div>
+            <label>Evidences:</label><br />
+              <div class="row">
+                <div class="col-sm-3">
+                  <button id="um" type="button" class="btn btn-default action-button shiny-bound-input"><image src="um.gif" width="30" height="30" /></button>
+                </div>
+                <div class="col-sm-3">
+                  <button id="num" type="button" class="btn btn-default action-button shiny-bound-input"><image src="num.gif"width="30" height="30" /></button>
+                </div>
+                <div class="col-sm-3">
+                  <button id="cl" type="button" class="btn btn-default action-button shiny-bound-input"><image src="eraser.png" width="30" height="30" /></button>
+                </div>
+              </div>
+            </div>    
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+         <div id="plothmm" class="shiny-plot-output"
+       style="width: 100%; height: 500px"></div> 
+      </div>
+      <div>
+      <div id="table" class="shiny-html-output"></div>      
+      </div>
+    </div>
+  </div>
+
+  <h2>Biological Example in Hidden Markov Model</h2>
+
+  <p>
+    After the above toy examples, let us work on a case which shows how HMM might be used in real life studies.
+  </p>
+  <p>
+    We know that DNA string is made up of 4 kind of bases A, T, G, C. When producing proteins, these bases comes as certain sequences as codes to control the production of proteins. However, not all the sequences on DNA are responsible for coding proteins. some of them are just "doing nothing" and we call these regions non-coding regions while the working part is called coding region. And they are usually referred to as H(high GC content) and L(low GC content) respectively.  
+  </p>
+
+  <p>
+    When learning about DNA strings, we don't know the H and L states, so we can only use the bases to find the probability of the states. Since the bases of DNA are not connected without pattern, they are connected with certain probabilities which varies accoding to H, L regions and ATCG bases. In this case, we build an HMM model, where H and L are hidden states and ATCG are evidences and use bases to find H, L states.
+  </p>
+  
+  <p>
+    The following picture shows the inital probabilities, transition probabilities and emission probabilities we are going to use in this case. Note that these structures are simplied, the real mechanism is way more complicated.
+  </p>
+
+  <center><img src="DNA.png" width="574.5" height="204" align="middle" /></center>
+
+  <p>
+    Let us consider the sequence S = GGCAC. Since the probabilities are really small, we will use $log_2$ scale instead. And the above probability picture is now represented in the following way:
+  </p>
+
+  <center><img src="DNA_log.png" width="560.4" height="208.8" align="middle" /></center>
+
+  <p>
+    Then as we did in the previous example, we can calculate $P(G_1|H)$ the probability of G at the first position is emited by H. And $P(X_1 = G_1|H) = P(H_0)*P(G_i|H)$ and similarly, we can calculate $P(G_1|L)$ the probability of G at the first position is emited by L. Under $log_2$ scale, we can get $P(G_1|H) = -2.737$ and $P(G_1|H) = -3.322$. Since we want the most probable hidden state, we will take maximum during calculating and use the formula below:
+    \begin{align}
+      P(x_i = e_i|H) & = P(e_i|H)*max(P(x_{i-1} = e_{i-1}|H)*P(H|H), \ \ P(x_{i-1} = e_{i-1}|L)*P(H|L)) \\
+      P(x_i = e_i|L) & = P(e_i|L)*max(P(x_{i-1} = e_{i-1}|H)*P(L|H), \ \ P(x_{i-1} = e_{i-1}|L)*P(L|L))
+
+    \end{align}
+
+    For example, the probability of A at the 4th position with state H is $P(A_4|H) = P(A|H)*max(P(C_3|L)*P(L|H), \ \ P(C_3|H)*P(H|H))$. 
+  </p>
+
+  <p>
+    Using the above formulas, we can get the following table of probabilities of the sequence and states:
+  </p>
+
+  <p>
+  <center>  
+    <table>
+      <tr>
+        <td></td>
+        <th>G</td>    
+        <th>G</td>
+        <th>C</td>
+        <th>A</td>
+        <th>C</td>
+      </tr>
+      <tr>
+        <th>H</td>
+        <th>-2.73</td>    
+        <th>-5.47</td>
+        <th>-8.21</td>
+        <td>-11.53</td>
+        <th>-14.01</td>
+      </tr>
+      <tr>
+        <th>L</td>
+        <td>-3.32</td>    
+        <td>-6.06</td>
+        <td>-8.79</td>
+        <th>-10.94</td>
+        <td>-14.01</td>
+      </tr>
+    </table> 
+  </center>
+  </p>
+  <p>
+    <br></br>
+    From the above table, we can see that the most probable path is HHHLH. Now, you can choose your own inputs to find out more about HMM.
+  </p>
+
+  <p>
+    <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <div class="form-group shiny-input-container">
+            <h4><b>Parameters</b></h4> 
+            <div>
+            <label for="inith">Initial Probability of H:</label><br /> 
+            <input class="js-range-slider" id="inith" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <div>
+            <label for="tranhh">Transition Probability from H to H:</label><br /> 
+            <input class="js-range-slider" id="tranhh" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <div>
+            <label for="tranll">Transition Probability from L to L:</label><br /> 
+            <input class="js-range-slider" id="tranll" data-min="0" data-max="1" data-from="0.6" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <div>
+            <label for="emha">Emission Probability from H to A:</label><br /> 
+            <input class="js-range-slider" id="emha" data-min="0" data-max="1" data-from="0.2" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <div>
+            <label for="emla">Emission Probability from L to A:</label><br /> 
+            <input class="js-range-slider" id="emla" data-min="0" data-max="1" data-from="0.3" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+            </div>
+            <span class="help-block">Note that the rest of the probabilities corresponding to the above ones are just 1 - above probabilities respectively for inital and transitional ones. For the emission probability, by biological properties, A&T always have the same probability, so do C&G.</span>
+            <div>
+            <label>Evidences:</label><br />
+              <div class="row">
+                <div class="col-sm-2">
+                  <button id="A" type="button" class="btn btn-default action-button shiny-bound-input">A</button>
+                </div>
+                <div class="col-sm-2">
+                  <button id="C" type="button" class="btn btn-default action-button shiny-bound-input">C</button>
+                </div>
+                <div class="col-sm-2">
+                  <button id="G" type="button" class="btn btn-default action-button shiny-bound-input">G</button>
+                </div>
+                <div class="col-sm-2">
+                  <button id="Tb" type="button" class="btn btn-default action-button shiny-bound-input">T</button>
+                </div>
+                <div class="col-sm-2">
+                  <button id="clbio" type="button" class="btn btn-default action-button shiny-bound-input"><image src="eraser.png" width="17" height="17" /></button>
+                </div>
+              </div>
+            </div>    
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+         <div id="plotbio" class="shiny-plot-output"
+       style="width: 100%; height: 500px"></div> 
+      </div>
+      <div>
+      <div id="tablebio" class="shiny-html-output"></div>      
+      </div>
+    </div>
+  </div>
+  </p>    
+<p>
+
+</p>
+</div>
+<h3> References</h3>
+
+<p>
+	<a name="refMC">Markov Chains</a>, Wikipedia, link
+</p>
+
+</body>
+
+
+</html>
+
+
+
