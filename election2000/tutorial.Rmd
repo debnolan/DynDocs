@@ -1,12 +1,3 @@
----
-title: "Tutorial part"
-author: "Qingyuan Zhang"
-date: "June 9, 2015"
-output: pdf_document
----
-
-
-
 ```{r}
 library(aod)
 library(ggplot2)
