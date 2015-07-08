@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+<style type="text/css">
+.knitr .inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage .left {
+  text-align: left;
+}
+.rimage .right {
+  text-align: right;
+}
+.rimage .center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];selectize[0.11.2];ionrangeslider[2.0.6];bootstrap[3.3.1]</script>
+  <script src="shared/json2-min.js"></script>
+  <script src="shared/jquery.min.js"></script>
+  <link href="shared/shiny.css" rel="stylesheet" />
+  <script src="shared/shiny.min.js"></script>
+  <link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+  <!--[if lt IE 9]>
+  <script src="shared/selectize/js/es5-shim.min.js"></script>
+  <![endif]-->
+  <script src="shared/selectize/js/selectize.min.js"></script>
+  <link href="shared/ionrangeslider/css/normalize.css" rel="stylesheet" />
+  <link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+  <link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+  <script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="shared/bootstrap/js/bootstrap.min.js"></script>
+  <script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+  <script src="shared/bootstrap/shim/respond.min.js"></script>
+  <title>Permutations Test</title>
+  </head>
+  
+  <head>
+<title>Permutations Test Tutorial</title>
+</head>
+
+<body>
+<h1>Permutations Test Tutorial</h1>
+
+<h2>Introduction</h2>
+<p>Permutations tests are a method from the general area of statistics called hypothesis testing; more specifically randomization testing. We will be using data from two-population drug efficacy trials to demonstrate the method, but the permutations testing model can be applied to a wide variety of situations for testing hypotheses about populations. The basic process involves simulating sample populations from the original population, comparing each of these populations to the original, and estimating the probability of refuting the null hypothesis. Let us explore each of these steps separately: </p>
+
+<h4>The Original Population</h4>
+<p>Let us assume we are analyzing data from a drug trial that is testing the efficacy of some drug A. The research methodology is to take some general population P, and randomly select N1 participants from P to take the drug A (pop1), and N2 participants from P to take a placebo (pop2); and then compare some measure of the drugs effect in P1 and P2. The higher the measure (M), the more effective the drug is in the body.</p>
+
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">pop1</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">10</span><span class="hl std">,</span> <span class="hl num">16</span><span class="hl std">,</span> <span class="hl num">12</span><span class="hl std">)</span>
+<span class="hl std">pop2</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">5</span><span class="hl std">,</span> <span class="hl num">9</span><span class="hl std">,</span> <span class="hl num">12</span><span class="hl std">,</span> <span class="hl num">8</span><span class="hl std">)</span>
+<span class="hl std">pop1</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 10 16 12
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">pop2</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1]  5  9 12  8
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com">#STEP 1 BELOW</span>
+<span class="hl std">pop</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(pop1, pop2)</span>
+</pre></div>
+</div></div>
+The mean of our "drug population" is <code class="knitr inline">12.67</code> units, while the mean of the "placebo" is <code class="knitr inline">8.5</code> units.
+
+<p>We ultimately want to compare our test statistic's mean value to the mean value pop1; the N1 participants who took drug A. It is interesting to note the difference in the mean between pop1 and pop2, which seems to suggest that the drug is effective. However, the discrepency in the two means could be due to chance! Perhaps the N1 participants were more susceptible to the drug than the general population would be, or perhaps the N2 participants had abnormally low values of M. This is where the permutations test comes in. Before generating our sample data, we want to combine the two populations to test whether the difference in the mean is due to chance.</p>
+
+<h4>Step 1: Combine the two populations</h4>
+<h4>Step 2: Randomly sample values from the combined population</h4>
+<p>We usually remove the same number of values from the combined population as we have in our original population of interest; drug A.</p>
+Here is an example of a random sample: <code class="knitr inline">16, 12, 5</code>.
+
+Now lets explore a bit of the theoretical statistics behind our test. Our possible permutations, along with their averages, are shown below.
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="output"><pre class="knitr r">##    V1 V2 V3   avg
+## 1  10 16 12 12.67
+## 2  10 16  5 10.33
+## 3  10 16  9 11.67
+## 4  10 16 12 12.67
+## 5  10 16  8 11.33
+## 6  10 12  5  9.00
+## 7  10 12  9 10.33
+## 8  10 12 12 11.33
+## 9  10 12  8 10.00
+## 10 10  5  9  8.00
+## 11 10  5 12  9.00
+## 12 10  5  8  7.67
+## 13 10  9 12 10.33
+## 14 10  9  8  9.00
+## 15 10 12  8 10.00
+## 16 16 12  5 11.00
+## 17 16 12  9 12.33
+## 18 16 12 12 13.33
+## 19 16 12  8 12.00
+## 20 16  5  9 10.00
+## 21 16  5 12 11.00
+## 22 16  5  8  9.67
+## 23 16  9 12 12.33
+## 24 16  9  8 11.00
+## 25 16 12  8 12.00
+## 26 12  5  9  8.67
+## 27 12  5 12  9.67
+## 28 12  5  8  8.33
+## 29 12  9 12 11.00
+## 30 12  9  8  9.67
+## 31 12 12  8 10.67
+## 32  5  9 12  8.67
+## 33  5  9  8  7.33
+## 34  5 12  8  8.33
+## 35  9 12  8  9.67
+</pre></div>
+</div></div>
+
+<p>Notice that we have 35 possible combinations of sampling 3 values from the population of 7. Also notice that only 3 of the possible combinations have mean values greater than or equal to that of the original drug population. In a dataset this small, we can actually estimate the probability that our discrepancy is due to chance. Can you estimate the p-value?</p>
+<p>Also note that it is VERY IMPORTANT FOR THE ORIGINAL DATA TO BE RANDOMLY ASSIGNED!! When populations in a two-sample trial are random, any differences in the two populations are either due to chance, or due to difference between the two populations. In this case, the difference between the two populations is that one took a drug and one took a placebo; if our data was not random from the start we would be unable to conclude that the drug caused the effect!</p>
+
+<h4>Step 3: Generate a large number of randomly sampled data sets</h4>
+
+<p>We repeat the random sampling process 1000 times, and take the mean of each of our random data sets. Let us vizualize this process with the following plot.</p>
+<div class="chunk" id="unnamed-chunk-3"><div class="rimage default"><img src="figure/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div></div>
+<p>From this plot, we can see that the mean values of the simulation are roughly normal. In fact, as we increase the number of repetitions, we will create a more and more normal distribution of values. We will explore this phenomenon more below.</p>
+
+<h4>Step 4: Compare each random data set with the actual data.</h4>
+
+<p>Notice the red line in the plot; it corresponds to the mean of the original data. It seems that most of the values have means below the original. Once again, can you estimate a probability from this graph? To compute an accurate p-value, we must first compare the mean of each of our subsets of 3 values with that of the original mean. If the simulated mean is greater than or equal to the original, we attribute a "TRUE" value to the data set, and if it is less than the original we call it "FALSE".</p>
+
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">perm</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(rep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(pop,</span> <span class="hl kwd">length</span><span class="hl std">(pop1))))</span>
+<span class="hl std">permtest</span> <span class="hl kwb">=</span> <span class="hl kwd">data.frame</span><span class="hl std">(perm, perm</span> <span class="hl opt">&gt;=</span> <span class="hl kwd">mean</span><span class="hl std">(pop1))</span>
+<span class="hl kwd">head</span><span class="hl std">(permtest)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">##        perm perm....mean.pop1.
+## 1  7.666667              FALSE
+## 2 10.333333              FALSE
+## 3 11.666667              FALSE
+## 4  8.666667              FALSE
+## 5 13.333333               TRUE
+## 6  9.666667              FALSE
+</pre></div>
+</div></div>
+
+<h4>Step 5: Estimate the probability pHat with the observed proportion of "TRUE" data.</h4>
+
+<p>We compute a p-value (pHat) for our original data based on our simulation as follows; count the number of randomly-sampled means that are greater than the original, and divide it by the total number of random samples.</p>
+
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">compare</span> <span class="hl kwb">=</span> <span class="hl kwd">sum</span><span class="hl std">(permtest[,</span><span class="hl num">2</span><span class="hl std">])</span>
+<span class="hl std">compare</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 91
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">compare</span><span class="hl opt">/</span><span class="hl std">rep</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.091
+</pre></div>
+</div></div>
+
+<p>We will not conclude that this p-value refutes the null hypothesis here, but we will observe that the probability is quite low. This makes sense; if we divide the 3 possible permutations by the possible 35, we get ~0.086. If we run our permutations test enough times, the probability will eventually converge to this value (see code below). We will explore how many repetitions are "enough" in our data analysis. However, note that here we were provided a relatively small data set. What if we had a trial on 20 patients, with 9 randomly selected drug participants? The number of possible combinations would balloon to 167,960!</p>
+
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl num">3</span><span class="hl opt">/</span><span class="hl num">35</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.08571429
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">permTest</span> <span class="hl kwb">=</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">pop1</span><span class="hl std">,</span> <span class="hl kwc">pop2</span><span class="hl std">,</span> <span class="hl kwc">NRep</span><span class="hl std">,</span> <span class="hl kwc">comp</span> <span class="hl std">=</span> <span class="hl kwd">mean</span><span class="hl std">(pop1)) {</span>
+  <span class="hl std">pop</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(pop1, pop2)</span>
+  <span class="hl std">simAvg</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(NRep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(pop,</span> <span class="hl kwd">length</span><span class="hl std">(pop1))))</span>
+  <span class="hl std">compare</span> <span class="hl kwb">=</span> <span class="hl std">simAvg</span> <span class="hl opt">&gt;=</span> <span class="hl std">comp</span>
+  <span class="hl kwd">return</span><span class="hl std">(</span><span class="hl kwd">sum</span><span class="hl std">(compare)</span><span class="hl opt">/</span><span class="hl std">NRep)</span>
+<span class="hl std">}</span>
+
+<span class="hl kwd">permTest</span><span class="hl std">(pop1, pop2,</span> <span class="hl num">10000</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 0.088
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">choose</span><span class="hl std">(</span><span class="hl num">20</span><span class="hl std">,</span> <span class="hl num">9</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] 167960
+</pre></div>
+</div></div>
+</body>
+  
+<body>
+  <div class="container-fluid">
+    <h2>Permutations Test Analysis</h2>
+    <div class="row">
+      <div class="col-sm-5">
+        <form class="well">
+          <span class="help-block">Run three permutations tests on drug trial data.</span>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="var">Choose a data set to analyze.</label>
+            <div>
+              <select id="var">
+<option value="Calcium">Calcium Trial</option>
+<option value="Alcohol">Alcohol Trial</option>
+  <option value="HIV">HIV Treatment Trial</option>
+</select>
+              <script type="application/json" data-for="var" data-nonempty="">{}</script>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+<p>
+
+<p>The Calcium data is from <a href="#Cobb" >Cobb </a>Manuscript</p>
+<p>The Alcohol data is from <a href="#Dorman" >Dorman </a>Lab Wiki</p>
+<p>The HIV data is from <a href="#BU" >Sullivan </a>from "Boston University Basic Concepts for Biostatistics"</p>
+
+<div id="intro" class="shiny-html-output"></div>
+  <label>Data</label><br />
+    <div id="data" class="shiny-html-output"></div>
+    <label>Average Value for Trial Data:</label><br />
+  	<div id="mean" class="shiny-html-output"></div>
+</p>
+<p>Below, you will generate a random permutation of the values in this data set. First, examine the 1000 repititon data set, then choose the number of repititons for your own permutations test below.</p>
+<p>
+    <label>Number of repetitions:</label><br /> 
+    <input type="number" name="NRep1" value="1000" min="1" max="10000" step = "100"/>
+</p>
+<p> 
+<div id="permPlot" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+         
+</p>
+<p>Examine the distribution of values in the plot. Do they look roughly normal? If not, try increasing the number of repetitions. What is the most common mean (approximately), and how does this compare to our mean of interest? How much of the data has mean values greater than or equal to the population of interest?</p>
+<p>
+How many repetitions do we REALLY need to get an accurate p-value. There are multiple ways to answer this question. One way is to simulate the same permutations test on a data set and notice that the distribution becomes more normal as the repetitions increase. In the plot below, explore the range of repetitions that limits the error of the p-values from our "exact" value obtained with the most repetitions.
+    <div class="container-fluid">
+    <label>pValue Convergence</label>
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <span class="help-block">Plot the pValues for the permutations test with different numbers of repetitions.</span>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="range">Logarithmic range of interest:</label>
+            <input class="js-range-slider" id="range" data-type="double" data-min="0.5" data-max="5" data-from="0" data-to="100" data-step="0.5" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+        <div id="plot" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+      </div>
+    </div>
+  </div>
+</p>
+</body>
+
+<body>
+<h2>Fisher's Exact Test on Dichotomized Data</h2>
+<p>The permutations test is flexible, and we can apply it to other statistics besides the mean. For example, we can "dichotomize data" based on a certain threshold. That is, if the a data value is greater than or equal to the threshold, we can assign the value a "1" (or a YES). If the value is less than the threshold, we assign it a value of "0" (or a NO). If our threshold value is the median of the entire population, then the subsequent permutations test is called the "median test".
+  </p>
+
+<p>  
+    <div id="median" class="shiny-text-output"></div>
+	<div id="threshold" class="shiny-html-output"></div>
+  <label>Threshold Value:</label><br /> 
+    <input type="number" name="thresh2" value="0" min="0" max="10" />
+ </p>
+	<label>Dichotomized Drug Data:</label><br />
+	  <div id="dataDich" class="shiny-html-output"></div>
+  </p>
+  <p>Now that we have dichotomized our data, we first take the sum of our data set of interest. Then, we perform a permutations test just as before, except instead of taking the mean of our random sample, we now take the sum of the sample (i.e. we count the number of values in the sample that are greater than our threshold). We calculate our p-value using the number of "YES" values from our data set of interest. This process is called Fisher's Exact Test.
+  </p>
+  <label>Sum of Dichotomized Data:</label>
+    <div id="sum" class="shiny-html-output"></div>
+  </p>
+
+<p>
+      <label>Number of repetitions:</label><br /> 
+    <input type="number" name="NRep2" value="1000" min="1" max="10000" step="100"/>
+
+  <div id="dichPlot" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+</p>
+<p>Notice the difference in the distribution and the p-value. On the one-hand, dichotomizing data can lead to oversimplification. However, Fisher's exact test can be useful if we have outliers in our data.</p>
+</body>
+
+<body>
+<h2>Wilcoxon Rank-Sum Test</h2>	
+<p>To adjust for outliers in the data, we can also rank the values in our population. We will not discuss the process for ranking data here, but to learn more see (insert link for explanation?). Once our data is ranked, we take the sum of our ranked data set of interest. This statistic will be used to compute the p-value. To perform the permutations test, we randomly select from the ranked data population, and take the sum of our random sample.</p>
+    <label>Number of repetitions:</label><br /> 
+    <input type="number" name="NRep3" value="1000" min="1" max="10000" step = "100"/>
+
+ <p>
+	<label>Ranked Drug Data:</label><br />
+	  <div id="rank" class="shiny-html-output"></div>
+    <div id="rankSum" class="shiny-text-output"></div>
+  </p>
+</p>
+  
+  <div id="wilcox" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div>
+
+<h4>References</h4>
+<a name="Cobb">George Cobb </a>Statistics Manuscript
+<br/>
+<a name="Dorman">Karin Dorman </a>Lab Wiki
+<br/>
+<a name="BU">Lisa Sullivan </a>BU Biostatistics
+
+</body>
+</html> 
