@@ -94,5 +94,12 @@ shinyServer(function(input, output) {
    output$info_2 <- renderPrint({
      nearPoints(satDF, input$plot_hover_2, xvar = input$x_2, yvar = input$y_2, threshold = 7)
    })
+   
+   ###################### data display
+   load("data/satDF_pretty.rda")
+   
+   output$mytable1 = renderTable({
+     satDF_pretty
+   }, options = list(orderClasses = TRUE))
      
 })

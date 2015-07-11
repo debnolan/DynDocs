@@ -24,6 +24,11 @@ abline(lm(y2 ~ x2), col="orange", lwd = 3, lty = 3)
 abline(lm(y  ~ x), lwd = 2, lty = 1)
 
 # kidney stone treatment example: 
+# Simpson's paradox usually fools us on tests of performance. 
+# In a famous example, researchers concluded that a newer treatment for 
+# kidney stones was more effective than traditional surgery, 
+# but it was later revealed that the newer treatment was more often
+
 # day 1 treats only small stones
 # day 2 treats only large stones
 day1total = 87 + 270
@@ -56,7 +61,6 @@ table = matrix(c(day1Ahit_per, day1Bhit_per, day2Ahit_per, day2Bhit_per, Atotal,
 # Reference: 
 # Wikipedia
 # http://vudlab.com/simpsons/
-# 
 
 
 
