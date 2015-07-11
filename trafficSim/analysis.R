@@ -1,8 +1,8 @@
 # load C files
-dyn.load("~/Documents/projects/DynDocs/trafficSim/BML.so")
+dyn.load("BML.so")
 
 # load simulation R functions
-source("~/Documents/projects/DynDocs/trafficSim/tutorial.R")
+source("tutorial.R")
 
 # sets seed for grid generation
 set.seed(12345)

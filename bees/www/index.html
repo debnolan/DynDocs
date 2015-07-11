@@ -1,0 +1,268 @@
+<html>
+
+<head>
+<style type="text/css">
+.knitr .inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage .left {
+  text-align: left;
+}
+.rimage .right {
+  text-align: right;
+}
+.rimage .center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>Arrival of African Honey Bees in the US</title>
+</head>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.1];ionrangeslider[2.0.6];bootstrap[3.3.1]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<link href="shared/ionrangeslider/css/normalize.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+
+<style>
+form {
+    display: inline;
+}
+
+body {
+    background-color: linen;
+}
+
+
+
+</style>
+
+
+<body>
+
+<h1>   
+African Honey Bees
+</h1>
+
+<h2>   
+Introduction
+</h2>
+<p>The African Honey Bee (AHB), also nicknamed the "killer bee", has had a significant impact on the agricultural economy. This species is unique from many other 
+bees because of its extremely defensive nature and the tendency of its colonies to swarm and spread. The implications of the AHB has been astronimical. Areas populated by AHB colonies have been quarantined, prohibiting the importation of the European Honey Bee. The subsequent lack of bees has taken a toll on crop pollination. Thus, there has been strong interest in predicting the arrival of the AHB to the United States. The case studied is heavily taken from the <a href="http://www.stat.tamu.edu/~matis/Predicting%20the%20Africanized%20Bee%20Invasion.pdf">work </a> of Matis and Kiffe. </a>
+
+In order to obtain the data below, cardboard box traps with a chemical attractant were placed at an average of every 93km (OR 300-500???m). Then, every month, the boxes were checked for presence of the AHB.</p>
+
+<h2>
+Fitting the Data
+</h2>
+
+<p>
+It was initially thought that the data could follow a normal distribution. However, after fitting a normal QQ plot, we noticed that our data doesn't lie on the 45 degree line. We noticed that the sample quantiles towards the right are significantly larger than the theoretical quantiles the normal distribution would predict. </br>
+
+If we were to use a normal distribution to model our data, it would severly underpredict the frequency of extreme values of x. This means that we would understate the possibilities of the AHB arrival. </br>
+
+Knowing this, it's possible that we can fit a better distribution function for the AHB data with the gamma distribution. 
+
+</p>
+<img src="images/normalqq.jpeg"/>
+<h2>
+The Gamma Distribution 
+</h2>
+
+<p>
+The Gamma Distribution is a continuous probability density function that is used to model the time required to perform some operation. Just as the Poisson distribution is the time-continuous distribution of the binomial, so is the gamma distribution the time-continuous analog of the negative binomial. </br>
+
+Matis and Kiffe choose to use the gamma distribution since the data models a unimodal, skewed distribution which takes on only positive values. The Gamma is a prediction of the time of the "rth" random arrival of some event. In this case, they were looking at the arrival of the "rth"" bee. Here they look at the reciprocal of speed, the "transit time" which models instead, the time required to travel a fixed distance. </br>
+
+Displayed below is a graph of the normal vs. the gamma distribution fitted on the data of the estimated transit time for AHBs. We see that the gamma distribution fits the data a lot better and weighs right tailed distributions more likely compared to the normal distribution. 
+
+</p>
+
+<img src="images/hist.jpeg"/>
+
+<h2>
+Conclusion
+</h2>
+<p>
+The Gamma distribution was found to be a good predictor of the African Honey Bee arrival time. The best fit gamma distribution for this data had an alpha value of 1.61 and a beta value of 2.37. </br>
+
+The strength of such a distribution is its ability to take into account the natural variability of the arrival. However, its limitations are also plentiful as there are many conditions that are static. For instance, this distribution does not take into account the presence of any predators or environmental factors.
+</p>
+
+<h1>
+Tutorial on The Gamma Distribution
+</h1>
+
+
+<h2>
+Exploring the Distribution Qualitatively 
+</h2>
+<p>
+First, let us explore what the gamma distribution looks like compared again other distributions like the normal, log normal, etc by simulating different number of observations. 
+</p
+
+<p>
+    <label>Distribution type:</label><br />
+    <select name="dist">
+      <option value="norm">Normal</option>
+      <option value="unif">Uniform</option>
+      <option value="lnorm">Log-normal</option>
+      <option value="exp">Exponential</option>
+      <option value="gamma">Gamma</option>
+    </select> 
+  </p>
+  
+<p>
+    <label>Number of observations:</label><br /> 
+   <input type="number" name="n" value="500" min="1" max="1000" />
+</p>
+
+<div class="checkbox">
+              <label>
+                <input id="cdf" type="checkbox"/>
+                <span>Plot CDF</span>
+              </label>
+            </div>
+
+<p>
+<button id="runSim" type="button" class="btn btn-default action-button">Simulate </button>
+</p>
+
+
+
+<div id="plot1" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+
+<p>Notice that the gamma distribution weighs a higher probability to the higher tail probabilities than the normal distibribution. 
+</p>
+
+<h2>
+Alpha and Beta Parameters in the Gamma Distribution
+</h2>
+
+
+<p>
+The Gamma Distribution is as follows:
+
+$\frac{(&#946;^&#945;)}{(&#945;-1)!} e^{-&#946;y} y^{&#945; - 1}$ </p>
+
+<p>
+Notice what happens to the shape when you change the &#945; parameter to 1, keeping &#946; constant. Then continue increasing the &#945; parameter while keeping the &#946; constant, and notice what the gamma distribution reesembles as it changes. </p>
+
+<p>
+<button id="a1" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945 </button>
+
+<button id="a2" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
+<button id="a3" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
+
+<button id="a4" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
+
+<button id="a5" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
+
+<button id="a6" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
+</p>
+
+
+<p>
+Now, observe the change when you vary the &#946; parameter while keeping the &#945; parameter constant. &#946; has a strong impact on the shape of the gamma distribution. When &#946; is less than 1, we tend to observe relatively broad distributions with long tails. As the value of &#946; increases, the distributions become tighter. This is because the variance of the gamma distribution is $\frac{&#945;}{&#946;^2}$. Additionally, the expected value of the gamma distribution is &#945;*&#946;.
+</p>
+
+Pick an &#945; and &#946; parameter on the slider below. </br>
+
+
+&#945; and &#946; values are both positive where &#945; is a shape parameter and &#946; is a scale parameter. These parameters are most easily undertstood when &#945; is an integer. In this case, the gamma models the sum of &#945; independent exponential random variables which each has a mean corresponding to the inverse of the &#946; parameter. 
+</p>
+
+<div class="form-group shiny-input-container">
+            <label class="control-label" for="alpha">Alpha:</label>
+            <input class="js-range-slider" id="alpha" data-min="0" data-max="10" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.01"/>
+          </div>
+
+<div class="form-group shiny-input-container">
+            <label class="control-label" for="beta">Beta:</label>
+            <input class="js-range-slider" id="beta" data-min="0" data-max="10" data-step=".01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.01"/>
+          </div>
+       
+
+
+
+
+<div id="plot2" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+
+
+
+
+<h2>
+Other Applications of the Gamma Distribution
+</h2>
+
+<p>
+Some values of &#945; and &#946; are well known distributions. For instance, the exponential distribution is evident from the basic form of the gamma for the case when the &#945; value is one. Furthermore, the chi squared distribution is evident when the &#945; and &#946; values are both 1/2. The gamma distribution is often used in econometrics and predicting accummulated rainfall. 
+</p>
+
+</body>
+</html>

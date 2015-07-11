@@ -1,5 +1,16 @@
 $(document).ready(function() {
+	$('#density_toggle').popover({
+		trigger: 'manual',
+		placement: 'left',
+		content: 'Click here to view density data table.',
+	});
+	$('#density_toggle').popover('show');
+
 	initializeAnimationFrames();
+
+	$('#density_toggle').click(function() {
+		$('#density_toggle').popover('hide');
+	});
 
 	$('#sim_animate').click(function() {
 		if (!animation) {
@@ -15,6 +26,11 @@ $(document).ready(function() {
 
 	$('#sim_reset').click(function() {
 		resetAnimationFrames()
+	});
+
+	$('#sim_create').click(function() {
+		stopAnimationFrames();
+		resetAnimationFrames();
 	});
 });
 

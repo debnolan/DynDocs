@@ -106,7 +106,11 @@
                                     <input id="sim_seed" class="form-control" type="number" value="12345" />
                                 </div>
                             </div>
-                            
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button id="sim_create" class="btn btn-default action-button" type="button">Create Simulation</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-8">
@@ -125,6 +129,7 @@
                             <div class="col-sm-9">
                                 <label for="sim_step_slider">Step Through Animation:</label>
                                 <input id="sim_step_slider" class="js-range-slider" />
+                                <div id="sim_gridlock" class="shiny-text-output"></div>
                             </div>
                         </div>
                     </div>
@@ -188,70 +193,84 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
+                                    <button id="density_create" class="btn btn-default action-button" type="button">Create Plot</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
                                     <label class="control-label" for="density_select">Densities:</label>
                                     <div id="density_select" class="shiny-input-checkboxgroup">
                                         <div class="shiny-options-group">
                                             <div class="checkbox row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-6">
                                                     <label>
                                                         <input type="checkbox" name="density_select" value="0.15" checked />
                                                         <span>0.15</span>
+                                                        <div class="color-box" style="background-color:#ffffcc;"></div>
                                                     </label>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-6">
                                                     <label>
                                                         <input type="checkbox" name="density_select" value="0.65" checked />
                                                         <span>0.65</span>
+                                                        <div class="color-box" style="background-color:#fc4e2a;"></div>
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="checkbox row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-6">
                                                     <label>
                                                         <input type="checkbox" name="density_select" value="0.25" checked />
                                                         <span>0.25</span>
+                                                        <div class="color-box" style="background-color:#ffeda0;"></div>
                                                     </label>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-6">
                                                     <label>
                                                         <input type="checkbox" name="density_select" value="0.75" checked />
                                                         <span>0.75</span>
+                                                        <div class="color-box" style="background-color:#e31a1c;"></div>
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="checkbox row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-6">
                                                     <label>
                                                         <input type="checkbox" name="density_select" value="0.35" checked />
                                                         <span>0.35</span>
+                                                        <div class="color-box" style="background-color:#fed976;"></div>
                                                     </label>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-6">
                                                     <label>
                                                         <input type="checkbox" name="density_select" value="0.85" checked />
                                                         <span>0.85</span>
+                                                        <div class="color-box" style="background-color:#bd0026;"></div>
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="checkbox row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-6">
                                                     <label>
                                                         <input type="checkbox" name="density_select" value="0.45" checked />
                                                         <span>0.45</span>
+                                                        <div class="color-box" style="background-color:#feb24c;"></div>
                                                     </label>
                                                 </div>
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-6">
                                                     <label>
                                                         <input type="checkbox" name="density_select" value="0.95" checked />
                                                         <span>0.95</span>
+                                                        <div class="color-box" style="background-color:#800026;"></div>
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="checkbox row">
-                                                <div class="col-sm-3">
+                                                <div class="col-sm-6">
                                                     <label>
                                                         <input type="checkbox" name="density_select" value="0.55" checked />
                                                         <span>0.55</span>
+                                                        <div class="color-box" style="background-color:#fd8d3c;"></div>
                                                     </label>
                                                 </div>
                                             </div>
@@ -274,21 +293,29 @@
                     <div class="col-sm-offset-4 col-sm-8">
                         <div class="panel">
                             <div class="panel-heading" role="tab">
-                                <h3 class="panel-title">
+                                <h3 id="density_toggle" class="panel-title" date-toggle="popover">
                                     <a data-toggle="collapse" href="#density_accordion">
                                         Density Table: Percent of Cars Moving by Density and Time
                                     </a>
                                 </h3>
                             </div>
-                            <div id="density_accordion" class="panel-collapse collapse" role="tabpanel" >
+                            <div id="density_accordion" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
-                                    <div id="density_table" class="shiny-html-output"><div>
+                                    <div id="density_table" class="shiny-html-output"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="footer">
+            <hr>
+            <h2>References</h2>
+            <p>Nolan, Deborah and Lang, Duncan Temple, "A Self-Organizing Dynamic System with a Phase Transition", <em>Case Studies in Data Science in R</em></p>
+            <p><a href="https://en.wikipedia.org/wiki/Simulation">Simulation</a>, Wikipedia</p>
+            <p>Davidian, M., <a href="http://www4.stat.ncsu.edu/~davidian/st810a/simulation_handout.pdf">Simulation Studies in Statistics</a>, NCSU</p>
+            <hr>
         </div>
     </div>
 </body>
