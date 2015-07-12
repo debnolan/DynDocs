@@ -15,10 +15,10 @@ library(MASS)
 normest = fitdistr(bee$Transit.Time, "normal")
 curve(dnorm(x, normest$estimate[1], normest$estimate[2]), add=TRUE, col='red')
 
-gammaest = fitdistr(bee$Transit.Time, densfun="gamma")
-curve(dgamma(x, gammaest$estimate[1], gammaest$estimate[2]), add=TRUE, col='blue')
+# gammaest = fitdistr(bee$Transit.Time, densfun="gamma")
+# curve(dgamma(x, gammaest$estimate[1], gammaest$estimate[2]), add=TRUE, col='blue')
 x=seq(0,20, by=0.1)
-lines(x, dgamma(x, 1.61,1/2.37), col=2)
+lines(x, dgamma(x, 1.61,1/2.37), col="blue")
 
 legend("topright", cex=0.75, pch=16, 
        col=c("red", "blue"), legend=c("Normal Dist", "Gamma Dist"))
