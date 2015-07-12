@@ -1,14 +1,3 @@
-#intro1 = readLines("www/introCal.html", warn = FALSE)
-#intro2 = readLines("www/introAlc.html", warn = FALSE)
-#intro3 = readLines("www/introHIV.html", warn = FALSE)
-#intros = list("Calcium" = intro1, "Alcohol" = intro2, "HIV" = intro3)
-
-#choice1 = readLines("www/threshCal.html", warn = FALSE)
-#choice2 = readLines("www/threshAlc.html", warn = FALSE)
-#choice3 = readLines("www/threshHIV.html", warn = FALSE)
-#choices = list("Calcium" = choice1, "Alcohol" = choice2, "HIV" = choice3)
-#save(intros, choices, file = "htmlChoices.rda")
-
 #input two drug trial populations (placebo and trial drug)
 #run the permutations test for mean with sample repetitions = NRep
 #compute a p-value

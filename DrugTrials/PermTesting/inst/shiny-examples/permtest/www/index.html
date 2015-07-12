@@ -97,10 +97,13 @@
 <h2>Introduction</h2>
 <p>Permutations tests are a method from the general area of statistics called hypothesis testing; more specifically randomization testing. We will be using data from two-population drug efficacy trials to demonstrate the method, but the permutations testing model can be applied to a wide variety of situations for testing hypotheses about populations. The basic process involves simulating sample populations from the original population, comparing each of these populations to the original, and estimating the probability of refuting the null hypothesis. Let us explore each of these steps separately: </p>
 
+
+
+
 <h4>The Original Population</h4>
 <p>Let us assume we are analyzing data from a drug trial that is testing the efficacy of some drug A. The research methodology is to take some general population P, and randomly select N1 participants from P to take the drug A (pop1), and N2 participants from P to take a placebo (pop2); and then compare some measure of the drugs effect in P1 and P2. The higher the measure (M), the more effective the drug is in the body.</p>
 
-<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">pop1</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">10</span><span class="hl std">,</span> <span class="hl num">16</span><span class="hl std">,</span> <span class="hl num">12</span><span class="hl std">)</span>
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">pop1</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">10</span><span class="hl std">,</span> <span class="hl num">16</span><span class="hl std">,</span> <span class="hl num">12</span><span class="hl std">)</span>
 <span class="hl std">pop2</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl num">5</span><span class="hl std">,</span> <span class="hl num">9</span><span class="hl std">,</span> <span class="hl num">12</span><span class="hl std">,</span> <span class="hl num">8</span><span class="hl std">)</span>
 <span class="hl std">pop1</span>
 </pre></div>
@@ -121,10 +124,10 @@ The mean of our "drug population" is <code class="knitr inline">12.67</code> uni
 <h4>Step 1: Combine the two populations</h4>
 <h4>Step 2: Randomly sample values from the combined population</h4>
 <p>We usually remove the same number of values from the combined population as we have in our original population of interest; drug A.</p>
-Here is an example of a random sample: <code class="knitr inline">16, 12, 5</code>.
+Here is an example of a random sample: <code class="knitr inline">5, 10, 12</code>.
 
 Now lets explore a bit of the theoretical statistics behind our test. Our possible permutations, along with their averages, are shown below.
-<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="output"><pre class="knitr r">##    V1 V2 V3   avg
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="output"><pre class="knitr r">##    V1 V2 V3   avg
 ## 1  10 16 12 12.67
 ## 2  10 16  5 10.33
 ## 3  10 16  9 11.67
@@ -169,23 +172,23 @@ Now lets explore a bit of the theoretical statistics behind our test. Our possib
 <h4>Step 3: Generate a large number of randomly sampled data sets</h4>
 
 <p>We repeat the random sampling process 1000 times, and take the mean of each of our random data sets. Let us vizualize this process with the following plot.</p>
-<div class="chunk" id="unnamed-chunk-3"><div class="rimage default"><img src="figure/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div></div>
+<div class="chunk" id="unnamed-chunk-4"><div class="rimage default"><img src="figure/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div></div>
 <p>From this plot, we can see that the mean values of the simulation are roughly normal. In fact, as we increase the number of repetitions, we will create a more and more normal distribution of values. We will explore this phenomenon more below.</p>
 
 <h4>Step 4: Compare each random data set with the actual data.</h4>
 
 <p>Notice the red line in the plot; it corresponds to the mean of the original data. It seems that most of the values have means below the original. Once again, can you estimate a probability from this graph? To compute an accurate p-value, we must first compare the mean of each of our subsets of 3 values with that of the original mean. If the simulated mean is greater than or equal to the original, we attribute a "TRUE" value to the data set, and if it is less than the original we call it "FALSE".</p>
 
-<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">perm</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(rep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(pop,</span> <span class="hl kwd">length</span><span class="hl std">(pop1))))</span>
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">perm</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(rep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(pop,</span> <span class="hl kwd">length</span><span class="hl std">(pop1))))</span>
 <span class="hl std">permtest</span> <span class="hl kwb">=</span> <span class="hl kwd">data.frame</span><span class="hl std">(perm, perm</span> <span class="hl opt">&gt;=</span> <span class="hl kwd">mean</span><span class="hl std">(pop1))</span>
 <span class="hl kwd">head</span><span class="hl std">(permtest)</span>
 </pre></div>
 <div class="output"><pre class="knitr r">##        perm perm....mean.pop1.
-## 1  7.666667              FALSE
-## 2 10.333333              FALSE
-## 3 11.666667              FALSE
-## 4  8.666667              FALSE
-## 5 13.333333               TRUE
+## 1  9.000000              FALSE
+## 2 10.000000              FALSE
+## 3  9.666667              FALSE
+## 4  9.000000              FALSE
+## 5 12.666667               TRUE
 ## 6  9.666667              FALSE
 </pre></div>
 </div></div>
@@ -194,33 +197,26 @@ Now lets explore a bit of the theoretical statistics behind our test. Our possib
 
 <p>We compute a p-value (pHat) for our original data based on our simulation as follows; count the number of randomly-sampled means that are greater than the original, and divide it by the total number of random samples.</p>
 
-<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">compare</span> <span class="hl kwb">=</span> <span class="hl kwd">sum</span><span class="hl std">(permtest[,</span><span class="hl num">2</span><span class="hl std">])</span>
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">compare</span> <span class="hl kwb">=</span> <span class="hl kwd">sum</span><span class="hl std">(permtest[,</span><span class="hl num">2</span><span class="hl std">])</span>
 <span class="hl std">compare</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] 91
+<div class="output"><pre class="knitr r">## [1] 102
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl std">compare</span><span class="hl opt">/</span><span class="hl std">rep</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] 0.091
+<div class="output"><pre class="knitr r">## [1] 0.102
 </pre></div>
 </div></div>
 
 <p>We will not conclude that this p-value refutes the null hypothesis here, but we will observe that the probability is quite low. This makes sense; if we divide the 3 possible permutations by the possible 35, we get ~0.086. If we run our permutations test enough times, the probability will eventually converge to this value (see code below). We will explore how many repetitions are "enough" in our data analysis. However, note that here we were provided a relatively small data set. What if we had a trial on 20 patients, with 9 randomly selected drug participants? The number of possible combinations would balloon to 167,960!</p>
 
-<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl num">3</span><span class="hl opt">/</span><span class="hl num">35</span>
+<div class="chunk" id="unnamed-chunk-7"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl num">3</span><span class="hl opt">/</span><span class="hl num">35</span>
 </pre></div>
 <div class="output"><pre class="knitr r">## [1] 0.08571429
 </pre></div>
-<div class="source"><pre class="knitr r"><span class="hl std">permTest</span> <span class="hl kwb">=</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">pop1</span><span class="hl std">,</span> <span class="hl kwc">pop2</span><span class="hl std">,</span> <span class="hl kwc">NRep</span><span class="hl std">,</span> <span class="hl kwc">comp</span> <span class="hl std">=</span> <span class="hl kwd">mean</span><span class="hl std">(pop1)) {</span>
-  <span class="hl std">pop</span> <span class="hl kwb">=</span> <span class="hl kwd">c</span><span class="hl std">(pop1, pop2)</span>
-  <span class="hl std">simAvg</span> <span class="hl kwb">=</span> <span class="hl kwd">replicate</span><span class="hl std">(NRep,</span> <span class="hl kwd">mean</span><span class="hl std">(</span><span class="hl kwd">sample</span><span class="hl std">(pop,</span> <span class="hl kwd">length</span><span class="hl std">(pop1))))</span>
-  <span class="hl std">compare</span> <span class="hl kwb">=</span> <span class="hl std">simAvg</span> <span class="hl opt">&gt;=</span> <span class="hl std">comp</span>
-  <span class="hl kwd">return</span><span class="hl std">(</span><span class="hl kwd">sum</span><span class="hl std">(compare)</span><span class="hl opt">/</span><span class="hl std">NRep)</span>
-<span class="hl std">}</span>
-
-<span class="hl kwd">permTest</span><span class="hl std">(pop1, pop2,</span> <span class="hl num">10000</span><span class="hl std">)</span>
+<div class="source"><pre class="knitr r"><span class="hl kwd">permTest</span><span class="hl std">(pop1, pop2,</span> <span class="hl num">10000</span><span class="hl std">)</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] 0.088
+<div class="output"><pre class="knitr r">## [1] 0.0874
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">choose</span><span class="hl std">(</span><span class="hl num">20</span><span class="hl std">,</span> <span class="hl num">9</span><span class="hl std">)</span>
 </pre></div>
@@ -230,8 +226,9 @@ Now lets explore a bit of the theoretical statistics behind our test. Our possib
 </body>
   
 <body>
+
+<p>As you just learned, the permutations test is an easy way to get an accurate probability of refuting the null hypothesis for data sets. We will now explore the permutations test using three different drug trials, each with very different outcomes. You will soon see that the permutations test is applicable to a wide variety of biostatistical situations! Select one of the three drug trials below to begin the analysis.</p>
   <div class="container-fluid">
-    <h2>Permutations Test Analysis</h2>
     <div class="row">
       <div class="col-sm-5">
         <form class="well">
@@ -252,6 +249,7 @@ Now lets explore a bit of the theoretical statistics behind our test. Our possib
 </div>
 <p>
 
+    <h2>Permutations Test Analysis</h2>
 <p>The Calcium data is from <a href="#Cobb" >Cobb </a>Manuscript</p>
 <p>The Alcohol data is from <a href="#Dorman" >Dorman </a>Lab Wiki</p>
 <p>The HIV data is from <a href="#BU" >Sullivan </a>from "Boston University Basic Concepts for Biostatistics"</p>
@@ -344,9 +342,9 @@ How many repetitions do we REALLY need to get an accurate p-value. There are mul
 <h4>References</h4>
 <a name="Cobb">George Cobb </a>Statistics Manuscript
 <br/>
-<a name="Dorman">Karin Dorman </a>Lab Wiki
+<a name="Dorman" href="http://thirteen-01.stat.iastate.edu/wiki/stat430/files?filename=wilcoxon_rank_sum-test.pdf">Karin Dorman </a>Lab Wiki
 <br/>
-<a name="BU">Lisa Sullivan </a>BU Biostatistics
+<a name="BU" href="http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Nonparametric/mobile_pages/BS704_Nonparametric4.html">Lisa Sullivan </a>BU Biostatistics
 
 </body>
 </html> 

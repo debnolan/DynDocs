@@ -1,0 +1,13 @@
+Package: PermTesting
+Title: Biostatistcal Analysis of Drug Trials Using Permutations Testing
+Version: 0.1
+Authors@R: person("Joseph", "Schenker", email = "josephschenker@berkeley.edu",
+	role = c("aut", "cre"))
+Description: What the package does (need to think about what to say)
+Depends: R(>= 3.1.0)
+License: 
+
+Suggests:
+  gtools (>= 3.5.0)
+
+LazyData: true 

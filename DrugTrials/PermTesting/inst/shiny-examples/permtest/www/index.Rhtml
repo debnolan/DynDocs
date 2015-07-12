@@ -35,6 +35,11 @@
 <h2>Introduction</h2>
 <p>Permutations tests are a method from the general area of statistics called hypothesis testing; more specifically randomization testing. We will be using data from two-population drug efficacy trials to demonstrate the method, but the permutations testing model can be applied to a wide variety of situations for testing hypotheses about populations. The basic process involves simulating sample populations from the original population, comparing each of these populations to the original, and estimating the probability of refuting the null hypothesis. Let us explore each of these steps separately: </p>
 
+<!--begin.rcode, echo=FALSE
+source("../helpers.R")
+end.rcode-->
+
+
 <h4>The Original Population</h4>
 <p>Let us assume we are analyzing data from a drug trial that is testing the efficacy of some drug A. The research methodology is to take some general population P, and randomly select N1 participants from P to take the drug A (pop1), and N2 participants from P to take a placebo (pop2); and then compare some measure of the drugs effect in P1 and P2. The higher the measure (M), the more effective the drug is in the body.</p>
 
@@ -58,9 +63,7 @@ Here is an example of a random sample: <!--rinline sample(pop, length(pop1)) -->
 
 Now lets explore a bit of the theoretical statistics behind our test. Our possible permutations, along with their averages, are shown below.
 <!--begin.rcode, collapse=TRUE, echo=FALSE
-library("gtools")
-library("xtable")
-m = combinations(n = length(pop), r = length(pop1), v = pop, set = FALSE)
+m = gtools::combinations(n = length(pop), r = length(pop1), v = pop, set = FALSE)
 avg = numeric()
 for (i in 1:dim(m)[1]) {
   avg[i] = round(mean(m[i,]), digits = 2)
@@ -76,14 +79,6 @@ end.rcode-->
 
 <p>We repeat the random sampling process 1000 times, and take the mean of each of our random data sets. Let us vizualize this process with the following plot.</p>
 <!--begin.rcode, echo=FALSE, collapse=TRUE, cache=FALSE
-plotPerm = function(pop1, pop2, NRep, comp = mean(pop1)) {
-  simPop = replicate(NRep, mean(sample(c(pop1, pop2), length(pop1))))
-  plot(table(unique(simPop, simPop)), type = "h",
-       xlab = "Average of Sample",
-       ylab = "Number of Times")
-  abline(v = comp, col = "red")
-}
-
 rep = 1000
 plotPerm(pop1, pop2, 1000)
 end.rcode-->
@@ -114,13 +109,6 @@ end.rcode-->
 <!--begin.rcode
 3/35
 
-permTest = function(pop1, pop2, NRep, comp = mean(pop1)) {
-  pop = c(pop1, pop2)
-  simAvg = replicate(NRep, mean(sample(pop, length(pop1))))
-  compare = simAvg >= comp
-  return(sum(compare)/NRep)
-}
-
 permTest(pop1, pop2, 10000)
 
 choose(20, 9)
@@ -128,8 +116,9 @@ end.rcode-->
 </body>
   
 <body>
+
+<p>As you just learned, the permutations test is an easy way to get an accurate probability of refuting the null hypothesis for data sets. We will now explore the permutations test using three different drug trials, each with very different outcomes. You will soon see that the permutations test is applicable to a wide variety of biostatistical situations! Select one of the three drug trials below to begin the analysis.</p>
   <div class="container-fluid">
-    <h2>Permutations Test Analysis</h2>
     <div class="row">
       <div class="col-sm-5">
         <form class="well">
@@ -150,6 +139,7 @@ end.rcode-->
 </div>
 <p>
 
+    <h2>Permutations Test Analysis</h2>
 <p>The Calcium data is from <a href="#Cobb" >Cobb </a>Manuscript</p>
 <p>The Alcohol data is from <a href="#Dorman" >Dorman </a>Lab Wiki</p>
 <p>The HIV data is from <a href="#BU" >Sullivan </a>from "Boston University Basic Concepts for Biostatistics"</p>
@@ -242,9 +232,9 @@ How many repetitions do we REALLY need to get an accurate p-value. There are mul
 <h4>References</h4>
 <a name="Cobb">George Cobb </a>Statistics Manuscript
 <br/>
-<a name="Dorman">Karin Dorman </a>Lab Wiki
+<a name="Dorman" href="http://thirteen-01.stat.iastate.edu/wiki/stat430/files?filename=wilcoxon_rank_sum-test.pdf">Karin Dorman </a>Lab Wiki
 <br/>
-<a name="BU">Lisa Sullivan </a>BU Biostatistics
+<a name="BU" href="http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Nonparametric/mobile_pages/BS704_Nonparametric4.html">Lisa Sullivan </a>BU Biostatistics
 
 </body>
 </html> 

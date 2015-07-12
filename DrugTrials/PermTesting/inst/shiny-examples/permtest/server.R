@@ -4,15 +4,20 @@ library("shiny")
 source("helpers.R")
 
 #load HTML interactive choices
+#this will change to a call to the data function inside the function
 load("htmlChoices.rda")
 
 #load data
-load("data/drugs.RData")
+# load("../../../data/Calcium.RData")
+# load("../../../data/Alcohol.RData")
+# load("../../../data/HIV.RData")
+load("../../../data/drugs.RData")
 
 shinyServer(
   function(input, output) {
     #select drug data set using a reactive widget
     dataSet <- reactive({ 
+      #this should change to allow for 3 separate RData files
       drugData[[input$var]]
     })
     output$intro <- renderText({paste(intros[[input$var]], collapse = "")})
@@ -23,21 +28,21 @@ shinyServer(
     #display the mean for both populations
     output$mean <- renderTable({
       data.frame("mean1" = mean(dataSet()[,1], na.rm = TRUE), 
-                 "mean2" = mean(dataSet()[,2]))
+                 "mean2" = mean(dataSet()[,2], na.rm = TRUE))
     })
     #allow user to select repetitions of sample from the selected data
     #plot a distribution of the means of the sample populations
     #compute p-Value for the sample set of population means
     output$permPlot <- renderPlot({
       args <- list(NRep = input$NRep1,
-                   pop1 = na.omit(dataSet()[,1]), pop2 = dataSet()[,2])
+                   pop1 = na.omit(dataSet()[,1]), pop2 = na.omit(dataSet()[,2]))
       do.call(plotPerm, args)
     })
     #plot convergence of p-values as repetitions increase for selected data
     #demonstrate necessary number of repetitions for accurate p-value
     output$plot <- renderPlot({
       args <- list(min = input$range[1], max = input$range[2],
-                   pop1 = na.omit(dataSet()[,1]), pop2 = dataSet()[,2], big = input$var)
+                   pop1 = na.omit(dataSet()[,1]), pop2 = na.omit(dataSet()[,2]), big = input$var)
       
       do.call(pValPlot, args)
     })
@@ -50,7 +55,8 @@ shinyServer(
     output$sum <- renderTable({
       data.frame("dichotomization 1" = sum(dichData(dataSet()[,1], dataSet()[,2], thresh = input$thresh2)$dich1, 
                                            na.rm = TRUE),
-                 "dichotomization 2" = sum(dichData(dataSet()[,1], dataSet()[,2], thresh = input$thresh2)$dich2))
+                 "dichotomization 2" = sum(dichData(dataSet()[,1], dataSet()[,2], thresh = input$thresh2)$dich2,
+                                           na.rm = TRUE))
     })
     #provides the median of the drug variable as a possible threshold value
     output$median <- renderText({
@@ -64,7 +70,7 @@ shinyServer(
     #compute p-Value for the sample set of population sums
     output$dichPlot <- renderPlot({
       args <- list(NRep = input$NRep2, thresh = input$thresh2,
-                   pop1 = na.omit(dataSet()[,1]), pop2 = dataSet()[,2])
+                   pop1 = na.omit(dataSet()[,1]), pop2 = na.omit(dataSet()[,2]))      
       do.call(dichPlot, args)
     })
     #vizualize the ranks of the selected data in a table
@@ -87,7 +93,7 @@ shinyServer(
     #compute p-Value for the sample set of population ranked-sums
     output$wilcox <- renderPlot({
       args <- list(NRep = input$NRep3,
-                   pop1 = na.omit(dataSet()[,1]), pop2 = dataSet()[,2])
+                   pop1 = na.omit(dataSet()[,1]), pop2 = na.omit(dataSet()[,2]))
       do.call(wilPlot, args)
     })
   }
