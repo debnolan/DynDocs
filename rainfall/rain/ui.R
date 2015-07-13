@@ -10,21 +10,9 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                 fluidPage(
                                   fluidRow(
                                     column(8,
-                                           h1("Extrem Value Theory"),
-                                           h2("Introduction"),
-                                           p(),
-                                           h2("Asymptootic Model Characterization"),
-                                           p("The classical asymptotically model for excesses above a high
-threshold is the generalised Pareto distribution. It is often useful to look 
-at the exceedances over a given threshold instead of the maximum or minimum of the data."),
-                                           h3("The Generalized Pareto Distribution"),
-                                          
-                                           h3("Outline Justification for the Generalized Pareto Model"),
-                                           h2("Modeling Threshold Excesses"),
-                                           h3("Threshold Selection"),
-                                           h3("Parameter Estimation"),
-                                           h3("Return Levels"),
+                                           includeHTML("index.html"),
                                            plotOutput("plots3", height = "200px"),
+                                           plotOutput("plots5", height = "200px"),
                                            plotOutput("plots2", height = "400px"),
                                            verbatimTextOutput("rl")
                                     )

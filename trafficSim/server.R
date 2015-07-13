@@ -1,6 +1,6 @@
 source("tutorial.R")
 # either set working directory or change path relative to local root
-dyn.load("~/Documents/projects/DynDocs/trafficSim/BML.so")
+dyn.load("BML.so")
 
 shinyServer(
   function(input, output) {

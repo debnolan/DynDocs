@@ -1,0 +1,8 @@
+To-do List:
+shinyAR
+- change the AR formula into LaTex form
+
+
+shinyPT
+- change how to print warning message when 1 "select" and 1 stock is chosen
+-

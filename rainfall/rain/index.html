@@ -13,7 +13,7 @@
   <h2>Introduction</h2>
   
   <p> In this project, we will look at the probability plot, quantile plot, return
-  level plot, and density plot which involves the fitting of data to a GPD using a range of different thresholds and estimate its return values. 
+  level plot, and density plot which involves the fitting of data to a Generalized Pareto Distribution using a range of different thresholds and estimate its return values of a weather station in Colarado. 
   </p>
 
   <h2>Asymptootic Model Characterization</h2>
@@ -62,15 +62,33 @@
     ${(u,${\frac{1}{n_u}}\sum_{i=1}^{n_u} (x_(i) - u)): u < x_max}$
   </p>
   <p>
-    It is termed as the mean residual life plot where the plot is approximately linear in threshold, u.
+    It is termed as the mean residual life plot where the plot is approximately linear in threshold, u
   </p>
   
-      <h3>Parameter Estimation</h3>
+      <h3>Parameter Estimation </h3>
+      <p>
+        Having determined a threshold, the parameters of the generalized Pareto distribution can be estimated by maximum likelihood. Maximum likelihood estimation of the parameters (k, &alpha;) was considered by DuMouchel (1983), Davison (1984), R. L. Smith (1984, 1987), J. A. Smith (1986), and Joe (1987). To compute the GPD maximum likelihood estimates, There are two values of (k, &alpha;) that must be investigated in order to compute the GPD maximum likelihood estimate, such that $\Re = \{k < 0, &alpha; > 0\} \cup \{0 < k \leq 1, {\frac{&alpha;}{k}} > X_n\}$. The first is the local maximum of the loglikelihood in space $\Re$ and the second is at the boundary space $\Re$, where k = 1. Suppose that X = {X<SUB><FONT size=-1>1</font></sub>,X<SUB><FONT size=-1>2</font></sub> . . , X<SUB><FONT size=-1>n</font></sub>} is a random sample from the GPD with largest value of X<SUB><FONT size=-1>n</font></sub>. Then, the loglikelihood
+is given by 
+      </p>
+      <p>
+        $$l(&sigma;, &xi;) = klog&sigma; - (1 + {\frac{1}{&sigma;}})\sum_{i=1}^{k} log(1+{\frac{&xi;y_i}{&sigma;}}),  k \neq 0$$
+      </p>
+      <p> $$l(&sigma;, &xi;) = -klog&sigma; - {\frac{1}{&sigma;}}\sum_{i=1}^{k} y_i,  k = 0$$ </p>
+      
+      <p>
+      where &sigma; > 0 for k > 0 and &sigma; > kX<SUB><FONT size=-1>(n)</font></sub> for k > 0. If k > 1, then there is no maximum likelihood estimate because $\lim_{{\frac{&alpha;}{k}}\to X^{+}} L(k, &alpha;; X) = \infty$ 
+      </p>
       <h3>Return Levels</h3>
+      <p>
+        When measuring the extreme value models, it is more convenient to interpret them in terms of return levels or quantiles rather than individual parameter values. Return levels are best to measure on the annual scale, so that the N-year return level is the level that is expected to be exceeded once in every N years. Suppose that a generalized Pareto distribution with parameters &sigma; and &xi; is a suitable model for exceedances of a threshold u by a variable X, such that
+      </p>
+      <p> $$Pr(X > x | X > u) = [1+&xi;({\frac{x-u}{&sigma;}})]^{\frac{-1}{&xi;}}$$</p>
+      <p> $$Pr(X > x) = &xi;_u[1 + &xi;({\frac{x_m-u}{&sigma;}})]^{\frac{-1}{&xi;}} = {\frac{1}{m}}$$ </p>
+      <p> where x<SUB><FONT size=-1>m</font></sub> is the m observation return level which it exceeds the average on every m observations and &xi; $\neq$ 0 
+      </p>
 
-  
   <h3>Application of GEV distribution</h3>
-  <p> Based on the extreme value theory that derives the GEV distribution, we can fit a sample of extremes to the GEV distribution to obtain the parameters that best explains the probability distribution of the extremes. In our present work, we first pick a weather station in Colorado and calculate daily maximum precipitation and the number of heavy rainfall events. These extremes-related quantities are, respectively, fitted to the GEV distribution. From the fitted distribution, we can estimate how often the extreme quantiles occur with a certain return level. The return value is defined as a value that is expected to be equaled or exceeded on average once every interval of time (T) (with a probability of 1/T). Therefore, we obtain the equation, CDF of the GEV distribution (i.e., equation (1)) = 1-1/T. We call "T" on the right hand side of this equation as a return period, and "x" in equation (1) (left hand side) is the return value. The return value can be calculated by solving this equation (i.e., by inverting the GEV distribution). In our current work, We calculated return values for 2-, 5-, 10-, and 20-yr return period at each grid point.
+  <p> In our present work, we first pick a weather station in Colorado and calculate daily maximum precipitation and the number of heavy rainfall events. From the fitted distribution, we can estimate how often the extreme quantiles occur with a certain return level. The return value is defined as a value that is expected to be equaled or exceeded on average once every interval of time. We calculated return values for 2-, 5-, 10-, 20-yr, 100-yr and 200-yr return period at each grid point.
   </p>
 
 
