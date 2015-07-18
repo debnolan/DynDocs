@@ -63,7 +63,6 @@
   font-weight: bold;
 }
 </style>
-<title>Money and Education</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <script type="application/shiny-singletons"></script>
   <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];selectize[0.11.2];ionrangeslider[2.0.6];bootstrap[3.3.1]</script>
@@ -85,6 +84,30 @@
 <script src="shared/bootstrap/js/bootstrap.min.js"></script>
 <script src="shared/bootstrap/shim/html5shiv.min.js"></script>
 <script src="shared/bootstrap/shim/respond.min.js"></script>
+<!--rgl header-->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons">dad5b75bf47e880028b79bccb72da884a78c0f69</script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.1];selectize[0.11.2];bootstrap[3.3.1]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
+<!--[if lt IE 9]>
+<script src="shared/selectize/js/es5-shim.min.js"></script>
+<![endif]-->
+<script src="shared/selectize/js/selectize.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+  <script src="shinyRGL/CanvasMatrix.js"></script>
+  <script src="shinyRGL/glbinding.js"></script>
+<!--css file-->
+<script src="shared/jquery.js" type="text/javascript"></script>
+<script src="shared/shiny.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="shared/interactive_doc.css"/> 
 </head>
 
 <body>
@@ -222,6 +245,84 @@ sat -- Average total score on the SAT in 1994-1995<br>
     </div>
   </div>
 </div> 
+
+
+<!--3D scatterplot-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>3-variable-satterplot</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="x">Choose an x variable:</label>
+            <div>
+              <select id="x"><option value="expend">Expenditure Per Pupil (in 000's of dollars)</option>
+<option value="ratio">Student-Teacher Ratio</option>
+<option value="salary" selected>Teacher Salary (in 000's of dollars)</option>
+<option value="frac">Eligible Student Fraction</option></select>
+              <script type="application/json" data-for="x" data-nonempty="">{}</script>
+            </div>
+          </div>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="y">Choose a y variable</label>
+            <div>
+              <select id="y"><option value="sat" selected>SAT Total Score</option>
+<option value="math">SAT Math Score</option>
+<option value="verbal">SAT Verbal Score</option></select>
+              <script type="application/json" data-for="y" data-nonempty="">{}</script>
+            </div>
+          </div>
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="z">Choose a z variable:</label>
+            <div>
+              <select id="z"><option value="expend">Expenditure Per Pupil (in 000's of dollars)</option>
+<option value="ratio">Student-Teacher Ratio</option>
+<option value="salary">Teacher Salary (in 000's of dollars)</option>
+<option value="frac" selected>Eligible Student Fraction</option></select>
+              <script type="application/json" data-for="z" data-nonempty="">{}</script>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+        <div id="sctPlot" class="shiny-gl-output" style="width: 100% ; height: 400px"></div>
+      </div>
+    </div>
+  </div>
+
+  
+<!--simpson's paradox tutorial-->
+<div class="container-fluid">
+  <h2>Simpson's Paradox</h2>
+  <div class="row">
+    <div class="col-sm-4">
+      <form class="well">
+        <div class="form-group shiny-input-container">
+          <label class="control-label" for="count_A_small">Treatment A Count For Small Kidney Stones:</label>
+          <input class="js-range-slider" id="count_A_small" data-min="0" data-max="350" data-from="87" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.285714285714286"/>
+        </div>
+        <div class="form-group shiny-input-container">
+          <label class="control-label" for="count_B_small">Treatment B Count For Small Kidney Stones:</label>
+          <input class="js-range-slider" id="count_B_small" data-min="0" data-max="350" data-from="263" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.285714285714286"/>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-8">
+      <div id="table" class="shiny-html-output"></div>
+      <div id="yesorno" class="shiny-text-output"></div>
+    </div>
+  </div>
+</div> 
+
+
+
+
+
+
 
 </body>
 </html>

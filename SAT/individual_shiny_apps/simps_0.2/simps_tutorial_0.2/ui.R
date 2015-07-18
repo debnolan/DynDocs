@@ -3,7 +3,7 @@ library(shiny)
 # Define UI for slider demo application
 shinyUI(fluidPage(
   #  Application title
-  titlePanel("Sliders"),
+  titlePanel("Simpson's Paradox"),
   # options
   sidebarLayout(
     sidebarPanel(

@@ -1,5 +1,6 @@
 # satDF = read.csv("http://www.stat.berkeley.edu/users/nolan/data/sat.csv") 
 # save(satDF, file = "satDF.rda")
+setwd("/Users/Zeyu/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT/rda_data/")
 load("satDF.rda")
 ### Question: which year is the data drawn from?
 ### variables: teacher salary(annual? average?); ratio(student-teacher ratio?); frac(eligible student?)
