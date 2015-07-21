@@ -1,27 +1,10 @@
 library(shiny)
 source("helper.R")
 
-#-------------------------- read data and prep -------------------------------#
+#load("../data/flow_occ.RData")
+data(flow_occ)
 
-traf <- read.csv("www/flow-occ-table.txt")
-nint <- nrow(traf) # number of 5-min intervals, 1740
-
-## Suppose starts on March 14th, 2003, Friday at midnight (we don't know the time)
-## then ends at 1am on Thur, March 20th
-day <- rep(c("Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thur"), 
-           each = 24*12, length.out = nint)
-time <- paste(rep(0:23, each = 12, length.out = nint), 
-              rep(c("00", "05", seq(10, 55, by = 5)), length.out =    nint), 
-              sep = ":") 
-
-## reshape data
-traf <- data.frame(Occ  = with(traf, c(Occ1, Occ2, Occ3)),
-                   Flow = with(traf, c(Flow1, Flow2, Flow3)),
-                   lane = rep(1:3, each = nint),
-                   day  = rep(day, 3), 
-                   time = rep(time, 3))
-traf$Speed <- with(traf, Flow/Occ) 
-
+nint <- nrow(traf)/max(traf$lane)  # number of 5-min intervals, 1740
 spRange <- range(traf$Speed, na.rm = TRUE)
 ocRange <- range(traf$Occ)
 flRange <- range(traf$Flow)
@@ -51,7 +34,7 @@ server <- function(input, output) {
       axis(1, at = seq(0, nint, by = 12*3), labels = rep("", nint/(12*3) + 1), tck = -0.03) 
     if (input$day)
       axis(3, at = seq(24*12/2, nint, by = 24*12), tick = FALSE, line = -0.5,
-           labels = c("Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"))
+           labels = unique(traf$day)[1:6])
     
     par(mar = c(5, 4, 0, 2) + 0.1)
     plot(traf$Occ[traf$lane == 1], type = "l", xaxt = "n", 
@@ -118,7 +101,7 @@ server <- function(input, output) {
                           labels = rep(seq(0, 21, by = 3), length.out = nint/(12*3) + 1),
                           mgp = c(3, -1.7, 0), cex.axis = 0.7))
     axis(3, at = seq(24*12/2, nint, by = 24*12), tick = FALSE, line = -2.5, cex.axis = 1.2,
-         labels = c("Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"))
+         labels = unique(traf$day)[1:6])
   })
 
   output$plot5 <- renderPlot({
@@ -138,7 +121,7 @@ server <- function(input, output) {
     axis(1, at = seq(0, nint, by = 12), labels = rep(seq(0, 23, by = 1), 
                                                      length.out = nint/12 + 1))
     axis(3, at = seq(24*12/2, nint, by = 24*12), tick = FALSE, line = -0.3, cex.axis = 1.8,
-         labels = c("Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"))
+         labels = unique(traf$day)[1:6])
     
     par(mar = c(2.5, 4, 1.5, 2) + 0.1)
     plot(traf$Occ[traf$lane == 3],  pch = c(1, 19)[rvals$cong[traf$lane == 3] + 1], 
