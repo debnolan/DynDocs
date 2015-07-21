@@ -162,7 +162,7 @@ server <- function(input, output) {
   
   observeEvent(input$plot4_click, {
     newClick <- unlist(input$plot4_click[c("x", "y")])
-    newInd   <- nearPointIndex(traf[, c(6, 1)], newClick)
+    newInd   <- nearPointIndex(traf[c("Speed", "Occ")], newClick)
     rvals$clickInd <- c(rvals$clickInd, newInd)  
   })
   
