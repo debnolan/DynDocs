@@ -56,6 +56,10 @@
           <label for="prob">Probability:</label><br/> 
           <input class="js-range-slider" id="probB" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
           </div>
+          <div>
+    	  <label>Number of Walks:</label><br/> 
+          <input type="number" name="numbB" value="1" min="0" max = "1000" /><br/> 
+    	  </div>
           
           <div class="form-group shiny-input-container">
            <button id="runSimB" type="button" class="btn btn-default action-button">Simulate </button>
@@ -91,7 +95,12 @@
     			<input type="number" name="meanC" value="0" min="0" max = "10000" /><br/> 
    				 <label>Standard Deviation:</label><br/> 
     			<input type="number" name="sdC" value="1" min="0" max = "10000" /><br/> 
-    	  </div>		
+    	  </div>
+          <div>
+    	  <label>Number of Walks:</label><br/> 
+          <input type="number" name="numbC" value="1" min="0" max = "1000" /><br/> 
+    	  </div>
+              	  		
           <div class="form-group shiny-input-container">
            <button id="runSimC" type="button" class="btn btn-default action-button">Simulate </button>
           </div>
@@ -128,7 +137,12 @@
           <div>
           <label for="prob">Y Probability:</label><br/> 
           <input class="js-range-slider" id="yprobD" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
-          </div>          
+          </div>
+          <div>
+    	  <label>Number of Walks:</label><br/> 
+          <input type="number" name="numbD" value="1" min="0" max = "1000" /><br/> 
+    	  </div>
+              	           
           <div class="form-group shiny-input-container">
            <button id="runSimD" type="button" class="btn btn-default action-button">Simulate </button>
           </div>        
@@ -168,6 +182,10 @@
 	     	<label>Y Standard Deviation:</label><br/> 
     		<input type="number" name="YsdE" value="1" min="0" max = "10000" /><br/>     				
     	  </div>
+          <div>
+    	  <label>Number of Walks:</label><br/> 
+          <input type="number" name="numbE" value="1" min="0" max = "1000" /><br/> 
+    	  </div>
           <div class="form-group shiny-input-container">
            <button id="runSimE" type="button" class="btn btn-default action-button">Simulate </button>
           </div>
@@ -179,6 +197,41 @@
       </div>
   	</div>
         <div class="row">
+
+
+      <div class="col-sm-4">
+        <form class="well">
+          <div class="form-group shiny-input-container">
+            <label class="control-label" for="types">2D Randome Walk with Drift</label>
+            <div>
+              <script type="application/json" data-for="typesE" data-nonempty="">{}</script>
+            </div>
+          </div>
+          <br/>
+  
+          <br/>
+          <div>
+    		<label>X Initial:</label><br/> 
+    		<input type="number" name="xinitG" value="1" min="0" max = "10000" /><br/> 
+   		  <br/>
+   			<label>Y Initial:</label><br/> 
+			<input type="number" name="yinitG" value="1" min="0" max = "10000" /><br/>
+    	  </div>
+          <div>
+    	  <label>Number of Walks:</label><br/> 
+          <input type="number" name="numbG" value="1" min="0" max = "1000" /><br/> 
+    	  </div>
+              	  
+          <div class="form-group shiny-input-container">
+           <button id="runSimG" type="button" class="btn btn-default action-button">Simulate </button>
+          </div>
+        </form>
+      </div>
+      	<div class="col-sm-8">
+        <div id="plotG" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+      	</div>
+      </div>
+  	</div>
 
 
 
@@ -195,14 +248,19 @@
           <br/>
           <div>
     			<label>Longitude Begin:</label><br/> 
-    			<input type="number" name="lonBeginF" value="30" min="0" max = "180" /><br/> 
+    			<input type="number" name="lonBeginF" value="30" min="-180" max = "180" /><br/> 
    				 <label>Longitude End:</label><br/> 
-    			<input type="number" name="lonEndF" value="40" min="0" max = "180" /><br/>
+    			<input type="number" name="lonEndF" value="40" min="-180" max = "180" /><br/>
     			<label>Latitude Begin:</label><br/> 
-    			<input type="number" name="latBeginF" value="50" min="0" max = "180" /><br/> 
+    			<input type="number" name="latBeginF" value="50" min="-180" max = "180" /><br/> 
    				 <label>Latitude End:</label><br/> 
-    			<input type="number" name="latEndF" value="60" min="0" max = "180" /><br/> 
+    			<input type="number" name="latEndF" value="60" min="-180" max = "180" /><br/> 
     	  </div>		
+          <div>
+    	  <label>Number of Walks:</label><br/> 
+          <input type="number" name="numbF" value="1" min="0" max = "1000" /><br/> 
+    	  </div>
+              	  
           <div class="form-group shiny-input-container">
            <button id="runSimF" type="button" class="btn btn-default action-button">Simulate </button>
           </div>

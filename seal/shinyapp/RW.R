@@ -1,9 +1,11 @@
 OneDimSimpleRandWalk <- function(num.steps, prob = 0.5) {
-  return(cumsum(sample(c(1, -1), num.steps, TRUE)))
+  walk = cumsum(sample(c(1, -1), num.steps, TRUE))
+  return(cbind(1:num.steps, walk))
 }
 
 OneDimBrownianRandWalk <- function(num.steps, mean = 0, sd = 1) {
-  return(cumsum(rnorm(num.steps, mean, sd)))
+  walk = cumsum(rnorm(num.steps, mean, sd))
+  return(cbind(1:num.steps, walk))
 }
 
 TwoDimSimpleRandWalk <- function(num.steps, x.prob = 0.5, y.prob = 0.5) {
@@ -93,7 +95,7 @@ GCRandomWalk <- function(num.steps = 0, latBegin = 46.8, lonBegin = 145.5,
   lat = 90 - 180 * theta_8 / pi
   lon = 180 * phi_8 / pi
 
-  return(cbind(lat, lon))
+  return(cbind(lon, lat))
 }
 
 
