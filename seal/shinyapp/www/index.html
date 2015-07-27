@@ -6,7 +6,7 @@
   <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.1];selectize[0.11.2];ionrangeslider[2.0.6];font-awesome[4.2.0];bootstrap[3.3.1]</script>
 <script src="shared/json2-min.js"></script>
 <script src="shared/jquery.min.js"></script>
-<link href="shared/shiny.css" rel="stylesheet" />
+<link href="shared/shiny.css" rel="stylesheet"/>
 <script src="shared/shiny.min.js"></script>
 <link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
 <!--[if lt IE 9]>
@@ -23,10 +23,28 @@
 <script src="shared/bootstrap/js/bootstrap.min.js"></script>
 <script src="shared/bootstrap/shim/html5shiv.min.js"></script>
 <script src="shared/bootstrap/shim/respond.min.js"></script>
-  <title>
-    <h4 align="center">Random Walk Tutorial</h4>
-  </title>
+
 </head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <hr />
+            <h1>ELEPHANT SEAL MOVEMENTS: MODELLING MIGRATION</h1>
+            <hr />
+        </div>
+        <div class="content">
+            <h2>Introduction</h2>
+            <p>
+                Random walk is a path of succession of random steps, which mathematical formalized. We will examine the movements of elephant seals migrations applying random walk model. However, the movement is on the surface of a sphere, which has a possibility that elephant seal migrates along great-circle path.
+            </p>
+            <p>
+                Before we examine random walk on great circle, let us look at several different models of random walk which are 'One Dimensional Simple Random Walk', 'One Dimensional Brownian Random Walk', 'Two Dimensional Simple Random Walk', 'Two Dimensional Brownian Random Walk', 'Two Dimensional Random Walk with Drift', then finally 'Great Circle Random Walk'.
+            </p>
+            <p>
+                With different models and simulations, various parameters can be tested to have better understanding of random walk.
+            </p>
+            <br />
 <body>
   <div class="container-fluid">
     <div class="row">
@@ -36,13 +54,11 @@
     </div>
     <div class="row">
  
-        
-
       <div class="col-sm-4">
         <form class="well">
           <div class="form-group shiny-input-container">
             <label class="control-label" for="types">1D Simple Random Walk</label>
-            <div>
+           <div>
               <script type="application/json" data-for="typesB" data-nonempty="">{}</script>
             </div>
           </div>
@@ -73,8 +89,6 @@
       </div>
   	</div>
           <div class="row">
-
-
 
       <div class="col-sm-4">
         <form class="well">
@@ -146,6 +160,7 @@
           <div class="form-group shiny-input-container">
            <button id="runSimD" type="button" class="btn btn-default action-button">Simulate </button>
           </div>        
+
         </form>
       </div>
       	<div class="col-sm-8">
@@ -153,7 +168,6 @@
       	</div>
       </div>
   	</div>
-
         <div class="row">
 
 
@@ -202,7 +216,7 @@
       <div class="col-sm-4">
         <form class="well">
           <div class="form-group shiny-input-container">
-            <label class="control-label" for="types">2D Randome Walk with Drift</label>
+            <label class="control-label" for="types">2D Random Walk with Drift</label>
             <div>
               <script type="application/json" data-for="typesE" data-nonempty="">{}</script>
             </div>
