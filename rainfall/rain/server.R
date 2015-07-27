@@ -99,5 +99,14 @@ shinyServer(function(input, output,session) {
     title(paste("Simulation result (Weather station ", datasetInput2(), ")", sep = ""))
   })
   
+  # If you don't like it, you can delete it
+  # Mean Residual plot
+  output$plots5 <-  renderPlot({
+    par(mfrow = c(1,1),bg = '#FAFAD2', mai = c(0.8,0.8,0.3,0.1))
+    #rainfalldf = as.data.frame(rainfall[[datasetInput()]])
+    #mrlplot(rainfalldf$precip, nint =  input$threshold)
+    mrlplot(rainfall[[datasetInput()]]$precip, nint =  input$threshold)
+    title("Mean Residual Plot")
+  })
   
 })

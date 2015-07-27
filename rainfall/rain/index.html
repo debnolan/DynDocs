@@ -29,16 +29,16 @@
   assuming that <I>F</i> satisfies certain conditions, then we have that Pr{M<SUB><FONT size=-1>n</font></sub> &le; z} &asymp; G(z), where
   </p>
   
-  <p> <img src="/images/GPDderivation2.png"> </p>
+  <p> <img src="GPDderivation2.png"> </p>
     
   <p> 
   for some &mu;, &sigma; &gt; 0 and &xi;.  Then for a large enough threshold, u, the distribution function of GPD (X-&mu;), conditional on X &gt; u, is then given by
   </p>
   
-  <img src="/images/GPDdefinition.png"></a>
+  <img src="GPDdefinition.png"></a>
   
   <p>
-    where z=(x-&mu;)/&sigma;, and k, &sigma;, &mu; are the shape, scale, and location parameters respectively. The scale of &sigma; must be positive, the shape and location can take any real numbers.
+    where $z={\frac{(x-&mu;)}{&sigma;}}$, and k, &sigma;, &mu; are the shape, scale, and location parameters respectively. The scale of &sigma; must be positive, the shape and location can take any real numbers.
   </p>
   
   <p>
@@ -50,7 +50,20 @@
   <p>&bull; &xi; &gt; 0: heavy tail</p>
   
   <h2>Outline Justification for the Generalized Pareto Model</h2>
-      <h2>Modeling Threshold Excesses</h2>
+  <p>
+   In this section, we will look at a proof of how GEV and GPD models are related one or another. Let X follows GEV distribution over a high threshold u and y is the excess (x-&mu;).     
+  </p>
+  <p>
+    $$Pr\{X > u + y | X > u\} = {\frac{1-Pr(X < x + u)}{1-Pr(X < u)}}$$
+    $$ = {\frac{[1 + \frac{&xi;(u + y - &mu;)}{&sigma;}]^{\frac{-1}{&xi;}}}{[1 + \frac{&xi;(u - &mu;)}{&sigma;}]^{\frac{-1}{&xi;}}}}  $$
+    
+    $$ = [1 + {\frac{\frac{&xi;(u + y - &mu;)}{&sigma;}}{1+\frac{&xi;(u - &mu;)}{&sigma;}}}]^{\frac{-1}{&xi;}} $$
+    $$ = [1 + {\frac{&xi; y }{&sigma;}}]^{\frac{-1}{&xi;}} $$
+  </p>
+  <p>
+    where &sigma;<SUB><FONT size=-1>u</font></sub> = &sigma; + &xi; (u-&mu;).&sigma;<SUB><FONT size=-1>u</font></sub> is the scale parameter of the Generalizd Pareto model and &sigma; is the scale of the point process model. This derivation makes the dependence of the GPD scale &sigma;<SUB><FONT size=-1>u</font></sub> and threshold u very clear that the GPD shape parameter is the same as the Generalized Extreme Value(GEV) shape parameter.
+  </p>
+  
       <h3>Threshold Selection</h3>
   <p>
   Selection of a threshold that is too low will result biased parameter estimates, but a threshold that is too high will result in large variance of the parameter estimates. The idea of selecting a reasonable approximation is to pick a low threshold for the limit subject model. 
@@ -62,12 +75,12 @@
     ${(u,${\frac{1}{n_u}}\sum_{i=1}^{n_u} (x_(i) - u)): u < x_max}$
   </p>
   <p>
-    It is termed as the mean residual life plot where the plot is approximately linear in threshold, u
+    The devivation is termed as the mean residual life plot where where x<SUB><FONT size=-1>(-1)</font></sub> is the observation above the u and n<SUB><FONT size=-1>u</font></sub> is the number of observation above the u. This method can potentially provide a way of choosing an appropriate threshold. As u increases, the mean residual plot changes linearly with u.
   </p>
   
       <h3>Parameter Estimation </h3>
       <p>
-        Having determined a threshold, the parameters of the generalized Pareto distribution can be estimated by maximum likelihood. Maximum likelihood estimation of the parameters (k, &alpha;) was considered by DuMouchel (1983), Davison (1984), R. L. Smith (1984, 1987), J. A. Smith (1986), and Joe (1987). To compute the GPD maximum likelihood estimates, There are two values of (k, &alpha;) that must be investigated in order to compute the GPD maximum likelihood estimate, such that $\Re = \{k < 0, &alpha; > 0\} \cup \{0 < k \leq 1, {\frac{&alpha;}{k}} > X_n\}$. The first is the local maximum of the loglikelihood in space $\Re$ and the second is at the boundary space $\Re$, where k = 1. Suppose that X = {X<SUB><FONT size=-1>1</font></sub>,X<SUB><FONT size=-1>2</font></sub> . . , X<SUB><FONT size=-1>n</font></sub>} is a random sample from the GPD with largest value of X<SUB><FONT size=-1>n</font></sub>. Then, the loglikelihood
+        Having determined a threshold, the parameters of the generalized Pareto distribution can be estimated by maximum likelihood. Maximum likelihood estimation of the parameters (k, &alpha;) was considered by DuMouchel (1983), Davison (1984), R. L. Smith (1984, 1987), J. A. Smith (1986), and Joe (1987). To compute the GPD maximum likelihood estimates, there are two values of (k, &alpha;) that must be investigated, such that $\Re = \{k < 0, &alpha; > 0\} \cup \{0 < k \leq 1, {\frac{&alpha;}{k}} > X_n\}$. The first is the local maximum of the loglikelihood in space $\Re$ and the second is at the boundary space $\Re$, where k = 1. Suppose that X = {X<SUB><FONT size=-1>1</font></sub>,X<SUB><FONT size=-1>2</font></sub> . . , X<SUB><FONT size=-1>n</font></sub>} is a random sample from the GPD with largest value of X<SUB><FONT size=-1>n</font></sub>. Then, the loglikelihood
 is given by 
       </p>
       <p>
@@ -87,8 +100,13 @@ is given by
       <p> where x<SUB><FONT size=-1>m</font></sub> is the m observation return level which it exceeds the average on every m observations and &xi; $\neq$ 0 
       </p>
 
-  <h3>Application of GEV distribution</h3>
-  <p> In our present work, we first pick a weather station in Colorado and calculate daily maximum precipitation and the number of heavy rainfall events. From the fitted distribution, we can estimate how often the extreme quantiles occur with a certain return level. The return value is defined as a value that is expected to be equaled or exceeded on average once every interval of time. We calculated return values for 2-, 5-, 10-, 20-yr, 100-yr and 200-yr return period at each grid point.
+  <h3>Application of Generalized Pareto model</h3>
+  <p> 
+  In our present work, we first pick a weather station in Colorado and calculate maximum precipitation and the number of heavy rainfall events. For example, the first plot is the disribution plot of the first weather station's daily percipitation ranging from 1948 to 2001 with an extremal threshold u(red line). The selection of the value of the threshold u is crucial: setting u too high will result high variance of the estimate of the parameters; setting u too small will result a larger number of data exceed the threshold, and so the estimates of the parameters will have low variance and lead to bias because the non-extremal tail does not be well-fit by the GPD model. </p>
+  <p>
+  The interpretation of a mean residual life plot is not easy to estimate in practice; the second plot is the mean residual life plot with 95% confidence intervals from the daily rainfall data. The graph, particular in weather station 7, appears to curve from u = 0 to u ~ 100, beyond which is approximately linear until u ~ 300, where it decays sharply. It is tempting to conclude that there is no stability until u = 300 because it appears approximate linearity. The information from the plot for large values of u is unreliable due to the limited amount of data in which the estimate and confidence interval are based. Therefore, it is statistically significant to conclude there is some evidence for linearity above u = 100, and we should work initially with a threshold at U<SUB><FONT size=-1>0</font></sub> = 100.
+</p>
+  <p>From the fitted distribution, we can estimate how often the extreme quantiles occur with a certain return level. The return value is defined as a value that is expected to be equaled or exceeded on average in each time interval. We calculated return values for 2-, 5-, 10-, 20-yr, 100-yr and 200-yr return period at each grid point. Finally, we provide diagnostic plots for the fitted generalized Pareto model to explain threshold excess fitted to daily rainfall data of each weather station.
   </p>
 
 

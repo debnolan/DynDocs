@@ -44,3 +44,7 @@ h1, h2, h3, h4 { font-weight: 400; }
   color: grey;
 }
 
+/* mouse over link */
+#a:hover {
+    color: #FF00FF;
+}
