@@ -1,6 +1,68 @@
 <html>
 
 <head>
+<style type="text/css">
+.knitr.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+},
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0em 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.rimage.left {
+  text-align: left;
+}
+.rimage.right {
+  text-align: right;
+}
+.rimage.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
 <title>Arrival of African Honey Bees in the US</title>
 </head>
 
@@ -49,7 +111,7 @@ African Honey Bees
 Introduction
 </h2>
 <p>The African Honey Bee (AHB), also nicknamed the "killer bee", has had a significant impact on the agricultural economy. This species is unique from many other 
-bees because of its extremely defensive nature and the tendency of its colonies to swarm and spread. The implications of the AHB has been astronimical. Areas populated by AHB colonies have been quarantined, prohibiting the importation of the European Honey Bee. The subsequent lack of bees has taken a toll on crop pollination. Thus, there has been strong interest in predicting the arrival of the AHB to the United States. The case studied is heavily adopted from the <a href="http://www.stat.tamu.edu/~matis/Predicting%20the%20Africanized%20Bee%20Invasion.pdf">work </a> of Matis and Kiffe. </a>
+bees because of its extremely defensive nature and the tendency of its colonies to swarm and spread. The implications of the AHB has been astronimical. Areas populated by AHB colonies have been quarantined, prohibiting the importation of the European Honey Bee. The subsequent lack of bees has taken a toll on crop pollination. Thus, there has been strong interest in predicting the arrival of the AHB to the United States. The case studied is heavily taken from the <a href="http://www.stat.tamu.edu/~matis/Predicting%20the%20Africanized%20Bee%20Invasion.pdf">work </a> of Matis and Kiffe. </a>
 </p>
 <p>
 In order to obtain the data below, cardboard box traps with a chemical attractant were placed at an average of every 93km (OR 300-500???m). Then, every month, the boxes were checked for presence of the AHB.</p>
@@ -153,40 +215,29 @@ The Gamma Distribution is as follows:
 
 $\frac{(&#946;^&#945;)}{(&#945;-1)!} e^{-&#946;y} y^{&#945; - 1}$ </p>
 
-
-<p>
-Now, observe the change when you vary the &#946; parameter while keeping the &#945; parameter constant. &#946; has a strong impact on the shape of the gamma distribution. When &#946; is less than 1, we tend to observe relatively broad distributions with long tails. As the value of &#946; increases, the distributions become tighter. This is because the variance of the gamma distribution is $\frac{&#945;}{&#946;^2}$. Additionally, the expected value of the gamma distribution is $\frac{&#945;}{&#946;}$.
-</p>
-
 <p>
 Notice what happens to the shape when you change the &#945; parameter to 1, keeping &#946; constant. Then continue increasing the &#945; parameter while keeping the &#946; constant, and notice what the gamma distribution reesembles as it changes. </p>
 
-
-
-
-
-
-Notice what happens when you set &#945; to 1 and vary the &#946; parameter. The graphs all resemble an exponential distribution.
-
 <p>
-<button id="a1" type="button" class="btn btn-default action-button">&#945; = 1 </br> &#946; = 1 </button>
+<button id="a1" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945 </button>
 
-<button id="a2" type="button" class="btn btn-default action-button">&#945; = 1 </br> &#946; = 2 </button>
+<button id="a2" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
+<button id="a3" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
 
-<button id="a3" type="button" class="btn btn-default action-button">&#945; = 1 </br> &#946; = 3 </button>
+<button id="a4" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
 
-<button id="a4" type="button" class="btn btn-default action-button">&#945; = 1 </br> &#946; = 4 </button>
+<button id="a5" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
 
-<button id="a5" type="button" class="btn btn-default action-button">&#945; = 1 </br> &#946; = 5 </button>
-
-<button id="a6" type="button" class="btn btn-default action-button">&#945; = 1 </br> &#946; = 6 </button>
+<button id="a6" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
 </p>
 
 <div id="alphas" class="shiny-plot-output" 
        style="width: 100%; height: 400px"></div> 
 
 
-
+<p>
+Now, observe the change when you vary the &#946; parameter while keeping the &#945; parameter constant. &#946; has a strong impact on the shape of the gamma distribution. When &#946; is less than 1, we tend to observe relatively broad distributions with long tails. As the value of &#946; increases, the distributions become tighter. This is because the variance of the gamma distribution is $\frac{&#945;}{&#946;^2}$. Additionally, the expected value of the gamma distribution is $\frac{&#945;}{&#946;}$.
+</p>
 <p>
 Pick an &#945; and &#946; parameter on the slider below.
 </p>

@@ -1,21 +1,26 @@
 graphGamma = function(alpha=1, beta=1) {
   y <- seq(0, 7, by=.001)
-  plot(x=y, y=dgamma(x, alpha, beta), col = "red", type = "l", xlab = "X",
+  plot(x=y, y=dgamma(x, alpha, rate = beta), col = "red", type = "l", xlab = "X",
        ylab="Probability Density", main="Gamma Distribution", ylim=c(0,7))
 }
 
-randPlot = function(alpha=1, beta=1){
-  curve(alpha*x, 1, alpha)
-}
-
-plotCDF = function(alpha = 1, beta = 1){
+plotCDF = function(n=1000, alpha = 1, beta = 1){
   title = paste("CDF of Gamma Distribution with alpha =", alpha, "and beta =", beta)
-  plot(ecdf(rgamma(1000, 1,1)), main = title, ylab = "", xlab = "")
+  plot(ecdf(rgamma(n, alpha, rate = beta)), main = title, ylab = "", xlab = "")
 }
+#The plotCDF function takes in a vector 
 
-dgamma(10, shape= 1)
+#dgamma(10, shape= 1)
 
 
+plotDataGammaQ = function(probs = seq(0.05, 0.95, by = 0.05), bee)
+  dataQ = quantile(bee$Transit.Time, probs = probs)
+  gammaQ  = qgamma(probs, 1.61, 1/2.37)
+  plot(dataQ~gammaQ, xlim = c(-3,20), ylim = c(0,20), xlab= 'Theoretical Observations', ylab = 'Data Observations')
+
+plotDataNormQ = function(probs = seq(0.05, 0.95, by = 0.05), bee)
+  normQ = qnorm(probs, mean = mean(bee$Transit.Time), sd = sd(bee$Transit.Time))
+  plot(dataQ~normQ, pch=19, xlab= 'Theoretical Observations', ylab = 'Data Observations')
 
 x <- seq(0, 7, by=.001)
 plot(x, dgamma(x, 1/2, 1), type="l",
