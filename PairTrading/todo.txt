@@ -1,0 +1,9 @@
+To-do List:
+shinyAR
+- change the AR formula into LaTex form
+
+
+shinyPT
+- change how to print warning message when 1 "select" and 1 stock is chosen
+- have not change server.R with respect to the mypieceofthepackage folder:
+  Do I change path names to data ? And I am not sure what to do with helper.R  .

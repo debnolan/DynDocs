@@ -1,0 +1,7 @@
+In the tutorial document:
+1) Add the use of nlm function 
+2) Apply confident curves on the plot 
+3) Create plot click on the Robot diagrams
+4) Add text documentation about the design of this tutorial piece
+5) possibly use Latex to display the y = exp(a + bx) formular in a better way (?)
+6) Input citation

@@ -119,7 +119,7 @@ shinyServer(function(input, output) {
      plot3d(x, y, z, col = "blue", size = 0.99, type = "s", xlab = input$x, 
             ylab = input$y, zlab = input$z)
      aspect3d(1,1,1)
-   }, height = 400, width = 400)
+   })
    
    ###################### Simpson's Paradox tutorial
    count_rate_values <- reactive({
