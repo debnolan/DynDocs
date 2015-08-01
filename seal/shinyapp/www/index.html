@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +27,8 @@
 
 </head>
 
-<body>
+<body topmargin="0" leftmargin="10" rightmargin="0">
+
     <div class="container">
         <div class="header">
             <hr />
@@ -35,51 +37,58 @@
         </div>
         <div class="content">
             <h2>Introduction</h2>
-            <p>
+           	 <p>
                 Random walk is a path of succession of random steps, which mathematical formalized. We will examine the movements of elephant seals migrations applying random walk model. However, the movement is on the surface of a sphere, which has a possibility that elephant seal migrates along great-circle path.
-            </p>
-            <p>
+             </p>
+             <p>
                 Before we examine random walk on great circle, let us look at several different models of random walk which are 'One Dimensional Simple Random Walk', 'One Dimensional Brownian Random Walk', 'Two Dimensional Simple Random Walk', 'Two Dimensional Brownian Random Walk', 'Two Dimensional Random Walk with Drift', then finally 'Great Circle Random Walk'.
-            </p>
-            <p>
+             </p>
+             <p>
                 With different models and simulations, various parameters can be tested to have better understanding of random walk.
-            </p>
-            <br />
-<body>
-  <div class="container-fluid">
-    <div class="row">
-      <h2>
-        <h4 align="center">Random Walk Tutorial</h4>
-      </h2>
+             </p>
+        </div>
     </div>
-    <div class="row">
+
+        <div class="container-fluid">
+   			 <div class="row">
+    		  <h2>
+      			  <h4 align="center">Random Walk Tutorial</h4>
+     		 </h2>
+   	  		 </div>
+    		 <div class="row">
  
-      <div class="col-sm-4">
+        	 <div class="content">
+            	<p>
+                The simplest type of random walk is discrete, and one-dimensional. Each step of the random walk is either up, with probability <i>p</i>, or down, with probability 1 - <i>p</i>. The horizontal axis indicates the number of steps in the random walk.
+           		</p>
+        	</div>
+ 
+      	  	<div class="col-sm-4">
         <form class="well">
-          <div class="form-group shiny-input-container">
-            <label class="control-label" for="types">1D Simple Random Walk</label>
-           <div>
-              <script type="application/json" data-for="typesB" data-nonempty="">{}</script>
+         	<div class="form-group shiny-input-container">
+            	<label class="control-label" for="types">1D Simple Random Walk</label>
+            <div>
+            	<script type="application/json" data-for="typesB" data-nonempty="">{}</script>
             </div>
-          </div>
-          <br/>
-          <div class="form-group shiny-input-container">
-            <label class="control-label" for="steps">Number of steps: </label>
-            <input class="js-range-slider" id="stepsB" data-min="1" data-max="10000" data-from="5000" data-step="1" data-grid="true" data-grid-num="9.999" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.01000100010001"/>
-          </div>
-          <br/>
-          <div>
-          <label for="prob">Probability:</label><br/> 
-          <input class="js-range-slider" id="probB" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
-          </div>
-          <div>
-    	  <label>Number of Walks:</label><br/> 
-          <input type="number" name="numbB" value="1" min="0" max = "1000" /><br/> 
-    	  </div>
+          	</div>
+          	<br/>
+          	<div class="form-group shiny-input-container">
+            	<label class="control-label" for="steps">Number of steps: </label>
+            	<input class="js-range-slider" id="stepsB" data-min="1" data-max="10000" data-from="5000" data-step="1" data-grid="true" data-grid-num="9.999" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.01000100010001"/>
+          	</div>
+          	<br/>
+          	<div>
+          		<label for="prob">Probability:</label><br/> 
+          		<input class="js-range-slider" id="probB" data-min="0" data-max="1" data-from="0.5" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+          	</div>
+          	<div>
+    	  		<label>Number of Walks:</label><br/> 
+          		<input type="number" name="numbB" value="1" min="0" max = "1000" /><br/> 
+    	  	</div>
           
-          <div class="form-group shiny-input-container">
-           <button id="runSimB" type="button" class="btn btn-default action-button">Simulate </button>
-          </div>
+          	<div class="form-group shiny-input-container">
+           		<button id="runSimB" type="button" class="btn btn-default action-button">Simulate </button>
+          	</div>
                       
         </form>
       </div>
@@ -88,17 +97,24 @@
       	</div>
       </div>
   	</div>
-          <div class="row">
+  	
+  	    <div class="container-fluid">
+    	      <div class="row">
 
-      <div class="col-sm-4">
-        <form class="well">
-          <div class="form-group shiny-input-container">
-            <label class="control-label" for="types">1D Brownian Random Walk</label>
-            <div>
-              <script type="application/json" data-for="typesC" data-nonempty="">{}</script>
-            </div>
-          </div>
-          <br/>
+    	   	  <div class="content">
+   	         	<p>
+                When the number of steps in the discrete random walk is large, the discretization becomes less obvious, and takes on a fractal-like pattern. That is, for a large number of steps, the overall picture no longer depends on the scale of the random walk. By shrinking both the horizontal and vertical axes, then, we can obtain a continuous random walk, known as Brownian motion. Each "step" is now generated by a normal random variable with appropriate mean and standard deviation, which depend on the discrete random walk.
+           	  	</p>
+   		      </div>
+      			<div class="col-sm-4">
+       		 <form class="well">
+         	   <div class="form-group shiny-input-container">
+            		<label class="control-label" for="types">1D Brownian Random Walk</label>
+           			 <div>
+            		<script type="application/json" data-for="typesC" data-nonempty="">{}</script>
+            		</div>
+         			</div>
+          	<br/>
           <div class="form-group shiny-input-container">
             <label class="control-label" for="steps">Number of steps: </label>
             <input class="js-range-slider" id="stepsC" data-min="1" data-max="10000" data-from="5000" data-step="1" data-grid="true" data-grid-num="9.999" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.01000100010001"/>
@@ -121,14 +137,20 @@
           
         </form>
       </div>
-      	<div class="col-sm-8">
+      			<div class="col-sm-8">
         <div id="plotC" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
       	</div>
-      </div>
-  	</div>
-        <div class="row">
+      			</div>
+  				</div>
+  			   
+  	    <div class="container-fluid">
+       	 <div class="row">
 
-
+        <div class="content">
+            <p>
+                The discrete random walk in two dimensions is identical to the one-dimensional random walk, but each step can be in either a horizontal or a vertical direction. A step is in the horizontal direction with probability <i>p</i> and in the vertical direction with probability 1 - <i>p</i>.
+            </p>
+        </div>
 
       <div class="col-sm-4">
         <form class="well">
@@ -160,17 +182,25 @@
           <div class="form-group shiny-input-container">
            <button id="runSimD" type="button" class="btn btn-default action-button">Simulate </button>
           </div>        
-
+        
         </form>
+        
+      
       </div>
       	<div class="col-sm-8">
         <div id="plotD" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
       	</div>
       </div>
-  	</div>
+  		 </div>
+  		 
+  		<div class="container-fluid">
         <div class="row">
-
-
+   
+        <div class="content">
+            <p>
+                As in the one-dimensional case, when the number of steps grows large, the overall picture becomes independent of the number of steps. By shrinking the horizontal and vertical axes, we obtain two-dimensional Brownian motion. Looking only at the x- or y-position of this random walk would yield one-dimensional Brownian motion.
+            </p>
+        </div>
 
       <div class="col-sm-4">
         <form class="well">
@@ -210,8 +240,15 @@
       	</div>
       </div>
   	</div>
+  	
+  	  	<div class="container-fluid">
         <div class="row">
 
+        <div class="content">
+            <p>
+                Finally, we can force a random walk to move toward a certain destination. At a given instant, in addition to moving randomly in two directions, the walk also "drifts" toward a certain point. The end result is a random path that connects the start and end points.
+            </p>
+        </div>
 
       <div class="col-sm-4">
         <form class="well">
@@ -245,8 +282,15 @@
         <div id="plotG" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
       	</div>
       </div>
-  	</div>
+</div>
 
+  	  	<div class="container-fluid">
+        <div class="row">
+        <div class="content">
+            <p>
+                The migration of elephant seals shows significant elements of randomness, although the destination appears to be fixed. Thus we can model this migration using a similar walk as the one above, but on a sphere. The resulting model is a random walk on a sphere that moves randomly in both horizontal and vertical directions, but also drifts toward its destination. This drift acts along the shortest path from the current point to the destination, which on a sphere is a great circle instead of a line.
+            </p>
+        </div>
 
 
       <div class="col-sm-4">
@@ -286,7 +330,6 @@
       	</div>
       </div>
   	</div>
-  	
   	
 </body>
 </html>
