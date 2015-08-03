@@ -1,3 +1,5 @@
+
+
 bee = read.table("beedata.csv", sep=",", header=TRUE)
 hist(bee$Transit.Time, breaks=seq(-01, 21, by=2), prob = TRUE, main = "Histogram of Estimated Transit Times",
      xlab = "Estimated transit time (mo per 100 km)", ylim = c(0,0.2))

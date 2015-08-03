@@ -1,6 +1,10 @@
 GCRandomWalk = function(lonBegin, latBegin, lonEnd, latEnd, 
     spe = 0.0065, sig =  0.005) 
 {
+  lonBegin = lonBegin*pi/180
+  latBegin = latBegin*pi/180
+  lonEnd = lonEnd*pi/180
+  latEnd = latEnd*pi/180
 # lat and lon MUST be in RADIANS 
  pi2<-pi/2
 
@@ -20,6 +24,9 @@ GCRandomWalk = function(lonBegin, latBegin, lonEnd, latEnd,
    x = c(x,px)
    p = c(p,pp)
   }
-
+  x = x*180/pi
+  p = p*180/pi
  return(matrix(c(x,p), ncol = 2, byrow=FALSE))
 }
+
+plot(GCRandomWalk(20,50,30,70), type='l')

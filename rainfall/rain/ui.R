@@ -12,6 +12,7 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                     column(8,
                                            includeHTML("index.html"),
                                            plotOutput("plots3", height = "200px"),
+                                           plotOutput("plots5", height = "200px"),
                                            plotOutput("plots2", height = "400px"),
                                            verbatimTextOutput("rl")
                                     )
@@ -91,4 +92,4 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                          'Summer project,', tags$em('by Wuji and Ryan.'))
                             )
                    )
-))
+))                   

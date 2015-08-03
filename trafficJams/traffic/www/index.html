@@ -80,47 +80,32 @@
 
 <div class="header">
  <h1>Traffic on I-80: Congestion and Line Comparison</h1> 
- <h1>Exploratory Data Analysis</h1>
- <h2>Intro</h2>
+ <h2>Exploratory Data Analysis</h2>
+<!-- <h2>Introduction</h2> -->
 </div>
   
- <h3>PeMS</h3>
 <p>
-Performance Measurement System (PeMS): Real time and archived traffic
-data displayed from over 25,000 individual detectors along the state
-freeways. Includes traffic detectors, incidents, lane closures, toll
-tags, census traffic counts, vehicle classification, weight-in-motion,
-and roadway inventory data.
-</p>
-<p>
-PeMS is a freeway performance measurement system for all of California.  It processes 2 GB/day of 30-second loop detector data in real time to produce useful information. Managers at any time can have a uniform, and comprehensive assessment of freeway performance. Traffic engineers can base their operational decisions on knowledge of the current state of the freeway network. Planners can determine whether congestion bottlenecks can be alleviated by improving operations or by minor capital improvements. Travelers can obtain the current shortest route and travel time estimates. Researchers can validate their theory and calibrate simulation models 
-</p>
-<p>
-The PeMS system receives flow and occupancy from approximately 22,000
-loops across the state every 30 seconds: 2 GB per day.
+PeMS is a California freeway performance measurement system that has
+real time and archived data collected from over 25,000 inductive-loop
+traffic detectors across the state. It receives flow and occupancy
+measurements every 30 seconds, 2 GB of data per day. Flow is the
+number of cars passing over a detector in a time interval, and
+occupancy is the percentage of time there was a car over the loop.
 </p>
 
- <h3>Our data:</h3>
 <p>
-data collected by loop detectors at a particular location of eastbound
-Interstate 80 in Sacramento, California, from March 14-20, 2003.For
-each of three lanes, the flow (number of cars) and the occupancy (the
-percentage of time there was a car over the loop) were recorded in
-successive five minute intervals.  There were 1740 such five minute
-intervals. Lane 1 is the leftmost lane, lane 2 is in the center, and
-lane 3 is the rightmost.
+We will look at the data from one particular location on eastbound
+I-80 in Sacramento from March 14 - 20, 2003, recorded in successive five
+minute intervals, 1740 intervals in all. For each of the three lanes,
+there are flow and occupancy measurements. 
 </p>
-
-<h3>Our goals</h3>
 <p>
-Want to look at the congestion and explore the difference between the
-tree lanes of traffic.
-</p>
-
-<br />
+Our goals are to look at the congestions on a freeway and explore the
+differences between the lanes of traffic.
+</p> 
 
 <div class="header">
-  <h2>Flow and Occupancy</h2>
+  <h3>Flow and Occupancy</h3>
 </div>  
 
 <p>
@@ -128,8 +113,6 @@ Look at the Flow and Occupancy time series: can you guess times of the
 day? Days of the week? 
 </p>
 
-
-  
 <div class="container-fluid">
   <form class="well">
      <div id="plot1" class="shiny-plot-output" 
@@ -151,53 +134,60 @@ day? Days of the week?
             </div>
     </div>
    </form>
-</div>  
+    </div>
+    
 <p>
 What is the relationship between $F$ (flow) and $O$ (occupancy)? 
 </p>
 
-<div id="plot2" class="shiny-plot-output" 
-     style="width: 80%; height: 450px"></div>  
+<div class="col" align="center">    
+  <div id="plot2" class="shiny-plot-output" align="center"
+    style="width: 80%; height: 450px">
+  </div>
+</div>  
 
 <p>
-We can see that overall the relantionship is not linear, but there is
-clearly a pattern. Cannot fit a regression line to the whole data but
-can use local weighted polynomial smoother - loess (fit one line to
-each of the lanes). Left part - most of the points, definitely linear,
-assume it is a non-congested traffic. Makes sense since the ratio of $F$
-and $O$ is a quantity directly  related to speed (want the plot in the center!).
+We can see that overall the relationship is not linear, but there is
+clearly a pattern. While it does not seem reasonable to try to fit a
+regression line to the whole data, we can use local weighted
+polynomial smoother - loess (fit one line to 
+each of the lanes). Most of the points are concentrated on the left
+side of the graph, where the relationship certainly seems linear;
+let's assume it's non-congested traffic. This makes sense since the
+ratio of $F$ to $O$ is a quantity directly related to speed.
 </p>
 
   <div class="checkbox">
     <label>
       <input id="loess" type="checkbox"/>
-      <span>Fit loess line to the data in the plot above</span>
+      <span>Fit loess lines to the data in the plot above</span>
     </label>
   </div>  
 
 <div class="header">
-  <h2>Speed, Distance, and Congestion</h2>
+  <h3>Speed, Distance, and Congestion</h3>
 </div>  
 
 <p>
-If the length of the cars is the same for all the cars, $F/S$ is proportional to
+If the length of the cars is the same for all the cars, $F/O$ is proportional to
 the speed. For simplicity, let's make a few assumptions that will help
-us formalize the relationships between the variables (will relax those
+us formalize the relationships between the variables (we can relax those
 assumptions later) and make a clear definition of congestion:
 </p>
 <ol>
   <li> $l$ - length of the car (constant)</li>
   <li> All the cars follow a "two-second rule" or "$c$-second rule" ($c$
   might be different for each lane): a driver has to reach a point on
-  the road at least c seconds after the car directly in front passed
+  the road at least $c$ seconds after the car directly in front passed
   it. $c$ is a constant.</li>
   <li> If a car's speed is limited by the car in front of it, it keeps
-  the minimal distance required by a "$c$-second rule"</li>
+  the minimal distance required by a "$c$-second rule".</li>
   <li> Speed is constant during each five-minute interval (can think
   of average speed).</li>
   <li> Distances between the cars are the same during each five-minute interval 
   (can think of average distance).</li>
-  <li> All cars observe some speed limit $m$.</li>
+  <li> All cars observe some speed limit $m$ (can be different for
+  each lane).</li>
 </ol>
 <p>
 Some more useful notation:
@@ -205,8 +195,8 @@ Some more useful notation:
 <ul>
   <li>$V = \displaystyle{\frac{F}{O} \propto Speed}$ 
   (will call $V$ speed for short  )</li>
-  <li>D - space between the cars (rear bumper to front bumper)</li>
-  <li>E - extra space between the cars (in addition to the space
+  <li>$D$ - space between the cars (rear bumper to front bumper)</li>
+  <li>$E$ - extra space between the cars (in addition to the space
   required by a "$c$-second rule"</li>
 </ul>
 <p>
@@ -214,13 +204,12 @@ Then
 \[ O = \frac{l}{l + D} = \frac{l}{l + cV + E} = \frac{l - cF}{l + E}. \]
 </p>
 <p>
-Congestion is a state where $V < m$ and $E = 0$. [somehow need to adjust
-assumptions to indicate that it cannot happen during slow flow times - actually 
-already taken care of by the assumption of the same distance].
+Congestion is a state where $V < m$ and $E = 0$. 
 </p>
 <p>
 How can we determine if an observation (a pair of $F$ and $O$) is in the
-congestion state or not? First, in the $F$ vs $O$ plot we can divide them
+congestion state or not? First, in the $F$ vs $O$ plot above we can
+separate observations
 by taking a derivative of a loess curve and finding a maximum. That
 would make the occupancy a sole predictor of the congestion (which might be
 reasonable judging from the first plot). However,
@@ -236,22 +225,12 @@ such as HMM (Hidden Markov Models) or some supervised clustering might
 be better in predicting a state.
 </p>
 <p>
-Static plot here of $O$ vs $V$ (what's up with the quality??? may have to do shiny). 
-Point out two clear clusters (possibly a
-transitional area); also note spreads in three lanes and, more
-importantly, hights of occupancy in traffic and also just before
-(indicating distance - space between cars and possibly bigger cars
-such as trucks). 
-</p>
-
-<div class="chunk" id="unnamed-chunk-2"><div class="rimage default"><img src="figure/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div></div>
-
-<p>
-We can see clear distinction between the lanes here. Let's look into that more closely.
+From the $F$ vs $O$ plot we can also see clear distinction between the
+lanes. Let's look into that more closely. 
 </p>
 
 <div class="header">
-  <h2>Lane Comparison</h2>
+  <h3>Lane Comparison</h3>
 </div>
 
 <p>
@@ -263,89 +242,126 @@ It would be interesting to compare the lanes in terms of
   <li>behavior around rush hours</li>
 </ul>
 <p>
-Histogram of speeds in three lanes + boxplot (static plot)
+Speed in three lanes - distribution comparison:
 </p>
 
-<div class="chunk" id="unnamed-chunk-3"><div class="rimage default"><img src="figure/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div></div>
+<p class="centeredImage">
+  <img src="figure/speedHist.png" style="width: 72%; height: 500px" />
+</p>
 
 <p>
-We can see that speed in the right lane is lower in general and has
+We can see that speed in the right lane is slower in general and has
 much greater spread. However, it doesn't mean that the cars in the
-right lane are always slower. Also, there is no clear bimodality in the right
-lane unlike the other two lanes.
+right lane are always slower. Also, there is no clear bimodality in
+the right lane unlike the other two lanes. Middle lane is the fasterst
+in general (possible reason - fast drivers avoid left lane to not get
+caught), and the leftmost lane is the least variable (people don't
+drive slowly there even at night). 
 </p>
 <p>
-Let's look at the time series again,
-this time including the speed and indicating congestion (plot,
-interactive, preferrably where you can pick time of day and day of
-week). Middle lane is the fasterst in general (fast drivers avoid left
-lane to not get caught), and the leftmost lane
-is the least variable (people don't drive slowly there even at night).
+Looking at the time series again, this time including the speed and
+possibly indicating congestion states, will
+help us understand what is happening in more detail.
+</p>
+<p>
+Below is a plot of Occupancy vs Speed. Two distinctive clusters can be
+seen, probably corresponding to the states of congestion and
+non-congestion. Points between them might correspond to a
+"transitional" state - when the flow starts exceeding lane capacity
+and congestion begins. To divide the states, draw a line on the graph
+by double clicking on two locations inside the plot. The time series plot
+below it will reflect the assignment of congestion states. To look at individual
+points, single click on them and they will appear in the time series
+as well (green-colored). To clear all the points and division of
+states, click the buttons below the plot. Time series can be
+zoomed in by selecting a time period for the zoom.
+</p>
+<p>
+Note: "quadratic curve" pattern for low occupancy in $O$ vs $V$ plot is due
+to extreme discreteness of flow measurements during low flow times
+(mostly at night). 
 </p>
 
-<div class="container-fluid">
-  <form class="well">
-  <div class="form-group shiny-input-container">
-    <div class="checkbox">
-      <label>
-        <input id="drange" type="checkbox"/>
-          <span>Select day range</span>
-      </label>
+<!-- The plot with clicks and double clicks that will affect itself -->
+<!-- and the following time series plot -->
+
+  <div class="col" align="center"> 
+    <div id="plot4" class="shiny-plot-output"
+      style="width: 80% ; height: 450px"
+      data-click-id="plot4_click" data-click-clip="TRUE"
+      data-dblclick-id="plot4_dblclick" data-dblclick-clip="TRUE">
     </div>
+
+    <button id="clearP" type="button"
+      class="btn btn-default action-button">Clear points
+    </button>
+    <button id="clearL" type="button"
+      class="btn btn-default action-button">Clear line
+    </button>
   </div>
-  <div class="form-group shiny-input-container">
-    <div class="checkbox">
-      <label>
-        <input id="trange" type="checkbox"/>
-          <span>Select time range</span>
-      </label>
-    </div>
-  </div>  
-  </form>
-</div>  
-    
+
+ <br />    
+
+<div id="plotZoom" class="shiny-plot-output"
+  style="width: 100% ; height: 23%"
+  data-brush-id="plotZoom_brush" data-brush-fill="#9cf"
+  data-brush-stroke="#036" data-brush-opacity="0.25"
+  data-brush-delay="300" data-brush-delay-type="debounce"
+  data-brush-clip="TRUE" data-brush-direction="x"
+  data-brush-reset-on-new="TRUE">
+</div>
+
 <div id="plot5" class="shiny-plot-output" 
-     style="width: 100%; height: 450px"></div> 
+  style="width: 100%; height: 500px"></div> 
 
 <p>
-What we can see:
+In these plots, differences in spreads of speed distributions are
+noticeable as well. Another interesting observation is that $O$ in
+congestion state is the highest for the left lane and the lowest for
+the right for the same $V$. Similar difference between the lanes can
+be seen in the $F$ 
+vs $O$ graph (higher $F$ in the left lane for the same $O$). To make
+sense of it, we relax the assumption of cars observing the distance to
+the vehicle in front. The fact that the highest flow right before
+congestion occurs in the left lane might indicate that cars in the
+left lane get closer to each other. The other reason could be that
+vehicles differ in length, with composition of types of vehicles
+varying by lane (e.g. greater number of trucks in the
+rightmost lane, especially at night), which would affect calculation
+of speed. 
 </p>
 
 <div class="header">
-  <h2>Conclusions</h2>
+  <h3>Conclusions</h3>
 </div>  
 
+<p>
+To collect and summarize our observations:
+</p>
+
 <ol>
-  <li>Flow/occ in left higher (probably at the same speed) - less
-  distance between cars and/or longer cars (cars in the right lane,
-  rarely in the left) </li>
-  <li>At nights variable speeds in right lane (when the flow is
-  low)</li>
-  <li> Left lane - don't go slowly in general</li>
-  <li> Middle lane is fastest during daytime
-  <li> During higher flow - speed similar in all lanes</li>
-  <li> Congestion starts in left lane, then middle, then right</li>
-  <li> Maximal flow before congestion starts</li>
-  <li> Occupancy - the best predictor of congestion</li>
-  <li> Flow lower after congestion than before</li>
-  <li> During congestion - right lane slower (not necessarily - could
-  be distance)? same speed higher occupancy means less distance (is
-  distance head-to-head or head-to-tail?) and/or trucks</li>
-  <li> Might want to identify transitional state - very beginning of
-  congestion what happens at that moment - cars reduce distance while
-  trying to keep the speed (violate our assumption of c = 2 seconds
-  rule) </li>
-  <li> Also note that "c" (the rule) is different in each lane </li>
-  <li> On Sunday - probably congestion due to something, not high
-  flow</li>
-  <li> The reason why we can't just use occupancy is not because of V
-  and E combination, but because of shrinking "c" just before
-  congestion But can still break them up by taking derivative of a
-  loess line </li>
+  <li>Higher flow in the left lane during/right before congestion
+  might suggest less distance between cars and/or shorter vehicles
+  (trucks usually in the right lane, rarely in the left); </li>
+  <li>At nights variable speeds in the right lane (when the flow is
+  low), longer vehicles possibly a factor as well;</li>
+  <li> During higher flow - speed somewhat similar in all lanes;</li>
+  <li> Left lane - cars don't go slowly in general;</li>
+  <li> Middle lane is fastest during daytime;</li>
+  <li> Congestion starts in left lane, then middle, then right;</li>
+  <li> Maximal flow can be observed right before congestion starts;</li>
+  <li> Occupancy - the best predictor of congestion;</li>
+  <li> Flow lower after congestion than before;</li>
+  <li> Might be reasonable to identify transitional state - the very beginning of
+  congestion when cars reduce distance while trying to keep the speed; </li>
+  <li> Also note that $c$ (for the $c$-rule) is different in each lane; </li>
+  <li> Congestion on Sunday is probably due to some road conditions,
+  not resulting from high flow.</li>
 </ol>   
 
+<br />
 
-<hr>
 <address></address>
-<!-- hhmts start -->Last modified: Tue Jun 30 00:09:34 PDT 2015 <!-- hhmts end -->
-</body> </html> 
+
+</body>
+</html> 

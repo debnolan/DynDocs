@@ -1,28 +1,4 @@
-OneDimSimpleRandWalk <- function(num.steps, prob = 0.5) {
-  walk = cumsum(sample(c(1, -1), num.steps, TRUE))
-  return(cbind(1:num.steps, walk))
-}
-
-OneDimBrownianRandWalk <- function(num.steps, mean = 0, sd = 1) {
-  walk = cumsum(rnorm(num.steps, mean, sd))
-  return(cbind(1:num.steps, walk))
-}
-
-TwoDimSimpleRandWalk <- function(num.steps, x.prob = 0.5, y.prob = 0.5) {
-  pos = matrix(0, ncol = 2, nrow = num.steps)
-  dir = sample(c(1, 2), num.steps, TRUE)
-  move = sample(c(1, -1), num.steps, TRUE)
-  pos[cbind(1:num.steps, dir)] = move
-  pos = apply(pos, 2, cumsum)
-  return(pos)
-}
-
-TwoDimBrownianRandWalk <- function(num.steps, mean = 0, sd = 1) {
-  return(cbind(OneDimBrownianRandWalk(num.steps, mean, sd)[, 2],
-               OneDimBrownianRandWalk(num.steps, mean, sd)[, 2]))
-}
-
-TwoDimRandWalkDrift <- function(x.init = 1, y.init = 1, delta = 0.0065,
+TDRWD <- function(num.steps = 0, x.init = 1, y.init = 1, delta = 0.0065,
                                 sigma = 0.005) {
   r.init = sqrt(x.init^2 + y.init^2)
   r = numeric(ceiling(2*r.init/delta))
@@ -48,19 +24,21 @@ TwoDimRandWalkDrift <- function(x.init = 1, y.init = 1, delta = 0.0065,
 
 multiWalk <- function(func, num.steps = 100, num.walks = 1) {
   colors = rgb(runif(num.walks), runif(num.walks), runif(num.walks),
-               alpha = 1/log10(10*num.walks))
+    alpha = 1/log10(10*num.walks))
   walks = lapply(1:num.walks, function(x) func(num.steps))
   min.x = min(sapply(walks, function(x) min(x[, 1])))
   max.x = max(sapply(walks, function(x) max(x[, 1])))
   min.y = min(sapply(walks, function(x) min(x[, 2])))
   max.y = max(sapply(walks, function(x) max(x[, 2])))
   plot(c(), c(), xlim = c(min.x, max.x), ylim = c(min.y, max.y), xlab = "x",
-       ylab = "y")
+    ylab = "y")
   for (i in 1:num.walks) {
     par(new = TRUE)
     plot(walks[[i]], type = "l", axes = FALSE, col = colors[i], xlab = "",
-         ylab = "", xlim = c(min.x, max.x), ylim = c(min.y, max.y))
+      ylab = "", xlim = c(min.x, max.x), ylim = c(min.y, max.y))
   }
   rm(walks)
 }
 
+func <- function(x) TDRWD(x, 100, 0, 0.065, 0.1)
+multiWalk(func, 0, 10)
