@@ -1,0 +1,13 @@
+Package: ARsim
+Title: Autoregression(1) Simulation and tutorial
+Version: 0.1
+Authors@R: person("Siu Ki Lui",  email = "dilly027480@berkeley.edu",
+	role = c("aut", "cre"))
+Description: A simple simulation for Autoregression
+Depends: R(>= 3.1.0)
+License: 
+
+Suggests:
+  shiny(0.12.0)
+
+LazyData: true 
