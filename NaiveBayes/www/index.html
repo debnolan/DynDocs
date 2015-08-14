@@ -457,6 +457,7 @@ h4 {
 
     	$('#btn-tojson').on('click', function() {
     		$('#var5').val(JSON.stringify(srcCanvas.toJSON()));
+	        $('#var5').trigger("change"); 
 		});
 
     	$('#btn-clear').on('click', function() {
