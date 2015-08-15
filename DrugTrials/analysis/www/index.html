@@ -151,7 +151,6 @@ var myTextInputBinding = new Shiny.InputBinding();
                    },
                    subscribe: function(el, callback) {
                     $(el).on('keyup.textInputBinding input.textInputBinding', function(event) {
-
                       if(event.keyCode == 13) { //if enter
                        callback();
                       }
