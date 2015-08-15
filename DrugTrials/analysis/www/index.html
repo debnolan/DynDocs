@@ -151,14 +151,17 @@ var myTextInputBinding = new Shiny.InputBinding();
                    },
                    subscribe: function(el, callback) {
                     $(el).on('keyup.textInputBinding input.textInputBinding', function(event) {
+
                       if(event.keyCode == 13) { //if enter
-       alert(event);
                        callback();
                       }
                     });
                    $(el).on('focusout.Bob', function(event) { // on losing focus
                      callback();
                      });
+                   $(el).on('click.Bob', function(event) { // click on the arrows for incrementing/decrementing the value
+                     callback();
+                     });       
                    },
                    unsubscribe: function(el) {
                         $(el).off('.Bob');

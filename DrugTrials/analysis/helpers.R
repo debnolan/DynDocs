@@ -150,7 +150,7 @@ wilPlot = function(pop1, pop2, NRep) {
   abline(v = sum(pop[1:length(pop1)]), col = "red")
   compare = simPop >= sum(pop[1:length(pop1)]) 
   pVal = sum(compare)/NRep
-  title(main = paste("pValue =", as.character(pVal)))
+  title(main = paste("p Value =", formatC(pVal, NumPValueDigits)))
 }
 
 #vizualize the ranking process for a specific threshold with dataframe
