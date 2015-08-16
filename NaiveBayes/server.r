@@ -1,6 +1,15 @@
 require(shiny)
 
-load("data/mnist.RData")
+load("data/mnist.RData", globalenv())  # This was not working with a simple call to load().
+                                       # The objects were not available to the server code
+                                       # as there are issues with environments.
+
+# Note that the functions from analysis.r are not getting sourced here,
+# and we are picking up the values from the RData file that were created a long time
+# ago.  They should really be removed from the RData file so that we are assured we
+# are getting the new versions in analysis.r
+
+source("analysis.r")
 
 shinyServer(
   function(input, output, session) {

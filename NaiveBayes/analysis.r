@@ -1,25 +1,36 @@
-naiveBayes = function(handWritten){
+# This uses global variables trainMean and trainPrior
 
-      
+naiveBayes = function(handWritten)
+{
+
   prob = list(1:784,1:784,1:784,1:784,1:784,1:784,1:784,1:784,1:784,1:784)
   
   for (i in 1:length(trainMean)){
     for (j in 1:784){
       if (handWritten[j] == 0){
         prob[[i]][j] = 1 - as.numeric(trainMean[[i]][j])
-      }else{
+      } else {
         prob[[i]][j] = as.numeric(trainMean[[i]][j])
       }
     }
   }
+
+  result1 = lapply(prob, function(x) -log(x))  
+
   
-  
-  result1 = lapply(prob,function(x) -log(x))
-  result2 = unlist(lapply(result1,sum))
+   # You can replace the initialization of prob and the 2 for loops, and the -log with 
+  prob1 = lapply(trainMean, function(x) 
+                                as.numeric( - log( ifelse(handWritten == 0,  1 - x, x) )) )
+
+  result2 = unlist(lapply(result1, sum))
+# The following is simpler, although we can also just put the sum into the definition of prob1 above and skip this line.
+  result2 = sapply(result1, sum)
+
   
   finalResult = (-log(as.numeric(trainPrior))) + result2 
-  
-  theNumber = which(min(finalResult)==finalResult,finalResult) - 1
+
+      # ? what is the second argument to which() doing here, i.e. the last finalResult in the expression?
+  theNumber = which(min(finalResult) == finalResult, finalResult) - 1
   
   return(theNumber)
   
@@ -48,6 +59,8 @@ reverser = function(vector){
 
 
 # This is okay as is, but of course is using knowledge of the JSON content.
+# This is now done in the function below jsonParser1, along with removing the need for reverser().
+
 # It is not clear that it has taken into account the first part of the path, i.e. the M(ove)
 # Instead,
 #  tmp = fromJSON(jsonFormat)
