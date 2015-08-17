@@ -25,7 +25,7 @@ shinyServer(function(input, output) {
     text(CI()[2] , 0.0005, "UpperBound")
     abline(v = median(x()), col = "blue")
     text(median(x()), 0.0009, 
-         paste("Estimated Median", sprintf("%.0f",median(x())), sep = ""))
+         paste("Estimated Median", sprintf("%.2f",median(x())), sep = ""))
   }) 
   
   output$text1 = renderText({    

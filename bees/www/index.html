@@ -114,7 +114,7 @@ Introduction
 bees because of its extremely defensive nature and the tendency of its colonies to swarm and spread. The implications of the AHB has been astronimical. Areas populated by AHB colonies have been quarantined, prohibiting the importation of the European Honey Bee. The subsequent lack of bees has taken a toll on crop pollination. Thus, there has been strong interest in predicting the arrival of the AHB to the United States. The case studied is heavily adopted from the <a href="http://www.stat.tamu.edu/~matis/Predicting%20the%20Africanized%20Bee%20Invasion.pdf">work </a> of Matis and Kiffe. </a>
 </p>
 <p>
-In order to obtain the data below, cardboard box traps with a chemical attractant were placed at an average of every 93km (OR 300-500???m). Then, every month, the boxes were checked for presence of the AHB.</p>
+In order to obtain the data below, cardboard box traps with a chemical attractant were placed at an average of every 93km. Then, every month, the boxes were checked for presence of the AHB.</p>
 
 <h2>
 Fitting the Data
@@ -128,9 +128,21 @@ If we were to use a normal distribution to model our data, it would severly unde
 </p>
 <p>
 Knowing this, it's possible that we can fit a better distribution function for the AHB data with the gamma distribution. 
-
 </p>
-<img src="images/normalqq.jpeg"/>
+
+<button id="NQQ" type="button" class="btn btn-default action-button">Normal QQ Plot</button>
+
+<button id="GQQ" type="button" class="btn btn-default action-button">Gamma QQ Plot</button>
+
+<p>
+<div id="plotQQ" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+</p>
+
+<p>
+As you can see, a 45 degree line from the data extending from the lowest x value maps most closely with the Gamma QQ plot -- suggesting we use a Gamma Distribution. 
+</p>
+
 <h2>
 The Gamma Distribution 
 </h2>
@@ -167,7 +179,7 @@ Tutorial on The Gamma Distribution
 Exploring the Distribution Qualitatively 
 </h2>
 <p>
-First, let us explore what the gamma distribution looks like compared again other distributions like the normal, log normal, etc by simulating different number of observations. 
+First, let us explore what some other distributions like the normal, lognormal, etc by simulating different number of observations. 
 </p
 
 <p>
@@ -177,7 +189,6 @@ First, let us explore what the gamma distribution looks like compared again othe
       <option value="unif">Uniform</option>
       <option value="lnorm">Log-normal</option>
       <option value="exp">Exponential</option>
-      <option value="gamma">Gamma</option>
     </select> 
   </p>
   
@@ -197,10 +208,31 @@ First, let us explore what the gamma distribution looks like compared again othe
 <button id="runSim" type="button" class="btn btn-default action-button">Simulate </button>
 </p>
 
-
-
 <div id="plot1" class="shiny-plot-output" 
        style="width: 100%; height: 400px"></div> 
+
+Now let us explore the gamma distribution and it's CDF. 
+
+<div class="form-group shiny-input-container">
+            <label class="control-label" for="num">N Observations:</label>
+            <input class="js-range-slider" id="num" data-min="0" data-max="500" data-step="10" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="10"/>
+          </div>
+
+<div class="checkbox">
+              <label>
+                <input id="Gcdf" type="checkbox"/>
+                <span>Plot CDF</span>
+              </label>
+            </div>
+
+<p>
+<button id="plotDistr" type="button" class="btn btn-default action-button">Simulate </button>
+</p>
+<p>
+<div id="plotGD" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+</p>
+
 
 <p>Notice that the gamma distribution weighs a higher probability to the higher tail probabilities than the normal distibribution. 
 </p>
@@ -216,48 +248,79 @@ The Gamma Distribution is as follows:
 $\frac{(&#946;^&#945;)}{(&#945;-1)!} e^{-&#946;y} y^{&#945; - 1}$ </p>
 
 <p>
-Notice what happens to the shape when you change the &#945; parameter to 1, keeping &#946; constant. Then continue increasing the &#945; parameter while keeping the &#946; constant, and notice what the gamma distribution reesembles as it changes. </p>
+Notice what happens to the shape when you change the &#945; while keeping &#946; constant. Notice what the gamma distribution resembles as &#945; changes -- as &#945; increases, the distribution starts becoming a normal distribution. </p>
+
+&#945;:
+<div>
+  <select id="alphalvl">
+    <option value= "0.5"selected>0.5</option>
+    <option value= "1" >1</option>
+    <option value= "1.5" >1.5</option>
+    <option value= "2" >2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+</select> 
+<script type="application/json" data-for="alphalvl" data-nonempty="">{}</script>
+</div>
 
 <p>
-<button id="a1" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945 </button>
-
-<button id="a2" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
-<button id="a3" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
-
-<button id="a4" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
-
-<button id="a5" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
-
-<button id="a6" type="button" class="btn btn-default action-button">&#945; = 5 </br> &#945; = 6 </button>
+<button id="plotAlpha" type="button" class="btn btn-default action-button">Plot </button>
 </p>
 
-<div id="alphas" class="shiny-plot-output" 
+<p>
+<div id="alph" class="shiny-plot-output" 
+       style="width: 100%; height: 400px"></div> 
+</p>
+
+<p>
+Now, observe the change when you vary the &#946; parameter while keeping the &#945; parameter constant. Notice what the gamma distribution resembles as &#946; changes -- as &#946; increases, the distribution starts becoming an exponential distribution.
+</p>
+
+&#946;:
+<div>
+  <select id="betalvl">
+    <option value= "0.5"selected>0.5</option>
+    <option value= "1" >1</option>
+    <option value= "1.5" >1.5</option>
+    <option value= "2" >2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+</select> 
+<script type="application/json" data-for="betalvl" data-nonempty="">{}</script>
+</div>
+
+<p>
+<button id="plotBeta" type="button" class="btn btn-default action-button">Plot </button>
+</p>
+
+
+<div id="beta" class="shiny-plot-output" 
        style="width: 100%; height: 400px"></div> 
 
 
 <p>
-Now, observe the change when you vary the &#946; parameter while keeping the &#945; parameter constant. &#946; has a strong impact on the shape of the gamma distribution. When &#946; is less than 1, we tend to observe relatively broad distributions with long tails. As the value of &#946; increases, the distributions become tighter. This is because the variance of the gamma distribution is $\frac{&#945;}{&#946;^2}$. Additionally, the expected value of the gamma distribution is $\frac{&#945;}{&#946;}$.
-</p>
-<p>
-Pick an &#945; and &#946; parameter on the slider below.
+Now, pick an &#945; and &#946; parameter on the slider below.
 </p>
 <p>
 &#945; and &#946; values are both positive where &#945; is a shape parameter and &#946; is the rate parameter, or the inverse of  the scale parameter. These parameters are most easily undertstood when &#945; is an integer. In this case, the gamma models the sum of &#945; independent exponential random variables which each has a mean corresponding to the inverse of the &#946; parameter. 
+
+Notice how &#946; has a strong impact on the shape of the gamma distribution. When &#946; is less than 1, we tend to observe relatively broad distributions with long tails. As the value of &#946; increases, the distributions become tighter (you can observe this by setting &#945; to 2 and changing &#946;. This is because the variance of the gamma distribution is $\frac{&#945;}{&#946;^2}$. Additionally, the expected value of the gamma distribution is $\frac{&#945;}{&#946;}$.
+
 </p>
 
 <div class="form-group shiny-input-container">
             <label class="control-label" for="alpha">Alpha:</label>
-            <input class="js-range-slider" id="alpha" data-min="0" data-max="10" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.01"/>
+            <input class="js-range-slider" id="alpha" data-min="0" data-max="10" data-step="0.01" data-grid="true" data-grid-num="10" data-from = "1" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.01"/>
           </div>
 
 <div class="form-group shiny-input-container">
             <label class="control-label" for="beta">Beta:</label>
-            <input class="js-range-slider" id="beta" data-min="0" data-max="10" data-step=".01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.01"/>
+            <input class="js-range-slider" id="beta" data-min="0" data-max="10" data-step=".01" data-grid="true" data-grid-num="10" data-from = "1" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.01"/>
           </div>
        
-
-
-
+<p>
+<button id="makePlot" type="button" class="btn btn-default action-button">Plot </button>
+</p>
 
 <div id="plot2" class="shiny-plot-output" 
        style="width: 100%; height: 400px"></div> 

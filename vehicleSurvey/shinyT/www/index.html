@@ -38,46 +38,96 @@
  
  <h1>Bootstrap Tutorial</h1>
  <p>
-  <h2>What is bootstrap?</h2><br/>
-  Usually, we draw samples from the population and find out the sampling distribution of the statistic to 
-  make confidence intervals and carry out hypothese tests. But what if we dont know the data generator? We
-  create a bootstrap population from the sample. We know the bootstrap population so we can figure out the 
-  bootstrap sampling distribution of the statistic. <br/>
-  Let  y = (-4, 3, 5, 7)  with n = 4 be the sample. The sample mean is 2.75, standard error is 4.79 <br/>
-  We can use the bootstrap distribution of $y^*$ to estimate the standard error of y.
-  $y^*$ is an observation drawn from the sample with $$ \Bbb {E}^*(y^*)= (-4)\Bbb {P}^*(-4) + (3)\Bbb {P}^*(3)
-  + (5)\Bbb {P}^*(5)+ (7)\Bbb {P}^*(7) = {-4+3+5+7 \over 4} = 2.75 = \bar{y}$$
-  $$ Var^*(y^*) = \sum_{i={y^*}}(y^* - \Bbb {E}^*(y^*))^2\Bbb {P}^*(y^*) = {(-4 - 2.75)^2+
-  (3 - 2.75)^2+(5 - 2.75)^2+(7 - 2.75)^2 \over 4} = 17.1875 = {3\over 4} S_y^2 $$
-  $Var^*(y^*) = {n-1\over n}S_y^2 $ in general.
-  Now we take a bootstrap sample of size 4 with replacement from the bootstrap population. There are $4^4$ = 256 
-  distinct bootstrap samples.(You can consider each sample as a vector, so (-4, 3, 3, 3) is different from (3, -4, 3, 3))
+<h2>What is bootstrap?</h2><br/>
+Usually, we are interested in the properties of a population. We want
+ to estimate the parameters ${θ}$ such as mean and standard deviation of the population and then carry out
+ hypothesis tests, as well as calculate confidence intervals for
+ ${θ}$. It is always easy that if we know the population comes from a
+ specific distribution. For example, the mean of a normal distribution
+ is the average number of every element in the population. In the most
+ cases in reality, however, we are not able to know the true distribution of the
+ data. Then how can we achieve it?<br/>
+
+Bootstrapping is the method that approximates the properites of
+$\hat{θ}$ by the means of random sampling techniques.<br/>
+
+We take samples $Y_{1}^*$, ..., $Y_{n}^*$ with replacement form the
+original sample $Y_{1}$, ...,$Y_{n}$. Every time we sample with
+replacement, we get a bootstrapped estimator, $\hat{θ}^*$. Once we
+bootstrap B samples, we can generate B bootstrapped estimators. <br/>
+
+          
+
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Y_{1}^{*(1)}$,
+..., $Y_{n}^{*(1)}$ $\longrightarrow$
+$\hat{θ}^{*(1)}$<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;random sampling&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+$Y_{1}$, ..., $Y_{n}$ $\Longrightarrow$  $\Longrightarrow$  $\Longrightarrow$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Y_{1}^{*(B)}$,
+..., $Y_{n}^{*(B)}$ $\longrightarrow$
+$\hat{θ}^{*(B)}$<br/>
+</p>
+  
+
+Moreover, Using the bootstrap estimates, we can find the bootstrap confidence interval for θ.
+
+<ul>
+ <li>Normal Theroey<br/>
+    Assume $\hat{θ}$ has an normal distribution and use the bootstrap to estimate $\hat{θ} \pm z_{α/2} SE^*(\hat{θ}^*)$</li>
+
+ <li>Pencentile ($\hat{θ}_{α/2}^*, \hat{θ}_{1-α/2}^*$)<br/>
+     For a bootstrap sample with size n, find the (1-α)% confidence interval by ordering $ \hat{θ}_b^* $ from smallest to largest and then pick 
+     $\hat{θ}_{(αn/2)}$ as the lower bound and $\hat{θ}_{(n-αn/2)}$ as the higher bound.</li>
+</ul>
+
+
+<p>
+Let's look at the example.<br/>
+
+  Y = (-4, 3, 5, 7)  with n = 4 be the population. We are
+interested in the mean $\bar{Y}$ of Y. <br/>
+Firstly, estimate the $\hat{Y}$ to be the mean of the sample. $$ \Bbb
+{E}^*(Y)= (-4)\Bbb {P}^*(-4) + (3)\Bbb {P}^*(3) + (5)\Bbb {P}^*(5)+ (7)\Bbb {P}^*(7) = {-4+3+5+7 \over 4} = 2.75 = \hat{Y}$$
+
+
+  Now we take a bootstrap sample of size 4 with replacement from the bootstrap population:
+$(y_{b1}^*, y_{b2}^*, y_{b3}^*, y_{b4}^*)$ <br/>
+We have B = 256 distinct bootstrap samples in total because $4^4$ = 256.<br/>
+  (You can consider each sample as a vector, so (-4, 3, 3, 3) is different from (3, -4, 3, 3))<br/>
+  For each bootstrap sample we compute the bootstrap statistic $ \bar
+{y}_b^* = {y_{b1}^* + y_{b2}^* + y_{b3}^* + y_{b4}^* \over 4}$ and
+therefore we can find the bootstrap sampling distribution of $ \bar {y}^* $ 
+  We can see all 256 samples from the graph below. 
+</p>
 </p>
 
-
+  <p>
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-8" style="overflow: auto;">
               <div class="tabbable tabs-above">
                 <ul class="nav nav-tabs">
-                  <li class="active">
-                    <a href="#tab-3778-1" data-toggle="tab" data-value="Table">Combination</a>
+		  <li class="active">
+		   <a href="#tab-3778-1" data-toggle="tab" data-value="Table">Combination</a>
                   </li>
                   <li>
                     <a href="#tab-3778-2" data-toggle="tab" data-value="Table">Summary</a>
                   </li>
                   <li>
-                    <a href="#tab-3778-3" data-toggle="tab" data-value="Plot">Plot</a>
+		      <a href="#tab-3778-3" data-toggle="tab" data-value="Plot">Plot</a>
                   </li>
                 </ul>
                 <div class="tab-content" >
-                  <div class="tab-pane" data-value="Table" id="tab-3778-1">
+                  <div class="tab-pane active" data-value="Table" id="tab-3778-1">
                     <pre id="table" class="shiny-html-output" style="width: 100% ; height: 400px"></pre>
                   </div>
                   <div class="tab-pane" data-value="Table" id="tab-3778-2">
                     <pre id="summary" class="shiny-html-output" style="width: 100% ; height: 400px"></pre>
                   </div>
-                  <div class="tab-pane active" data-value="Plot" id="tab-3778-3">
+                  <div class="tab-pane" data-value="Plot" id="tab-3778-3">
                     <div class="form-group shiny-input-container">
                      <label class="control-label" for="bins">Number of Bins:</label>
                      <input class="js-range-slider" id="bins" data-min="0" data-max="100" data-from="50" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="5" />
@@ -88,17 +138,41 @@
               </div>
             </div>
           </div>
-        </div>
+       </div>
 
+Having the bootstrap distribution of $ \bar {y}^*$ , we can compute
+       95%(α = 5%) confindence interval for  $\bar{Y}$. <br/>
+Found out the 2.5percentile and 97.5percentile of the bootstrapped
+       estimates $y_{b}^*$, we are having the 95% confidence interval
+      (-1.75, 6)<br/>
+
+</p>
+
+<P>
+       <h2> Bootstrap Estimation </h2>
+
+        In the most cases, however, a population is too large to observe every
+ member. We have to draw out a certain number of samples from the
+ population and find out the sampling distribution for futher analysis.<br/>
+
+More generally, without relying on the linearity of $ \hat {θ}$, 
+$\Bbb {p}^* (y_1^*, ... , y_n^*) = (y_{b1}^*, ..., y_{bn}^*) = {1 \over n^n}$ let $\hat {theta}_b^* $be the statistic basted on an particular bootstrap sample(y_{b1}^*, ..., y_{bn}^*), we can compute
+$$\Bbb {E}^*( \hat {θ}^*) = {1 \over n^n}\sum_{b=1}^{n^n} \hat {Θ}(y_{b1}^*, ..., y_{bn}^*)$$
+$$Var^*(\hat {θ}^*) = {1 \over n^n}\sum_{b=1}^{n^n}[\hat {Θ}(y_{b1}^*, ..., y_{bn}^*) - \Bbb {E}^*( \hat {θ}^*)]^2 $$
+Often, $n^n$ is a very large number (e.g, $4^4$ = 256, $10^{10}$ = 10,000,000,000, and $100^{100}$ = 10 billion), so figuring out the exact bootstrap distribution quickly becomes unwieldy, 
+even for reasonable sample sizes. Fortunately, we can take a random sample of bootstrap samples and can do quite well at estimating 
+$\Bbb {E}^*( \hat {θ}^*) \approx {1 \over 1000}\sum_{b=1}^{1000} \hat {Θ}(y_{b1}^*, ..., y_{bn}^*)$ where $(y_{b1}^*, ..., y_{bn}^*)$ is a random selected bootstrap sample. Similarly 
+$Var^*(\hat {θ}^*) \approx {1 \over 1000}\sum_{b=1}^{1000}(\hat {Θ}(y_{b1}^*, ..., y_{bn}^*) - \bar{ \hat {θ}}^*)^2 $.
+(maybe add something to describe the graph below)
+</p>
 
 <p>
-<h2> Bootstrap Estimation </h2>
  <table id="showcase-app-code">
     <tr>
       <td id="showcase-app-container" class="showcase-app-container-expanded">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-sm-4">
+           <div class="form-group shiny-input-container" style="width: 200px; height: 600px">
               <form class="well">
                 <div id="dist" class="form-group shiny-input-radiogroup shiny-input-container">
                   <label class="control-label" for="dist">Distribution type:</label>
@@ -113,6 +187,12 @@
                       <label>
                         <input type="radio" name="dist" value="exp"/>
                         <span>Exponential</span>
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="dist" value="gamma"/>
+                        <span>Gamma</span>
                       </label>
                     </div>
                   </div>
@@ -132,53 +212,46 @@
                 </div> 
               </form>
             </div>
-            <div class="col-sm-8">
+            </div>
+            </div>
+         </td>
+         <td id="showcase-app-container" class="showcase-app-container-expanded">
                 <div id="plot1" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
                 <div class="checkbox">
                  <label>
                   <input id="population" type="checkbox"/>
-                  <span>Population Distribution</span>
+                  <span>Simple RandomSampling Distribution</span>
                  </label>
                 </div>
+        </td>
+        <td id="showcase-app-container" class="showcase-app-container-expanded">
                 <div id="plot3" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
                 <div class="checkbox">
                  <label>
                   <input id="true" type="checkbox"/>
-                  <span> Simple Random Sampling Distribution</span>
+                  <span> Bootstrap Sampling Distribution</span>
                  </label>
                 </div>
-            </div>
-          </div>
-        </div>
+         </td>
         <td id="showcase-sxs-code" class="showcase-sxs-code-collapsed"></td>
       </td>
     </tr>
-  </table> 
-        
-                
-                
-                
-                
-                
-                
-    
-
-
-
-
+  </table>
+  
 
 </p>
 
 <p>
-<h2> Why does this work? <h2>
-</p>
+<h2> Why does this work? </h2>
 
-
-
-
-
+<ol>
+<li>Bootstrap sample is drawn from the bootstrap population in the same manna as the sample is drawn from the population, so the bootstrap observation are analogous to the original observations.</li>
+<li>Bootstrap statistic is computed from the bootstrap sample in the same manna as original statistic is computed from sample, so the bootstrap statistic are analogous to the original statistic. </li>
+<li>$\hat{θ}$ as an estimate of θ is analogous to $\hat{θ}^*$ as an estimated of $\hat{θ}$. </li>
+<li>the distribution of $\hat{θ}^*$ is analogous to the distribution of $\hat{θ}$ (which we don't know because the population is unknown). </li>
+</ol>
+</p> 
 
  
-   
 </body>
 </html>

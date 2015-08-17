@@ -92,4 +92,4 @@ shinyUI(navbarPage("Rainfall in Colorado",
                                          'Summer project,', tags$em('by Wuji and Ryan.'))
                             )
                    )
-))
+))                   

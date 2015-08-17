@@ -8,12 +8,13 @@ shinyUI(pageWithSidebar(
   
   # Sidebar with choices of Random Walk and specify the number of steps
   sidebarPanel(
-#    radioButtons("types", "Choose a type of Random Walk:", 
+    #    radioButtons("types", "Choose a type of Random Walk:", 
     selectInput("types", "Choose a type of Random Walk:", 
                 choices=c("1D Simple Rand Walk" = "OneDimSimpleRandWalk", 
-                     "1D Brownian Rand Walk" = "OneDimBrownianRandWalk",
-                     "2D Simple Rand Walk" = "TwoDimSimpleRandWalk", 
-                     "2D Brownian Rand Walk" = "TwoDimBrownianRandWalk")),
+                          "1D Brownian Rand Walk" = "OneDimBrownianRandWalk",
+                          "2D Simple Rand Walk" = "TwoDimSimpleRandWalk", 
+                          "2D Brownian Rand Walk" = "TwoDimBrownianRandWalk",
+                          "Great Circle Rand Walk" = "GCRandomWalk")),
     br(),
     
     sliderInput("steps", "Number of steps: ", 
@@ -22,12 +23,14 @@ shinyUI(pageWithSidebar(
     br(),
     
     radioButtons(inputId = "var", label = "Select the file type", choices = list("png","pdf"))
-),
+  ),
   # Show a plot of the generated distribution
- mainPanel(
+  mainPanel(
     plotOutput("plot"),
     downloadButton(outputId = "down", label = "Download the plot")
   )
 ))
+
+
 
 

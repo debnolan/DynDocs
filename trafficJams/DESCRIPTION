@@ -1,0 +1,13 @@
+Package: traffic
+Title: Traffic Interactive Exploratory Data Analysis
+Version: 0.1
+Authors@R: person("Inna", "Gerlovina", email = "innager@berkeley.edu", role = "cre")
+Description: The package interactively explores traffic congestions and compares
+                    the three lanes of I-80 highway near Sacramento.
+Depends:R (>= 3.2.1)
+License:
+
+Suggests:
+  shiny(>= 0.12.1)
+
+LazyData: true
