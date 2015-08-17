@@ -38,70 +38,122 @@
  
  <h1>Bootstrap Tutorial</h1>
  <p>
-  <h2>What is bootstrap?</h2><br/>
-  Usually, we draw samples from the population and find out the sampling distribution of the statistic $\hat{θ}$. Then we can  
-  make confidence intervals and carry out hypothese tests. But what if we don't know the data generator? We can approximate the 
-  sampling distribution of $\hat{θ}$ with bootstrap. We use the sample as the bootstrap population 
-  so we can figure out the bootstrap sampling distribution of the statistic. We could simulate all $n^n$ <br/>
-  Let  y = (-4, 3, 5, 7)  with n = 4 be the sample. The sample mean is 2.75, standard error is 4.79 <br/>
-  We can use the bootstrap distribution of $y^*$ to estimate the standard error of y.
-  $y^*$ is an observation drawn from the sample with $$ \Bbb {E}^*(y^*)= (-4)\Bbb {P}^*(-4) + (3)\Bbb {P}^*(3)
-  + (5)\Bbb {P}^*(5)+ (7)\Bbb {P}^*(7) = {-4+3+5+7 \over 4} = 2.75 = \bar{y}$$
-  $$ Var^*(y^*) = \sum_{i={y^*}}(y^* - \Bbb {E}^*(y^*))^2\Bbb {P}^*(y^*) = {(-4 - 2.75)^2+
-  (3 - 2.75)^2+(5 - 2.75)^2+(7 - 2.75)^2 \over 4} = 17.1875 = {3\over 4} S_y^2 $$
-  $Var^*(y^*) = {n-1\over n}S_y^2 $ in general.
+<h2>What is bootstrap?</h2><br/>
+Usually, we are interested in the properties of a population. We want
+ to estimate the parameters ${θ}$ such as mean and standard deviation of the population and then carry out
+ hypothesis tests, as well as calculate confidence intervals for
+ ${θ}$. It is always easy that if we know the population comes from a
+ specific distribution. For example, the mean of a normal distribution
+ is the average number of every element in the population. In the most
+ cases in reality, however, we are not able to know the true distribution of the
+ data. Then how can we achieve it?<br/>
+
+Bootstrapping is the method that approximates the properites of
+$\hat{θ}$ by the means of random sampling techniques.<br/>
+
+We take samples $Y_{1}^*$, ..., $Y_{n}^*$ with replacement form the
+original sample $Y_{1}$, ...,$Y_{n}$. Every time we sample with
+replacement, we get a bootstrapped estimator, $\hat{θ}^*$. Once we
+bootstrap B samples, we can generate B bootstrapped estimators. <br/>
+
+          
+
+<p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Y_{1}^{*(1)}$,
+..., $Y_{n}^{*(1)}$ $\longrightarrow$
+$\hat{θ}^{*(1)}$<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;random sampling&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+$Y_{1}$, ..., $Y_{n}$ $\Longrightarrow$  $\Longrightarrow$  $\Longrightarrow$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Y_{1}^{*(B)}$,
+..., $Y_{n}^{*(B)}$ $\longrightarrow$
+$\hat{θ}^{*(B)}$<br/>
+</p>
+  
+
+Moreover, Using the bootstrap estimates, we can find the bootstrap confidence interval for θ.
+
+<ul>
+ <li>Normal Theroey<br/>
+    Assume $\hat{θ}$ has an normal distribution and use the bootstrap to estimate $\hat{θ} \pm z_{α/2} SE^*(\hat{θ}^*)$</li>
+
+ <li>Pencentile ($\hat{θ}_{α/2}^*, \hat{θ}_{1-α/2}^*$)<br/>
+     For a bootstrap sample with size n, find the (1-α)% confidence interval by ordering $ \hat{θ}_b^* $ from smallest to largest and then pick 
+     $\hat{θ}_{(αn/2)}$ as the lower bound and $\hat{θ}_{(n-αn/2)}$ as the higher bound.</li>
+</ul>
+
+
+<p>
+Let's look at the example.<br/>
+
+  Y = (-4, 3, 5, 7)  with n = 4 be the population. We are
+interested in the mean $\bar{Y}$ of Y. <br/>
+Firstly, estimate the $\hat{Y}$ to be the mean of the sample. $$ \Bbb
+{E}^*(Y)= (-4)\Bbb {P}^*(-4) + (3)\Bbb {P}^*(3) + (5)\Bbb {P}^*(5)+ (7)\Bbb {P}^*(7) = {-4+3+5+7 \over 4} = 2.75 = \hat{Y}$$
+
+
   Now we take a bootstrap sample of size 4 with replacement from the bootstrap population:
-  $(y_{b1}^*, y_{b2}^*, y_{b3}^*, y_{b4}^*)$ <br/>
+$(y_{b1}^*, y_{b2}^*, y_{b3}^*, y_{b4}^*)$ <br/>
+We have B = 256 distinct bootstrap samples in total because $4^4$ = 256.<br/>
   (You can consider each sample as a vector, so (-4, 3, 3, 3) is different from (3, -4, 3, 3))<br/>
-  For each bootstrap sample we compute the bootstrap statistic $ \bar {y}_b^* = {y_{b1}^* + y_{b2}^* + y_{b3}^* + y_{b4}^* \over 4}$
-  We can find the sampling distribution of $ \bar {y}^* $ because we know  $ \Bbb {P}(y_b^*) = {1 \over 256}$, because there are $4^4$ = 256 distinct bootstrap samples.
+  For each bootstrap sample we compute the bootstrap statistic $ \bar
+{y}_b^* = {y_{b1}^* + y_{b2}^* + y_{b3}^* + y_{b4}^* \over 4}$ and
+therefore we can find the bootstrap sampling distribution of $ \bar {y}^* $ 
   We can see all 256 samples from the graph below. 
-  </p>
+</p>
+</p>
+
   <p>
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-8" style="overflow: auto;">
               <div class="tabbable tabs-above">
                 <ul class="nav nav-tabs">
-                  <li class="active">
-                    <a href="#tab-3778-1" data-toggle="tab" data-value=Table">Combination</a>
+		  <li class="active">
+		   <a href="#tab-3778-1" data-toggle="tab" data-value="Table">Combination</a>
                   </li>
                   <li>
                     <a href="#tab-3778-2" data-toggle="tab" data-value="Table">Summary</a>
                   </li>
                   <li>
-                    <a href="#tab-3778-3" data-toggle="tab" data-value="Plot">Plot</a>
+		      <a href="#tab-3778-3" data-toggle="tab" data-value="Plot">Plot</a>
                   </li>
                 </ul>
                 <div class="tab-content" >
                   <div class="tab-pane active" data-value="Table" id="tab-3778-1">
                     <pre id="table" class="shiny-html-output" style="width: 100% ; height: 400px"></pre>
-                  </div>  
+                  </div>
                   <div class="tab-pane" data-value="Table" id="tab-3778-2">
                     <pre id="summary" class="shiny-html-output" style="width: 100% ; height: 400px"></pre>
                   </div>
                   <div class="tab-pane" data-value="Plot" id="tab-3778-3">
                     <div class="form-group shiny-input-container">
-                      <label class="control-label" for="bins">Number of Bins:</label>
-                      <input class="js-range-slider" id="bins" data-min="1" data-max="100" data-from="50" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="5" />
+                     <label class="control-label" for="bins">Number of Bins:</label>
+                     <input class="js-range-slider" id="bins" data-min="0" data-max="100" data-from="50" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="5" />
                     </div>
                     <pre id="plot" class="shiny-plot-output" style="width: 100% ; height: 400px"></pre>
-                  </div>  
+                  </div>
                 </div>
               </div>
             </div>
           </div>
        </div>
 
-Having the bootstrap distribution of $ \bar {y}^*$ , we can find $ \Bbb {E} (\bar {y}^*) $ and Var$(\bar {y}^*)$.
-But also because $\bar {y}^*$ is linear and we know $ \Bbb {E} (\bar {y}^*) = \bar {y} $, and the $y_i^*$ are independent, we can determine
-$$\Bbb {E}^*(y^*) = {1 \over n} \sum_{i=1}^n \Bbb {E}(y_i^*) = {1 \over n} \sum_{i=1}^n \bar {y} = \bar {y}$$
-$$ Var^*(\bar {y}^*) = Var^*({1 \over n} \sum_{i = 1}^n y_i ^*)= {1 \over n} Var^*(y_i^*)= {1 \over n}({1 \over n}\sum_{i=1}^n(y_i - \bar {y})^2) = {1 \over n}({n-1 \over n}S_y^2)$$
-For this example, we get $SD^*(\bar {y}^*) = 2.073 $
+Having the bootstrap distribution of $ \bar {y}^*$ , we can compute
+       95%(α = 5%) confindence interval for  $\bar{Y}$. <br/>
+Found out the 2.5percentile and 97.5percentile of the bootstrapped
+       estimates $y_{b}^*$, we are having the 95% confidence interval
+      (-1.75, 6)<br/>
+
 </p>
 
 <P>
-<h2> Bootstrap Estimation </h2>
+       <h2> Bootstrap Estimation </h2>
+
+        In the most cases, however, a population is too large to observe every
+ member. We have to draw out a certain number of samples from the
+ population and find out the sampling distribution for futher analysis.<br/>
 
 More generally, without relying on the linearity of $ \hat {θ}$, 
 $\Bbb {p}^* (y_1^*, ... , y_n^*) = (y_{b1}^*, ..., y_{bn}^*) = {1 \over n^n}$ let $\hat {theta}_b^* $be the statistic basted on an particular bootstrap sample(y_{b1}^*, ..., y_{bn}^*), we can compute
@@ -186,16 +238,7 @@ $Var^*(\hat {θ}^*) \approx {1 \over 1000}\sum_{b=1}^{1000}(\hat {Θ}(y_{b1}^*, 
     </tr>
   </table>
   
-Using the bootstrap estimates, we can find the bootstrap confidence interval for θ.
 
-<ul>
- <li>Normal Theroey<br/>
-    Assume $\hat{θ}$ has an normal distribution and use the bootstrap to estimate SE($\hat{θ}$) $\hat{θ} \pm z_{α/2} SE^*(\hat{θ}^*)$</li>
-
- <li>Percentile ($\hat{θ}_{α/2}, \hat{θ}_{1-α/2}$)<br/>
-     For a bootstrap sample with size n, find the (1-α)% confidence interval by ordering $ \hat{θ}_b^* $ from smallest to largest and then pick 
-     $\hat{θ}_{(αn/2)}$ as the lower bound and $\hat{θ}_{(n-αn/2)}$ as the higher bound.</li>
-</ul>
 </p>
 
 <p>
