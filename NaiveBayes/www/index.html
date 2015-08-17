@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <script type="application/shiny-singletons"></script>
-  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];selectize[0.11.2];ionrangeslider[2.0.6];bootstrap[3.3.1]</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script type="application/shiny-singletons"></script>
+<script type="application/html-dependencies">
+	json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];selectize[0.11.2];ionrangeslider[2.0.6];bootstrap[3.3.1]
+</script>
 <script src="shared/json2-min.js"></script>
 <script src="shared/jquery.min.js"></script>
 <link href="shared/shiny.css" rel="stylesheet" />
@@ -22,54 +24,574 @@
 <script src="shared/bootstrap/js/bootstrap.min.js"></script>
 <script src="shared/bootstrap/shim/html5shiv.min.js"></script>
 <script src="shared/bootstrap/shim/respond.min.js"></script>
+<!--<script src="fabric.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
   <title>MNIST</title>
 </head>
+
 <body>
-  <div class="container-fluid">
-    <h2>Handwritten Number Recognition</h2>
+<!--Navigation bar tab-->
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+	<div class="container">
+    	<div class="navbar-header">
+        	<span class="navbar-brand">MNIST</span>
+        </div>
+      	<ul class="nav navbar-nav shiny-tab-input shiny-bound-input" id="nav">
+        	<li class="active">
+        		<a href="#tab-1" data-toggle="tab" data-value="Demo">Demo</a>
+        	</li>
+        	<li>
+          		<a href="#tab-2" data-toggle="tab" data-value="Documentation">Documentation</a>
+        	</li>
+        	<li>
+          		<a href="#tab-3" data-toggle="tab"></a>
+        	</li>
+      	</ul>
+	</div>
+</nav>
+
+<!--Acutal Contents-->
+<div class="tab-content">
+
+<!--Contents for first tab: Demo-->
+<style type="text/css">
+.center-table{
+  margin: 0 auto !important;
+  float: none !important;
+}
+
+
+.canvas-container {
+   padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 300px;
+    
+}
+
+h2 {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	padding-left: 40px;
+}
+
+h4 {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	line-height: 2;
+    color: #333;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.doc {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    line-height: 2;
+    color: #333;
+    padding-left: 40px;
+    padding-right: 40px;
+    text-indent: 40px;
+}
+
+#citation {
+	text-align: right;
+	font-style: italic;
+}
+
+</style>
+
+<div class="tab-pane active" data-value="Demo" id="tab-1">
+
+	<!--First row starts-->
     <div class="row">
-      <div class="col-sm-12">
+    <div class="col-sm-1">
+    </div> 
+     <div class="col-sm-8">
         <form class="well">
-          <span class="help-block">Return recognized numbers based on MNIST data base.</span>
-          <div class="form-group shiny-input-container">
+            <div id="var1" class="form-group shiny-input-radiogroup shiny-input-container">
+            <div class="text-center">
+          	<label class="control-label" for="var1">Choose a sample digit to process into simple format</label>
+          	</div>
+          	<div class="shiny-option-group">
+          	<table class="span5 center-table">
+  				<tr>
+    				<td>
+    				<img src="images/var1/zero.png",alt="zero"><br/>
+    				<div class="radio">
+    				<p class="text-center">
+				    <input type="radio" name="var1" value="zero" checked="checked"/>
+				    <span>zero</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var1/one.png",alt="one"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var1" value="one"/>
+				    <span>one</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var1/two.png",alt="two"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var1" value="two"/>
+				    <span>two</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var1/three.png",alt="three"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var1" value="three"/>
+				    <span>three</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var1/four.png",alt="four"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var1" value="four"/>
+				    <span>four</span>
+				    </p>
+				    </div>
+				    </td>
+				</tr>
+				<tr>
+				    <td>
+				    <img src="images/var1/five.png",alt="five"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var1" value="five">
+				    <span>five</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var1/six.png",alt="six"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var1" value="six">
+				    <span>six</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var1/seven.png",alt="seven"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var1" value="seven">
+				    <span>seven</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var1/eight.png",alt="eight"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var1" value="eight">
+				    <span>eight</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var1/nine.png",alt="nine"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var1" value="nine">
+				    <span>nine</span>
+				    </p>
+				    </div>
+				    </td>
+				</tr>
+				</table>
 
-          	<label class="control-label" for="var1">Choose the number of boxes you want</label>
-          	<div>
-              <select id="var1">
-              <option value="one" selected>1</option>
-              <option value="two">2</option>
-              <option value="three">3</option>
-              <option value="four">4</option>
-              <option value="five">5</option>
-              <option value="six">6</option>
-              <option value="seven">7</option>
-              <option value="eight">8</option>
-              <option value="nine">9</option>
-              <option value="ten">10</option></select>
-              <script type="application/json" data-for="var1" data-nonempty="">{}</script>
             </div>
+    	</div>
+    	</form>
+    	</div>
 
-            <label class="control-label" for="var2">Write numbers</label>
+    	<div class="col-sm-2">  		
+        	<div id="processedVar1" class="shiny-plot-output" style="width: 350px ; height:350px"></div>
+      	</div>
+      	<div class="col-sm-1"></div>
+
+
+      	</div>
+      	<!--First row ends-->
+
+      	<!--Second row starts-->
+      	<div class="row">
+      	<div class="col-sm-1">
+      	</div>
+     	<div class="col-sm-8">
+        <form class="well">
+            <div id="var2" class="form-group shiny-input-radiogroup shiny-input-container">
+            <div class="text-center">
+          	<label class="control-label" for="var2">Comparison of above image to conditional probability represented in grayscale images</label>
+          	</div>
+          	<div class="shiny-option-group">
+          	<table class="span5 center-table">
+  				<tr>
+    				<td>
+    				<img src="images/var2/zero.png",alt="zero"><br/>
+    				<div class="radio">
+    				<p class="text-center">
+				    <input type="radio" name="var2" value="zero" checked="checked"/>
+				    <span>zero</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var2/one.png",alt="one"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var2" value="one"/>
+				    <span>one</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var2/two.png",alt="two"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var2" value="two"/>
+				    <span>two</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var2/three.png",alt="three"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var2" value="three"/>
+				    <span>three</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var2/four.png",alt="four"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var2" value="four"/>
+				    <span>four</span>
+				    </p>
+				    </div>
+				    </td>
+				</tr>
+				<tr>
+				    <td>
+				    <img src="images/var2/five.png",alt="five"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var2" value="five">
+				    <span>five</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var2/six.png",alt="six"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var2" value="six">
+				    <span>six</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var2/seven.png",alt="seven"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var2" value="seven">
+				    <span>seven</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var2/eight.png",alt="eight"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var2" value="eight">
+				    <span>eight</span>
+				    </p>
+				    </div>
+				    </td>
+				    <td>
+				    <img src="images/var2/nine.png",alt="nine"><br/>
+				    <div class="radio">
+				    <p class="text-center">
+				    <input type="radio" name="var2" value="nine">
+				    <span>nine</span>
+				    </p>
+				    </div>
+				    </td>
+				</tr>
+				</table>
+
+            </div>
+    	</div>
+    	</form>
+    	</div>
+    	<div class="col-sm-2">	
+        	<div id="processedVar2" class="shiny-plot-output" style="width: 350px ; height:350px"></div>
+      	</div>
+      	<div class="col-sm-1"></div>
+
+
+    	</div>
+
+        <!--Second row ends-->
+
+        <!--Third row starts-->
+        <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-4">
+        <div class="well">
+        <div class="form-group shiny-input-container">
+            <label class="control-label" for="var3">Choose a sample digit from above</label>
             <div>
-            	
-
-
-
+              <select id="var3">
+              <option value="zero" selected>A Sample of Zero</option>
+              <option value="one">A Sample of One</option>
+              <option value="two">A Sample of Two</option>
+              <option value="three">A Sample of Three</option>
+              <option value="four">A Sample of Four</option>
+              <option value="five">A Sample of Five</option>
+              <option value="six">A Sample of Six</option>
+              <option value="seven">A Sample of Seven</option>
+              <option value="eight">A Sample of Eight</option>
+              <option value="nine">A Sample of Nine</option>
+              </select>
+             
             </div>
-          </div>
-        </form>
-      </div>
-      <div class="col-sm-12">
-        <div id="text1" class="shiny-text-output"></div>
-        <div id="text2" class="shiny-text-output"></div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
- 
-</body>
-</html>
+          </div>	
+        	<div id="processedVar3" class="shiny-html-output"></div>
+        </div>
+        </div>
 
+        <div class="col-sm-7">
+        	<div id="processedVar4" class="shiny-plot-output" style="width: 100% ; height:400px"></div>
+        </div>
+        </div>
+        <!--Third row ends-->
+
+        <!--Fourth row starts-->
+
+        <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+        <div class="well">
+        <div class="text-center">
+		<div class="form-group shiny-input-container">
+		<div class="text-center">
+		<label class="control-label" for="var5">Try by yourself</label>
+		</div>
+		<div class="canvas-container">
+        <canvas id="src-canvas" width="300" height="300" style="border:1px solid black;"></canvas>
+		<div id='btns'>
+			<button id="btn-tojson">Submit</button>
+		    <button id="btn-clear">Clear</button>
+<!--		    <button id="btn-submit">Submit</button> -->
+		</div>
+
+   
+		<div class="form-group shiny-input-container" style="visibility: hidden">
+			<label for="var5">Output</label>
+			<input id="var5" type="text" class="form-control shiny-bound-input" value="JSON format"/>
+		</div>
+        </div>
+        </div>
+    	</div>
+    	</div>
+    	</div>
+
+    	<div class="col-sm-3">
+    		<div id="processedVar5" class="shiny-plot-output" style="width: 400px ; height:400px"></div>
+    	</div>
+
+    	<div class="col-sm-1"></div>
+
+    	<div class="col-sm-4">
+        <div class="well">
+        <div id="processedVar7" class="shiny-plot-output" style="width: 100% ; height:300px"></div>
+        <br/>
+        <div id="processedVar6" class="shiny-html-output"></div>
+        </div>
+        </div>
+
+        
+
+    	</div>
+
+		<script id="main">
+		var srcCanvas = new fabric.Canvas('src-canvas', {
+    		isDrawingMode: true,
+    		selectable: false,});
+
+		var drawingItems = [];
+		
+		srcCanvas.on('object:added',  function(e){ 
+    	drawingItems.push(e.target);
+		});
+
+		$('#btn-group').on('click', function() {
+    	var group = new fabric.Group([], {});
+    
+    	for(var i = 0; i < drawingItems.length; i++) {
+        	var drawingItem = drawingItems[i];
+        	srcCanvas.remove(drawingItem);
+        	group.addWithUpdate(drawingItem);
+    	}
+    
+    	srcCanvas.add(group);});
+
+    	$('#btn-tojson').on('click', function() {
+    		$('#var5').val(JSON.stringify(srcCanvas.toJSON()));
+	        $('#var5').trigger("change"); 
+		});
+
+    	$('#btn-clear').on('click', function() {
+		    srcCanvas.clear();
+		    destCanvas.clear();
+		    //$('#var5').val('');
+		    $('#var5').clear();
+		});
+
+		$('btn-submit').on('click', function() {
+			var jsonText = $('#var5').text();
+			//$('#var5').html(jsonText + " ");
+			$('#var5').submit();
+		});
+
+
+		</script>
+
+
+
+
+
+        <!--Fourth row ends-->
+
+
+
+    </div>
+
+    
+
+
+	<!--Contents for Second tab: Documentation-->
+	<div class="tab-pane" data-value="Documentation" id="tab-2">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+	<div class="well">	
+	    <h2>Introduction to Naive Bayes' Classifier</h2><br/><br/>
+
+	    <h4>Introduction to Bayes' Rule</h4>
+	    <p class="doc">In probability theory and applications, Bayes' rule relates the odds of event $A_1$ to the odds of event $A_2$, before (prior to) and after (posterior to) conditioning on another event $B$. The odds on $A_1$ to event $A_2$ is simply the ratio of the probabilities of the two events. The prior odds is the ratio of the unconditional or prior probabilities, the posterior odds is the ratio of conditional or posterior probabilities given the event $B$. The relationship is expressed in terms of the likelihood ratio or Bayes factor, $\Lambda$. By definition, this is the ratio of the conditional probabilities of the event $B$ given that $A_1$ is the case or that $A_2$ is the case, respectively. The rule simply states: posterior odds equals prior odds times Bayes factor.</p>
+	    <br/>
+	    <p class="doc">When arbitrarily many events $A$ are of interest, not just two, the rule can be rephrased as posterior is proportional to prior times likelihood, $P(A|B)$ $\propto$ $P(A)$ $P(B|A)$ where the proportionality symbol means that the left hand side is proportional to (i.e., equals a constant times) the right hand side as $A$ varies, for fixed or given $B$.</p>
+	    <br/>
+	    <p class="doc">Bayes' rule is an equivalent way to formulate Bayes' theorem. If we know the odds for and against $A$ we also know the probabilities of $A$. It may be preferred to Bayes' theorem in practice for a number of reasons.</p>
+	    <br/>
+	    <p class="doc">Bayes' rule is widely used in statistics, science and engineering, for instance in model selection, probabilistic expert systems based on Bayes networks, statistical proof in legal proceedings, email spam filters, and so on. As an elementary fact from the calculus of probability, Bayes' rule tells us how unconditional and conditional probabilities are related whether we work with a frequentist interpretation of probability or a Bayesian interpretation of probability. Under the Bayesian interpretation it is frequently applied in the situation where $A_1$ and $A_2$ are competing hypotheses, and B is some observed evidence. The rule shows how one's judgement on whether $A_1$ or $A_2$ is true should be updated on observing the evidence $B$.</p>
+	    <br/>
+	    <br/>
+	    
+	    <h4>Concept of Naive Bayes' Classifier</h4>
+	    <p class="doc">Naive Bayes is a simple technique for constructing classifiers: models that assign class labels to problem instances, represented as vectors of feature values, where the class labels are drawn from some finite set. It is not a single algorithm for training such classifiers, but a family of algorithms based on a common principle: all naive Bayes classifiers assume that the value of a particular feature is independent of the value of any other feature, given the class variable. For example, a fruit may be considered to be an apple if it is red, round, and about 10 cm in diameter. A naive Bayes classifier considers each of these features to contribute independently to the probability that this fruit is an apple, regardless of any possible correlations between the color, roundness and diameter features.</p>
+	    <br/>
+	    <p class="doc">For some types of probability models, naive Bayes classifiers can be trained very efficiently in a supervised learning setting. In many practical applications, parameter estimation for naive Bayes models uses the method of maximum likelihood; in other words, one can work with the naive Bayes model without accepting Bayesian probability or using any Bayesian methods.</p>
+	    <br/>
+	    <p class="doc">Despite their naive design and apparently oversimplified assumptions, naive Bayes classifiers have worked quite well in many complex real-world situations. In 2004, an analysis of the Bayesian classification problem showed that there are sound theoretical reasons for the apparently implausible efficacy of naive Bayes classifiers. Still, a comprehensive comparison with other classification algorithms in 2006 showed that Bayes classification is outperformed by other approaches, such as boosted trees or random forests.</p>
+	    <br/>
+	    <p class="doc">An advantage of naive Bayes is that it only requires a small amount of training data to estimate the parameters necessary for classification.</p>
+		<br/>
+		<br/>
+
+		<h4>Handwritten Digit Recognition Using Naive Bayes Classifier</h4>
+		<p class="doc">Handwriting recognition is an important machine learning problem that has many practical applications. Many institutions nowadays regularly use automated systems to recognize handwriting and convert it to digital words or letters, which are easier to process and more efficient than having a human manually look at them one by one. For example, the post office uses handwriting recognition to detect the addresses on mail and sort them to the corresponding destinations, while banks use handwriting recognition to detect the amount of money that are written on checks. These systems have been fine-tuned and achieve accuracy comparable to (or even better than) human performance, which is why they are now so widely used. To understand how these kinds of systems work, let us consider a simpler problem of digit classification. In this problem, we are given an image of a handwritten digit (0 − 9) and we have to identify the number written on the image. This is an instance of a classification problem: we are given an object (in this case an image) that belongs to one of several classes (the digits), and we have to decide which class to assign the object to. A typical dataset that is used for this problem is the MNIST1 dataset, where each image is grayscale and has size 28×28 pixels. Sample figures in demo page show some examples of the digits from MNIST.</p>
+		<br/>
+		<p class="doc">Now we treat the variations in the digits as a probability distribution over the images. So for each digit $j$ $∈$ ${0,1,...,9}$, we have a probability distribution $P_j(x)$ over the images $x$, which represents our uncertainty or imperfect knowledge about the variations among the images containing digit $j$. Under distribution $P_j(x)$, we are a lot more likely to generate images $x$ that look like how we would write digit $j$; however, there is also a small probability that $P_j(x)$ generates images that are supposed to contain digit $j$, but by random chance may look like other digits.</p>
+		<br/>
+		<p class="doc">The distributions $P_j$ are imperfect models of the digits. Nevertheless, since they are concentrated around good images of each digit, they are still a useful representation of our knowledge. At this point it is still not clear where we get the distributions $P_j$ from, but for the moment let us assume we have them. With this setup, we can phrase the digit classification problem in terms of balls and bins as follows: We have 10 bins, each one corresponds to a digit. Within each bin we have all possible balls (images) corresponding to that bin (digit). We assume the images within bin $j$ are distributed according to the probability distribution $P_j$ , which means the images in bin $j$ are more likely to have a digit $j$ written in them. Then we are given an image which was taken from one of the bins (the image has a digit written in it), but we don’t know which one, and our task is to guess which bin the image was likely to have come from (which digit the image corresponds to).</p>
+		<br/>
+		<p class="doc">Let us assume we have a prior distribution over the bins. If $y$ denotes the bin label, then we write the prior probability distribution as $$P(y = j) = πj \, , \, j ∈ {0,1,...,9}.$$</p>
+		<br/> 
+		<p class="doc">The prior distribution $(π_0,...,π_9)$ represents our initial belief on the distribution of the digits before we see any images. For example, we may believe that all 10 digits are equally likely to appear, in which case $π_0$ = $π_1$ = $···$ = $π_9$ = 0.1 . Or maybe for some reason we believe that the digit 1 appears more often than any other digits, say for example $π_1$ = 0.3, $π_2$ = 0.15, and so on. But for the moment let us assume we have some prior distribution.</p>
+		<br/>
+		<p class="doc">As noted before, we assume that within each bin $j$, the images are distributed according to $P_j$. Thus, $P_j(x)$ is the conditional probability of generating image $x$ given that the digit is $j$: $$P( \; x \; | \; y \; = \; j \; ) = P_j(x)$$</p>
+		<br/>
+		<p class="doc">Now suppose we are given an image $x$. How do we decide which bin the image came from? Just like in the original balls and bins problem, we apply Bayes’ rule to compute the posterior probability of each bin after having observed $x$: $$P(y = j \, | \, x) = {P(y = j)·P(x \, | \, y = j) \over P(x) } = {π_j·P_j(x) \over ∑ ^9 _{i=0} πi P_i(x)} . $$</p>
+		<br/>
+		<p class="doc">In the second equality above we have used the total probability rule: $$P(x) = P(y = 0)·P(x \, | \, y = 0) + P(y = 1)·P(x \, | \, y = 1) + ··· + P(y = 9)·P(x \, | \, y = 9) = π_0·P_0(x) + π_1·P_1(x) + ··· + π_9·P_9(x).$$</p>
+		<br/>
+		<p class="doc">Now that we have the posterior distribution, we should decide which digit to classify $x$ to. To do this, we choose the digit that maximizes the posterior probability. That is, classify $x$ to the digit: $$h(x) = argmax_j \, P(y = j \, | \, x)$$</p>
+		<br/>
+		<p class="doc">Recall that the posterior distribution represents our updated belief about the digits after seeing the image $x$. So the rule is doing a simple and reasonable thing: If after seeing $x$ we believe that digit $j$ is more likely than any other digits, then we should use that digit $j$ as our guess to what number is written in $x$. Notice from the Bayes’ rule calculation that the denominator $P(x)$ does not depend on $j$. Therefore, we can omit $P(j)$ from the maximization problem over $j$ , so we can equivalently write: $$h(x) = argmax_j \, [π_j·P_j(x)].$$</p>
+		<br/>
+		<p class="doc">The estimator above is called the Bayes optimal estimator. It is also known as the $maximum \; a \; posteriori \; (MAP) \; estimator$, i.e., the one that maximizes the posterior distribution.</p>
+		<br/>
+		<p class="doc">To classify an image $x$, we only need to calculate the prior $π_j$ and the conditional probability $P_j(x)$ for all digits $j$ $∈$ $[0,1,...,9]$, and find the one that maximizes their product. So if we know the prior distribution $π_j$ and all the conditional distributions $P_j$, then we are done. But where do they come from?</p>
+		<br/>
+		<p class="doc">One way to obtain these distributions is to learn them from the data. Typically, in a machine learning problem we have access to some training data that we can use to train our model, and some test data to test the performance of our model. The MNIST dataset that we are using provides 60000 training examples (where each example consists of a pair $(x, y)$ of an image and the corresponding digit) and 10000 test images.</p>
+		<br/>
+		<p class="doc"><b>Estimating the prior. </b> Recall that the prior probability $π_j$ $=$ $P(y = j)$ is our initial belief about the distribution of the digits. Suppose we are given $n$ training examples ($n$ $=$ $60000$ in our case). We divide them into 10 parts based on the digits in the images. Then we estimate the prior probability $π_j$ by:$$\hat π_j = {n_j \over n}$$</p>
+		<br/>
+		<p class="doc">where $n_j$ is the number of examples having digit $j$. Intuitively, we are thinking of the training examples as random samples taken from the underlying distribution that generates the digits and the images. If the probability of getting digit $j$ is $π_j$, then among $n$ samples we expect to get $n_j$ = $nπ_j$ images with digit $j$, so our estimate for $π_j$ should be $\hat π_j$ $=$ $nj \over n$. Notice that $n_0$ + $n_1$ +···+ $n_9$ = $n$, so $\hat π_0$ +$\hat π_1$ +···+$\hat π_9$ = $1$, which means our estimate $(\hat π_0, \hat π_1,..., \hat π_9)$ forms a valid probability distribution.</p>
+
+		<br/>
+		<p class="doc"><b>Estimating the conditional. </b> Let us assume for now that we have binary images. That is, we convert our grayscale image $x$ $∈$ $[0,1]^{784}$ into a binary image $x$ $∈$ $[0,1]^{784}$ by thresholding each pixel value (if $x_i$ $≥$ $1/2$ , then assign it to $x_i$ $=$ $1$, otherwise assign it to $x_i$ $=$ $0$). Then for each digit $j$ $∈$ ${0,1,...,9}$, our conditional distribution $P_j(x)$ is a probability distribution over the discrete space $[0,1]^{784}$, which has $2^{784}$ elements. So a general distribution over $[0,1]^{784}$ requires specifying $2^{784}$ numbers that sum up to 1, and that is a very large number of parameters. In the Naive Bayes model, we make an assumption that greatly simplifies the number of parameters: We assume that within each digit, the individual pixel values are independent $[0,1]$-random variables. This means the probability distribution $P_j$ over $x$ $=$ $(x_1, x_2,..., x_{784})$ $∈$ $[0,1]s^{784}$ factorizes into a product: $$P_j(x) \, = \, P_{j1}(x_1)·P_{j2}(x_2)···P_{j784}(x_{784}).$$</p>
+		<br/>
+		<p class="doc">Each individual distribution $P_{ji}(x_i)$ is a probability distribution over the value of the $i^{th}$ pixel $x_i$ $∈$ $[0,1]$. We can think of each $P_{ji}$ as a biased coin flip with bias $p_{ji}$: $$P_{ji}(xi \, = \, 1) = p_{ji}, \, P_{ji}(x_i \, = \, 0) \, = \, 1 \, − \, p_{ji},$$</p>
+		<br/>
+		<p class="doc">which we can more concisely write as: $$P_{ji}(x_i) = p^{xi}_{ji} \, (1− p_{ji})^{1−xi} , \, x_i ∈ [0,1].$$</p>
+		<br/>
+		<p class="doc">So now the distribution $P_j(x)$ abobe only has 784 parameters ($p_{j1}$, $p_{j2}$,..., $p_{j,784}$). Moreover, these parameters are easy to learn: Estimating each $p_{ji}$ is the same problem as estimating the bias of a coin, which we know how to do.</p>
+		<br/>
+		<p class="doc">Specifically, fix a digit $j$ $∈$ $[0,1,...,9]$ and a pixel $i$ $∈$ $[1,2,...,784]$. Out of $n$ training examples, let $n_j$ be the number of examples with digit $j$. Among these $n_j$ examples with digit $j$, let $n_{ji}$ be the number of examples having $x_i$ $=$ $1$. Then we estimate $p_{ji}$ by $$ \hat p_{ji} \, = \, {n_{ji} \over n_j}.$$</p>
+		<br/>
+		<p class="doc">Recall the intuition: We are thinking of the $n_j$ examples as random samples drawn from the underlying (conditional) distribution of images with digit $j$. If the probability of pixel $i$ being on $(x_i = 1)$ is equal to $p_{ji}$, then among these $n_j$ samples we expect to see $n_{ji}$ $=$ $n_j$ $p_{ji}$ images with $x_i$ $=$ $1$. Therefore, our estimate for $p_{ji}$ should be $\hat p_{ji} \, = \, {n_{ji} \over n_j}$.</p>
+		<br/>
+		<p class="doc"><b>Naive Bayes classifier. </b> With the ingredients above, we can summarize the Naive Bayes classifier as follows. The data space is the set of all possible binary images, $X$ $=$ $[0,1]^{784}$. The label space is the set of all possible digits, $Y$ $=$ $[0,1,...,9]$. From the training data, we estimate $i)$ Prior probability $(π_0,π_1,...,π_9)$ and $ii)$ Conditional probability $p_{ji}$ for all digits $0$ $≤$ $j$ $≤$ $9$ and pixels $1$ $≤$ $i$ $≤$ $784$.</p>
+		<br/>
+		<p class="doc">Given an image $x$ $=$ $(x_1,..., x_{784})$ $∈$ $[0,1]^{784}$, we can compute its conditional likelihood given digit $j$ as: $$P_j(x) = ∏^{784}_{i=1}P_{ji}(x_i) = ∏^{784}_{i=1}P^{x_i}_{ji}(1-p_{ji})^{1-x_i}.$$</p>
+		<br/>
+		<p class="doc">In the first equality above we use the Naive Bayes assumption, and in the second equality we use. Then we use our inference framework and classify image $x$ to the digit given by the $MAP$ estimator: $$h(x) = argmax_j \, [π_j·P_j(x)] = argmax_j \, [π_j·∏^{784}_{i=1}P^{x_i}_{ji}(1-p_{ji})^{1-x_i}]$$</p>
+		<br/>
+		<p class="doc">But notice that in the calculation above we are multiplying many small numbers, so the resulting product will be very small, and may be rounded down to 0 if the value is smaller than the limit of precision of the computer; this is called underflow. To avoid underflow, we can maximize the logarithm instead: 
+		$$h(x) = argmax_j \, [log(π_j)·∑^{784}_{i=1}(x_i·log(p_{ji}) + (1−x_i)log(1− p_{ji}))]$$</p>
+		<br/>
+		<p class="doc">This is the entire Naive Bayes classifier, a very simple algorithm.</p>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<div id="citation">
+		MNIST Dataset from: http://yann.lecun.com/exdb/mnist/<br/>
+		Bayes' Rule from Wikipedia: https://en.wikipedia.org/wiki/Bayes%27_rule<br/>
+		Naive Bayes' Classifier from Wikipedia: https://en.wikipedia.org/wiki/Naive_Bayes_classifier<br/>
+		Naive Bayes' Classifier on MNIST Dataset from UC Berkeley CS70 Spring 2015 : http://www-inst.eecs.berkeley.edu/~cs70/sp15/notes/n21.pdf<br/>
+	</div>
+	</div>
+	</div>    
+	</div>
+
+</div>
+
+
+
+
+
+</body>
+
+</html>
