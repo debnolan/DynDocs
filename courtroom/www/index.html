@@ -140,7 +140,7 @@
 			\[df = \left( number \thinspace of \thinspace rows - 1 \right) \left( number \thinspace of \thinspace columns - 1\right).\]
 		</p>
 		<p>
-			Below to the left is a visual representation of how the P-value was determined: the area under the curve and to the right of the chi-square statistic is the corresponding P-value. Notice that our chi-square test statistic is far off to the right, nowhere near the bulk of the density in our distribution. This is analogous to our miniscule P-value. To the right of it is a residual plot, which shows how much each component is contributing to the total value of $\chi ^{ 2 }$.
+			Below to the left is a visual representation of how the P-value was determined: the area under the curve and to the right of the chi-square statistic is the corresponding P-value. Notice that our chi-square test statistic is far off to the right, nowhere near the bulk of the density in our distribution. This is analogous to our miniscule P-value. To the right of it is a residual plot, where each residual is computed using the formula $\frac{Observed \thinspace - \thinspace Expected}{\sqrt{Expected}}$. This plot shows how much each component is contributing to the total value of $\chi ^{ 2 }$.
 		</p>
 		<p>
 			<img src="content/chiSqPlot.gif" class="block" alt="chiSqPlot.gif" />
@@ -157,11 +157,10 @@
 			
 			<div class="top-panel">
 				<div class="top">
-					To the right, you'll a table of expected counts of shifts in each of four categories relevant in this study. Below that, there should be a dropdown menu that you can click to 
+					Beneath this text to the left, there is a table of expected counts of shifts in each of four categories relevant in this study. To the right of it, you should see a pair of widgets: a dropdown menu and a slider bar. You can click on the dropdown menu to select a category of the counts you'd like to explore. The slider will update to accomodate your choice and you can then use it to change the corresponding cell's content in the table of observed counts to the far right. You'll see that there are two plots further down that also update upon changing the widgets. The one on the left shows the chi-square distribution with one degree of freedom; the dotted line indicates the $chi ^{ 2 }$ test statistic associated with the current observed counts and the area under the curve to the right of this dotted line represents the consequent P-value. The plot on the right is the residual plot, showing which counts are mainly responsible for any "weirdness" we see in the data. Lastly, at the very bottom is a brief statement that concludes the findings of our hypothesis test.
 				</div>
 			</div>
-			<div class="middle-panel">
-				<table class="fourRows">
+			<div class="middle-panel"><table class="fourRows">
 					<thead>
 						<th colspan="4">Expected counts</th>
 					</thead>
@@ -249,7 +248,7 @@
 
 	<div class="concluding-remarks">
 		<p>
-			Write some stuff here
+			<!--VICTOR, WRITE SOME STUFF HERE-->
 		</p>
 	</div>
 	
