@@ -4,58 +4,38 @@ library(ggplot2)
 
 #getwd()
 #setwd("~/DynDocs/SAT/Interactive Regression")
+load("data/satDF.rda")
 
 shinyServer(function(input, output) {
-  load("data/satDF_new.rda")
-
-  data <- data.frame(  
-    SAT = satDF_new$'SAT Total Score',
-    Frac = satDF_new$'Eligible Student Fraction',
-    Salary = satDF_new$'Teacher Salary')
-  
-  frac_intervals = co.intervals(data$Frac, number = 5)
-  
-  # write a function that extract 6 frac groups
-  frac_group = function(interval_group){
-    which(data$Frac >= interval_group[1] & data$Frac <= interval_group[2])
-  }
-  
-  frac_list = apply(frac_intervals, 1, frac_group)
-  
-  frac_list[[1]]
-  
-  lm(data$Frac[frac_list[[1]]] ~ data$Salary[frac_list[[1]]], data = data)
-  
-  data$Salary[frac_list[[1]]]
+  satDF$fourths = cut(satDF$frac, breaks = quantile(satDF$frac, probs= seq(0,1,5)))
   
   lm_list = list()
-  for(i in 1:5){
-    lm_list[[i]] = lm(data$SAT[frac_list[[i]]] ~ data$Salary[frac_list[[i]]], data = data)
+  for(i in 1:4){
+  lm_list[[i]] = lm(satDF$sat[which(satDF$fourths==levels(satDF$fourths)[i])]~ satDF$salary[which(satDF$fourths==levels(satDF$fourths)[i])], satDF)
   }
-   
+
+  party = list()
+  for(i in 1:4){
+  party[[i]] = satDF[which(satDF$fourths==levels(satDF$fourths)[i]) , ]
+}
 
 regression <- reactive({
 
     if (input$model == "Simple regression") {
-      fit.res <- lm(data$SAT~ data$Salary, data)
+      fit.res <- lm(satDF$sat~ satDF$salary, satDF)
     } else if (input$model == "Controlling for frac") {
-      fit.res <- lm(data$SAT~ data$Salary + data$Frac, data)
-    } else if (input$model == "First Fifth of Data") {
-      fit.res <- lm_list[[1]]
-    } else if (input$model == "Second Fifth of Data") {
+      fit.res <- lm(satDF$sat~ satDF$salary + satDF$frac, satDF)
+    } else if (input$model == "First Fourth of Data") {
+      fit.res <-lm_list[[1]] 
+    } else if (input$model == "Second Fourth of Data") {
       fit.res <- lm_list[[2]]
-    } else if (input$model == "Third Fifth of Data") {
+    } else if (input$model == "Third Fourth of Data") {
       fit.res <- lm_list[[3]]
-    } else if (input$model == "Fourth Fifth of Data") {
+    } else if (input$model == "Last Fourth of Data") {
       fit.res <- lm_list[[4]]
-    } else if (input$model == "Last Fifth of Data") {
-      fit.res <- lm_list[[5]]
     } 
-
-    #print("fit.res")
-    #print(fit.res)
     
-    # Get the model summary
+# Get the model summary
     if (is.null(fit.res)) {
       fit.summary <- NULL
    }  else {
@@ -70,52 +50,52 @@ return(list(fit.res=fit.res, fit.summary=fit.summary))
   # Plot a scatter of the data with regression lines corresponding to the model
   output$reg.plot <- renderPlot({         
   
-    x <- data$Salary
-    y <- data$SAT
-    g <- data$Frac
-    coefs <- regression()$fit.res$coefficients
-    
-    #fraccoefs = lm_list()$coefficients
-    
-    #print("fraccoefs")
-    #print(fraccoefs)
-    #print(coefs)
-    #print("coefs[1]")
-    #print(coefs[1])
-    
-    # Plot the true model
-    
-  plot(x, y, pch=16, cex=1.2, bty="n", main= "The Effect of Teacher Salary on SAT scores", xlab="Average Teacher Salary (in thousands of dollars)", ylab="Average Total SAT Scores")
-   
-    if (input$model == "Simple regression") {
-      #abline(coefs[1], coefs[2], lwd=3)
-      abline(coefs, lwd=3)
-    } else if (input$model == "Controlling for frac") {
-      abline(a = coefs[1], b = coefs[2], lwd=3) 
-      #abline(coefs["(Intercept)"], coefs[2], lwd=3) 
-    } else if (input$model == "First Fifth of Data") {
-      abline(lm_list[[1]]$coefficients, lwd=3) 
-      par(col="red" )
-    } else if (input$model == "Second Fifth of Data") {
-      abline(lm_list[[2]]$coefficients, lwd=3)
-    }  else if (input$model == "Third Fifth of Data") {
-      abline(lm_list[[3]]$coefficients, lwd=3)
-    }  else if (input$model == "Fourth Fifth of Data") {
-      abline(lm_list[[4]]$coefficients, lwd=3)
-    }  else if (input$model == "Last Fifth of Data") {
-      abline(lm_list[[5]]$coefficients, lwd=3)
-    }  
-  })
+    x = satDF$salary
+    y = satDF$sat
+    g = satDF$frac
+    coefs = regression()$fit.res$coefficients
+          
+  plot(x, y, pch=16, type= "n", cex=1.2, bty="n", main= "The Effect of Teacher Salary on SAT scores", xlab="Average Teacher Salary (in thousands of dollars)", ylab="Average Total SAT Scores")
+      
   
-  #---------------------------------------------------------------------------
-  # Show the lm() summary for the 
- # output$reg.summary <- renderPrint({
+  if (input$model == "Simple regression") {
+    points(x, y, pch=16, cex=1.2, col="black")
+      abline(coefs, lwd=3, col= "red")
+    } else if (input$model == "Controlling for frac") {
+      points(x, y, pch=16, cex=1.2, col="black")
+      abline(a = coefs[1], b = coefs[2], lwd=3, col= "red") 
+    } else if (input$model == "First Fourth of Data") {
+      points(x, y, pch=16, cex=1.2, col="black")
+      points(party[[1]]$salary, party[[1]]$sat, pch=16, cex=1.2, col="red")      
+      abline(lm_list[[1]]$coefficients, lwd=3, col= "red") 
+    } else if (input$model == "Second Fourth of Data") {
+      points(x, y, pch=16, cex=1.2, col="black")
+      points(party[[2]]$salary, party[[2]]$sat, pch=16, cex=1.2, col="red")
+      abline(lm_list[[2]]$coefficients, lwd=3, col= "red")
+    }  else if (input$model == "Third Fourth of Data") {
+      points(x, y, pch=16, cex=1.2, col="black")
+      points(party[[3]]$salary, party[[3]]$sat, pch=16, cex=1.2, col="red")
+      abline(lm_list[[3]]$coefficients, lwd=3, col= "red")
+    }  else if (input$model == "Last Fourth of Data") {
+      points(x, y, pch=16, cex=1.2, col="black")
+      points(party[[4]]$salary, party[[4]]$sat, pch=16, cex=1.2, col="red")
+      abline(lm_list[[4]]$coefficients, lwd=3, col= "red")
+    }   
+  })
     
-  #  summary <- regression()$fit.summary
-  #  if (!is.null(summary)) {
-   #   return(regression()$fit.summary)
-#    }
+
+#---------------------------------------------------------------------------
+  
+#####################################
+
+#Show the lm() summary for the 
+  output$reg.summary <- renderPrint({
     
-#  })
+    summary <- regression()$fit.summary
+    if (!is.null(summary)) {
+      return(regression()$fit.summary)
+    }
+    
+  })
   
 })

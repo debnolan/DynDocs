@@ -1,5 +1,7 @@
 intros = readLines("www/introCal.html")
 
+NumPValueDigits = 3
+
 #function for reactive widget to create dataSet used in analysis
 drugData = function(char) {
   if(char == "Calcium") {
@@ -66,7 +68,7 @@ plotPerm = function(pop1, pop2, NRep) {
   abline(v = mean(pop1), col = "red")
   compare = simPop >= mean(pop1)
   pVal = sum(compare)/NRep
-  title(main = paste("pValue =", as.character(pVal)))
+  title(main = paste("p Value =", formatC(pVal, NumPValueDigits)))
 }
 
 #pass a vector of logarithmically increasing NReps to permTest
@@ -92,7 +94,7 @@ pValPlot = function(pop1, pop2, min, max, freq = .1, big = "NULL") {
   axis(2, seq(0, k, by = 0.05))
   pHat = pVal[length(pVal)]
   abline(h = pHat, lty = 3, col = "grey")
-  title(main = paste("pValue =", as.character(pHat)))
+  title(main = paste("p Value =", formatC(pHat, NumPValueDigits)))
 }
 
 #dichotomize two drug trial pops (placebo and trial drug) by a threshold
@@ -110,7 +112,7 @@ dichPlot = function(pop1, pop2, NRep, thresh) {
   abline(v = sum(dich[1:length(pop1)]) - 0.5, col = "red")
   compare = simPop >= sum(dich[1:length(pop1)])
   pVal = sum(compare)/NRep
-  title(main = paste("pValue =", as.character(pVal)))
+  title(main = paste("p Value =", formatC(pVal, NumPValueDigits)))
 }
 
 #vizualize the dichotomization process for a specific threshold with dataframe
@@ -148,7 +150,7 @@ wilPlot = function(pop1, pop2, NRep) {
   abline(v = sum(pop[1:length(pop1)]), col = "red")
   compare = simPop >= sum(pop[1:length(pop1)]) 
   pVal = sum(compare)/NRep
-  title(main = paste("pValue =", as.character(pVal)))
+  title(main = paste("p Value =", formatC(pVal, NumPValueDigits)))
 }
 
 #vizualize the ranking process for a specific threshold with dataframe

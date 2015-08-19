@@ -93,7 +93,7 @@ server <- function(input, output) {
   })
     
   output$plotZoom <- renderPlot({
-    par(mar = c(4, 2.5, 3, 1.4) + 0.1)
+    par(mar = c(3, 2.5, 3, 1.35) + 0.1)
     plot(1:nint, rep(1, nint), type = "n", xaxt = "n", yaxt = "n", ylab = "", 
          xlab = "", main = "Zoom: brush to select time span", col.main = "darkblue")
     mtext("time of day", side = 1, line = 0.6, cex = 1)

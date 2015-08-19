@@ -48,7 +48,7 @@
 			<li>H<sub>A</sub>: The instance of death on a shift was somehow associated with whether or not Gilbert was present.</li>
 		</ul>
 		<p>
-			Our test assumes the null hypothesis is true, and the <strong>P-value</strong> produced later on is the probability of observing data that is as deviant or more so from what we <em>expect</em> to see under this assumption. At this point, we will also choose our <strong>significance level</strong>, a predetermined cut-off for the P-value below which we reject H<sub>0</sub>. We'll use the standard 0.05 significance level, meaning we will reject the null hypothesis if the probability of finding such deviant data under H<sub>0</sub> is less than 5%.
+			Our test assumes the null hypothesis is true, and the <strong>P-value</strong> produced later on is the probability of seeing the observed data given this assumption. At this point, we will also choose our <strong>significance level</strong>, a predetermined cut-off for the P-value below which we reject H<sub>0</sub>. We'll use the standard 0.05 significance level, meaning we will reject the null hypothesis if the probability of finding such deviant data under H<sub>0</sub> is less than 5%.
 		</p>
 		<p>
 			Once we have the marginal row and column sums, we can compute the table of expected frequencies for each cell using the formula $\frac{ n_{ row } \thinspace \cdot \thinspace n_{ column } }{ n_{ total } }$. We define the chi-square <strong>test statistic</strong> to be $\chi ^{ 2 } = \sum { \frac { \left( Observed \thinspace - \thinspace Expected \right) ^{ 2 } }{ Expected } }$, and from there we can calculate our P-value. Please take a moment out to verify and convince yourself that the calculations below are correct.
@@ -104,7 +104,7 @@
 		<table class="threeRows">
 			<thead>
 				<tr>
-					<th colspan="2">$\chi ^{ 2 }$ "Contributors"</th>
+					<th colspan="2">$\chi ^{ 2 }$ Components</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -140,7 +140,7 @@
 			\[df = \left( number \thinspace of \thinspace rows - 1 \right) \left( number \thinspace of \thinspace columns - 1\right).\]
 		</p>
 		<p>
-			Below is a visual representation of how the P-value was determined: the area under the curve and to the right of the chi-square statistic is the corresponding P-value. Notice that our chi-square test statistic is far off to the right, nowhere near the bulk of the density in our distribution. This is analogous to our miniscule P-value.
+			Below to the left is a visual representation of how the P-value was determined: the area under the curve and to the right of the chi-square statistic is the corresponding P-value. Notice that our chi-square test statistic is far off to the right, nowhere near the bulk of the density in our distribution. This is analogous to our miniscule P-value. To the right of it is a residual plot, where each residual is computed using the formula $\frac{Observed \thinspace - \thinspace Expected}{\sqrt{Expected}}$. This plot shows how much each component is contributing to the total value of $\chi ^{ 2 }$.
 		</p>
 		<p>
 			<img src="content/chiSqPlot.gif" class="block" alt="chiSqPlot.gif" />
@@ -156,120 +156,99 @@
 			<legend><h3>Tutorial: Data Exploration, Hypothesis Testing, Residual Analysis</h3></legend>
 			
 			<div class="top-panel">
-				<div class="top-top-left">
-					These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. These are instructions. 
-				</div>
-				<div class="top-top-right">
-					<table class="fourRows">
-						<thead>
-							<th colspan="4">Expected counts</th>
-						</thead>
-						<tbody class="calculations">
-							<tr>
-								<td class="tgilbert"><u>Gilbert</u></td>
-								<td class="tdeath">Death</td>
-								<td class="tdeath">No death</td>
-								<td class="tdeath">Total</td>
-							</tr>
-							<tr>
-								<td class="tgilbert">Present</td>
-								<td>11.59</td>
-								<td>245.41</td>
-								<td>257</td>
-							</tr>
-							<tr>
-								<td class="tgilbert">Absent</td>
-								<td>62.41</td>
-								<td>1321.59</td>
-								<td>1384</td>
-							</tr>
-							<tr>
-								<td class="tgilbert">Total</td>
-								<td>74</td>
-								<td>1567</td>
-								<td>1641</td>
-							</tr>
-						</tbody>
-					</table>
+				<div class="top">
+					Beneath this text to the left, there is a table of expected counts of shifts in each of four categories relevant in this study. To the right of it, you should see a pair of widgets: a dropdown menu and a slider bar. You can click on the dropdown menu to select a category of the counts you'd like to explore. The slider will update to accomodate your choice and you can then use it to change the corresponding cell's content in the table of observed counts to the far right. You'll see that there are two plots further down that also update upon changing the widgets. The one on the left shows the chi-square distribution with one degree of freedom; the dotted line indicates the $chi ^{ 2 }$ test statistic associated with the current observed counts and the area under the curve to the right of this dotted line represents the consequent P-value. The plot on the right is the residual plot, showing which counts are mainly responsible for any "weirdness" we see in the data. Lastly, at the very bottom is a brief statement that concludes the findings of our hypothesis test.
 				</div>
 			</div>
-			
-			<div class="side-panel">
+			<div class="middle-panel"><table class="fourRows">
+					<thead>
+						<th colspan="4">Expected counts</th>
+					</thead>
+					<tbody class="calculations">
+						<tr>
+							<td class="tgilbert"><u>Gilbert</u></td>
+							<td class="tdeath">Death</td>
+							<td class="tdeath">No death</td>
+							<td class="tdeath">Total</td>
+						</tr>
+						<tr>
+							<td class="tgilbert">Present</td>
+							<td>11.59</td>
+							<td>245.41</td>
+							<td>257</td>
+						</tr>
+						<tr>
+							<td class="tgilbert">Absent</td>
+							<td>62.41</td>
+							<td>1321.59</td>
+							<td>1384</td>
+						</tr>
+						<tr>
+							<td class="tgilbert">Total</td>
+							<td>74</td>
+							<td>1567</td>
+							<td>1641</td>
+						</tr>
+					</tbody>
+				</table>
+
 				<div class="shiny-input-container">
-					<label for="whichCell">Select a subset of shifts:</label>
+					<label for="whichCell" class="whichCellLabel">Select a subset of shifts:</label>
 					<select name="whichCell" id="whichCell">
 						<option value="cell11" selected="selected">Gilbert present &amp; Death</option>
 						<option value="cell21">Gilbert absent &amp; Death</option>
 						<option value="cell12">Gilbert present &amp; No death</option>
 						<option value="cell22">Gilbert absent &amp; No death</option>
 					</select>
+					<label for="cellCount">Specify a cell count:</label><br />
+					<input type="range" name="cellCount" id="cellCount" min="0" max="74" value="40" />
+					<span class="rangeValue"></span>
 				</div>
-				
-				<div class="shiny-input-container">
-					<label for="cell-count">Specify a cell count:</label><br />
-					<input type="range" name="cell-count" id="cell-count" min="0" max="74" value="40" />
-					<span class="range-value"></span>
-				</div>
-				
-				<div>
-					<table class="fourRows">
-						<thead>
-							<th colspan="4">Observed counts</th>
-						</thead>
-						<tbody class="calculations">
-							<tr>
-								<td class="tgilbert"><u>Gilbert</u></td>
-								<td class="tdeath">Death</td>
-								<td class="tdeath">No death</td>
-								<td class="tdeath">Total</td>
-							</tr>
-							<tr>
-								<td class="tgilbert">Present</td>
-								<td id="n11">40</td>
-								<td id="n12">217</td>
-								<td>257</td>
-							</tr>
-							<tr>
-								<td class="tgilbert">Absent</td>
-								<td id="n21">34</td>
-								<td id="n22">1350</td>
-								<td>1384</td>
-							</tr>
-							<tr>
-								<td class="tgilbert">Total</td>
-								<td>74</td>
-								<td>1567</td>
-								<td>1641</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+
+				<table class="fourRows">
+					<thead>
+						<th colspan="4">Observed counts</th>
+					</thead>
+					<tbody class="calculations">
+						<tr>
+							<td class="tgilbert"><u>Gilbert</u></td>
+							<td class="tdeath">Death</td>
+							<td class="tdeath">No death</td>
+							<td class="tdeath">Total</td>
+						</tr>
+						<tr>
+							<td class="tgilbert">Present</td>
+							<td id="n11">40</td>
+							<td id="n12">217</td>
+							<td>257</td>
+						</tr>
+						<tr>
+							<td class="tgilbert">Absent</td>
+							<td id="n21">34</td>
+							<td id="n22">1350</td>
+							<td>1384</td>
+						</tr>
+						<tr>
+							<td class="tgilbert">Total</td>
+							<td>74</td>
+							<td>1567</td>
+							<td>1641</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			
+
 			<div class="main-panel">
 				<div id="chiSqPlot" class="shiny-plot-output"></div>
 				<div id="residPlot" class="shiny-plot-output"></div>
 				<div id="summary" class="shiny-text-output"></div>
 			</div>
 		</fieldset>
-		<br />
-		<fieldset>
-			<legend><h3>Tutorial: --------------</h3></legend>
-
-			<div class="top-panel">
-			</div>
-
-			<div class="side-panel">
-			</div>
-
-			<div class="main-panel">
-			</div>
-		</fieldset>
 	</div>
 
 	<div class="concluding-remarks">
 		<p>
-			Write some stuff here
+			<!--VICTOR, WRITE SOME STUFF HERE-->
 		</p>
 	</div>
 	

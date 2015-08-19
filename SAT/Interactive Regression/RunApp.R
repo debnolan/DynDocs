@@ -20,11 +20,4 @@ Two ideas to improve:
 
   3) Optional: Slider for the data. Includes everything. 
 
-3) Talk about Zoes plots and the correlations between each of the variables. 
-
-4) Incorporate Zoes code for the Y variable...
-
-
 Zoes plot
-
-1) Maybe make the tiniest plot points bigger.
