@@ -79,7 +79,7 @@
 				<td class="tgilbert">Total</td>
 				<td>74</td>
 				<td>1567</td>
-				<td>1641</td>
+				<td>1641<sup><a href="#citation1" id="reference1">[1]</a></sup></td>
 			</tr>
 		</table>
 		<div>$\leadsto$</div>
@@ -140,7 +140,7 @@
 			\[df = \left( number \thinspace of \thinspace rows - 1 \right) \left( number \thinspace of \thinspace columns - 1\right).\]
 		</p>
 		<p>
-			Below to the left is a visual representation of how the P-value was determined: the area under the curve and to the right of the chi-square statistic is the corresponding P-value. Notice that our chi-square test statistic is far off to the right, nowhere near the bulk of the density in our distribution. This is analogous to our miniscule P-value. To the right of it is a residual plot, where each residual is computed using the formula $\frac{Observed \thinspace - \thinspace Expected}{\sqrt{Expected}}$. This plot shows how much each component is contributing to the total value of $\chi ^{ 2 }$.
+			Below to the left is a visual representation of how the P-value was determined: the area under the curve and to the right of the chi-square statistic is the corresponding P-value. Notice that our test statistic is far off to the right, nowhere near the bulk of our distribution's density, hence our miniscule P-value. To the right of it is a residual plot, where each residual is computed using the formula $\frac{Observed \thinspace - \thinspace Expected}{\sqrt{Expected}}$. This plot shows how much each component is contributing to the total value of $\chi ^{ 2 }$.
 		</p>
 		<p>
 			<img src="content/chiSqPlot.gif" class="block" alt="chiSqPlot.gif" />
@@ -238,7 +238,7 @@
 				</table>
 			</div>
 
-			<div class="main-panel">
+			<div class="bottom-panel">
 				<div id="chiSqPlot" class="shiny-plot-output"></div>
 				<div id="residPlot" class="shiny-plot-output"></div>
 				<div id="summary" class="shiny-text-output"></div>
@@ -253,7 +253,10 @@
 	</div>
 	
 	<div class="references">
-			<!--ADD HYPERLINKS FROM WITHIN ANALYSIS-->
+		<h3>References</h3>
+		<ol>
+			<li><a href="#citation1" id="reference1">^</a> R. Peck, G. Casella, G. Cobb, R. Hoerl, D. Nolan, R. Starbuck, & H. Stern (2005). Statistics: A Guide to the Unknown. In Cobb, G., Gehlbach, S., Statistics in the Courtroom: United States vs. Kristen Gilbert (pp. 3-18). Pacific Grove, CA: Duxbury Press in partnership with the American Statistical Association. (Original work published 1989)</li>
+		</ol>
 	</div>
 </body>
 </html>

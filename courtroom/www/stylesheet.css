@@ -14,6 +14,10 @@ h1 {
 	text-align: center;
 }
 
+a {
+	text-decoration: none;
+}
+
 table {
 	text-align: center;
 }
@@ -115,7 +119,7 @@ select {
 	height: 100px;
 }
 
-.main-panel {
+.bottom-panel {
 	display: block;
 	float: left;
 	margin: 0%;
