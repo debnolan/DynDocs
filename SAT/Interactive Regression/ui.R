@@ -13,10 +13,9 @@ shinyUI(pageWithSidebar(
                  strong("Linear model to evaluate"),
                   choices=c("Simple regression",
                             "Controlling for frac",
-                            "First Fourth of Data",
-                            "Second Fourth of Data",
-                            "Third Fourth of Data",
-                            "Last Fourth of Data"))
+                            "First Half of Data",
+                            "Second Half of Data",
+                            "Third Half of Data"))
 
     
     )
