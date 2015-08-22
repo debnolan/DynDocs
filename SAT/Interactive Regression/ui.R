@@ -14,8 +14,8 @@ shinyUI(pageWithSidebar(
                   choices=c("Simple regression",
                             "Controlling for frac",
                             "First Half of Data",
-                            "Second Half of Data",
-                            "Third Half of Data"))
+                            "Second Half of Data"
+                            ))
 
     
     )
