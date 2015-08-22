@@ -50,8 +50,8 @@ plotGen = function(counts) {
   abline(v = myChiSq, col = "#838996", lty = "dashed")
   clip(-420, 420, -1, 2)
   text(median(chiSq), 1.8, expression(paste(chi[1]^2, " Distribution")))
-  text(median(chiSq), -.4, expression(chi^2))
-  text(-chiSq[300] / 6, .875, "Density", srt = 90)
+  text(median(chiSq), -.35, expression(chi^2))
+  text(-chiSq[300] / 7, .80, "Density", srt = 90)
 }
 
 # Function to make a chi-square residual plot.
@@ -66,7 +66,8 @@ residGen = function(counts) {
   text(1:4, 0, cex = .8, col = "#838996",
        labels = c("Gilbert present\nDeath", "Gilbert absent\nDeath",
                   "Gilbert present\nNo death", "Gilbert absent\nNo death"))
-  text(.15, 2, "Residuals", srt = 90, xpd = TRUE)
+  text(.25, (max(Residuals) + min(Residuals)) / 2, "Residuals",
+       srt = 90, xpd = TRUE)
 }
 
 # Function to generate conclusion statement to be displayed in tutorial.
@@ -80,7 +81,8 @@ conclusion = function(counts) {
   }
   paste0("We assessed the null hypothesis that the instance of death on a ",
          "shift was independent of Gilbert's presense. We found a chi-square ",
-         "test statistic of ", sprintf("%.2f", myChiSq), ", which corresponds to a P-value of ",
-         sprintf("%g", pValue), ". Given this information, we would ", statement, " the ",
-         "null hypothesis at the standard .05 significance level.")
+         "test statistic of ", sprintf("%.2f", myChiSq), ", which ",
+         "corresponds to a P-value of ", sprintf("%.4f", pValue), ". Given ",
+         "this information, we would ", statement, " the null hypothesis at ",
+         "the standard .05 significance level.")
 }

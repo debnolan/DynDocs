@@ -14,6 +14,10 @@ h1 {
 	text-align: center;
 }
 
+a {
+	text-decoration: none;
+}
+
 table {
 	text-align: center;
 }
@@ -40,7 +44,7 @@ div.calculations div {
 	display: inline-block;
 	height: 55px;
 	vertical-align: middle;
-	width: 20px;
+	width: 25px;
 }
 
 div.calculations table.fourRows {
@@ -62,13 +66,13 @@ div.calculations table.twoRows {
 
 .tdeath {
 	font-weight: bold;
-	max-width: 55px;
+	width: 55px;
 }
 
 .tgilbert {
 	font-weight: bold;
 	text-align: right;
-	max-width: 55px;
+	width: 55px;
 }
 
 
@@ -80,70 +84,63 @@ div.calculations table.twoRows {
 /*----------------------------------*/
 
 select {
-	margin-bottom: 8%;
+	margin-bottom: 2%;
 	margin-left: -.5%;
 	margin-top: 2%;
-	width: 98%;
+	width: 97%;
 }
-
-.main-panel {
-	display: inline-block;
-	float: left;
-	margin: 0%;
-	height: 200px;
-	width: 610px;
-}
-
-.shiny-input-container {
-	width: 100%;
-}
-
-.side-panel {
-	display: inline-block;
-	float: left;
-	margin: 0%;
-	height: 200px;
-	width: 200px;
-}
-
-.top-panel {
-	display: block;
-	height: 125px;
-}
-
-
-
-
-
-/*----------------------------------*/
-/*----->> HYPOTHESIS TESTING <<-----*/
-/*----------------------------------*/
 
 #chiSqPlot, #residPlot {
 	float: left;
-	height: 185px;
+	height: 270px;
 	margin: 0%;
-	width: 305px;
+	padding: 0%;
+	width: 400px;
 }
 
 #summary {
 	float: left;
-	height: 15px;
+	height: 50px;
 	margin: 0%;
-	width: 610px;
+	width: 800px;
 }
 
-.top-top-left {
+.middle-panel {
+	text-align: center;
 	border: 1px solid #FFFFFF;
+	display: block;
+	height: 100px;
 	float: left;
-	width: 74%;
+	width: 100%;
 }
 
-.top-top-right {
+.middle-panel table {
+	display: inline-block;
+	height: 100px;
+}
+
+.bottom-panel {
+	display: block;
+	float: left;
+	margin: 0%;
+	height: 320px;
+	width: 800px;
+}
+
+.shiny-input-container {
+	display: inline-block;
+	vertical-align: 12px;
+	width: 350px;
+}
+
+.top-panel {
+	display: block;
 	border: 1px solid #FFFFFF;
 	float: left;
-	width: 25%;
+	height: 165px;
+	width: 100%;
 }
+
 
 
 
@@ -152,7 +149,7 @@ select {
 /*-------->> SLIDER INPUT <<--------*/
 /*----------------------------------*/
 
-#cell-count {
+#cellCount {
 	-webkit-appearance: none;
 	background: #C7D0D5;
 	border-radius: 3px;
@@ -162,10 +159,10 @@ select {
 	margin-left: -.5%;
 	margin-top: 2%;
 	padding: 0%;
-	width: 150px;
+	width: 240px;
 }
 
-#cell-count::-webkit-slider-thumb {
+#cellCount::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	background: #838996;
 	border-radius: 3px;
@@ -177,7 +174,7 @@ select {
 	transition: background .15s ease-in-out;
 }
 
-#cell-count::-moz-range-thumb {
+#cellCount::-moz-range-thumb {
 	background: #838996;
 	border-radius: 3px;
 	box-shadow: 3px 3px 3px #F5F5F5, 0px 0px 3px #FFFFFF;
@@ -188,7 +185,7 @@ select {
 	transition: background .15s ease-in-out;
 }
 
-#cell-count::-ms-thumb {
+#cellCount::-ms-thumb {
 	background: #838996;
 	border-radius: 3px;
 	box-shadow: 3px 3px 3px #F5F5F5, 0px 0px 3px #FFFFFF;
@@ -197,7 +194,7 @@ select {
 	width: 12px;
 }
 
-.range-value {
+.rangeValue {
 	background: #282828;
 	border-radius: 3px;
 	color: #F5F5F5;
@@ -209,5 +206,5 @@ select {
 	position: relative;
 	margin-left: 0px;
 	text-align: center;
-	width: 35px;
+	width: 40px;
 }

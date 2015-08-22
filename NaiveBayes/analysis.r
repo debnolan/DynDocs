@@ -52,5 +52,18 @@ jsonParser = function(jsonFormat){
     myMat[coordinatesFinal[2*i-1],coordinatesFinal[2*i]] = 1
   }
   myMat = matrix(reverser(myMat),28,28)
+  myMatCopy = myMat
+  for(c in 1:28){
+    for(r in 1:28){
+      if (myMatCopy[c,r]==1){
+        if (c !=1 && c!= 28 && r != 1 && r!= 28){
+          myMat[c-1,r] = 1
+          myMat[c+1,r] = 1
+          myMat[c,r-1] = 1
+          myMat[c,r+1] = 1
+        }
+      }
+    }
+  }
   return(myMat)
 }

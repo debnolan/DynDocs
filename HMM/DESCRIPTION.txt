@@ -1,0 +1,19 @@
+Package: HMMtr
+Title: Hidden Markov Model tutorial
+Version: 0.1
+Authors@R: c(
+  person("Liu", "Yue", email = "viscentliu@gmail.com",
+	   role = c("aut", "cre"))
+  person("Song", "Binglin", email = "binglinsong@berkeley.edu",
+	  role = "aut"))
+Description: Introduction to basic ideas of Hidden Markov Model with interactive graph models and descriptions of Markov Chains. 
+Depends: R(>= 3.0.0)
+License: 
+
+Suggests:
+  shiny(0.12.0)
+  expm(0.99-1.1)
+  HMM(1.0)
+  Matrix(1.2-0)
+
+LazyData: true 

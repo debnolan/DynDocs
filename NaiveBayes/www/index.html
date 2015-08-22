@@ -30,7 +30,7 @@
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
-  <title>MNIST</title>
+  <title>Naive Bayes Classifier</title>
 </head>
 
 <body>
@@ -38,7 +38,7 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
 	<div class="container">
     	<div class="navbar-header">
-        	<span class="navbar-brand">MNIST</span>
+        	<span class="navbar-brand">Naive Bayes Classifier</span>
         </div>
       	<ul class="nav navbar-nav shiny-tab-input shiny-bound-input" id="nav">
         	<li class="active">
@@ -399,13 +399,13 @@ h4 {
 		<div class="canvas-container">
         <canvas id="src-canvas" width="300" height="300" style="border:1px solid black;"></canvas>
 		<div id='btns'>
-			<button id="btn-tojson">To JSON</button>
+			<button id="btn-tojson">Submit</button>
 		    <button id="btn-clear">Clear</button>
-		    <button id="btn-submit">Submit</button>
+<!--		    <button id="btn-submit">Submit</button> -->
 		</div>
 
    
-		<div class="form-group shiny-input-container">
+		<div class="form-group shiny-input-container" style="visibility: hidden">
 			<label for="var5">Output</label>
 			<input id="var5" type="text" class="form-control shiny-bound-input" value="JSON format"/>
 		</div>
@@ -457,6 +457,7 @@ h4 {
 
     	$('#btn-tojson').on('click', function() {
     		$('#var5').val(JSON.stringify(srcCanvas.toJSON()));
+	        $('#var5').trigger("change"); 
 		});
 
     	$('#btn-clear').on('click', function() {
@@ -565,7 +566,7 @@ h4 {
 		<br/>
 		<p class="doc">Given an image $x$ $=$ $(x_1,..., x_{784})$ $∈$ $[0,1]^{784}$, we can compute its conditional likelihood given digit $j$ as: $$P_j(x) = ∏^{784}_{i=1}P_{ji}(x_i) = ∏^{784}_{i=1}P^{x_i}_{ji}(1-p_{ji})^{1-x_i}.$$</p>
 		<br/>
-		<p class="doc">In the first equality above we use the Naive Bayes assumption, and in the second equality we use. Then we use our inference framework and classify image $x$ to the digit given by the $MAP$ estimator: $$h(x) = argmax_j \, [π_j·P_j(x)] = argmax_j \, [π_j·∏^{784}_{i=1}P^{x_i}_{ji}(1-p_{ji})^{1-x_i}]$$</p>
+		<p class="doc">In the first equality above we use the Naive Bayes assumption, and in the second equality we use. Then we use our inference framework sand classify image $x$ to the digit given by the $MAP$ estimator: $$h(x) = argmax_j \, [π_j·P_j(x)] = argmax_j \, [π_j·∏^{784}_{i=1}P^{x_i}_{ji}(1-p_{ji})^{1-x_i}]$$</p>
 		<br/>
 		<p class="doc">But notice that in the calculation above we are multiplying many small numbers, so the resulting product will be very small, and may be rounded down to 0 if the value is smaller than the limit of precision of the computer; this is called underflow. To avoid underflow, we can maximize the logarithm instead: 
 		$$h(x) = argmax_j \, [log(π_j)·∑^{784}_{i=1}(x_i·log(p_{ji}) + (1−x_i)log(1− p_{ji}))]$$</p>
