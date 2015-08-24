@@ -5,16 +5,19 @@ fig.height <- 450
 
 shinyUI(pageWithSidebar(
   
-  headerPanel("SAT and Teachers' Salaries"), 
+  headerPanel("SAT and Teachers' Salaries: The Truth Behind the Numbers"), 
   sidebarPanel(
     div(p("Relate modeling choices to plots and summaries of the models")),
     
     div(selectInput("model",
-                 strong("Linear model to evaluate"),
-                  choices=c("Simple regression",
-                            "Controlling for frac"))
-
-    
+                    strong("Linear model to evaluate"),
+                    choices=c("Simple regression",
+                              "Controlling for frac",
+                              "First Half of Data",
+                              "Second Half of Data"
+                    ))
+        
+        
     )
   ),
   
