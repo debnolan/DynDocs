@@ -1,5 +1,5 @@
+# options(rgl.useNULL=TRUE)
 library(shiny)
-options(rgl.useNULL=TRUE)
 library(ggplot2)
 library(grid)
 library(gridExtra)
@@ -8,13 +8,13 @@ library(ggvis)
 library(shinyRGL)
 library(rgl)
 library(plyr)
+  load("data/satDF.rda")
+  load("data/satDF_one.rda") # adding two columns: region and state population
+  load("data/satDF_pretty.rda")
 
 
 # Define server logic required to draw a scatterplot
 shinyServer(function(input, output) {
-  load("data/satDF.rda")
-  load("data/satDF_one.rda") # adding two columns: region and state population
-  load("data/satDF_pretty.rda")
   
   output$text <- renderText({
     input$title
@@ -54,7 +54,7 @@ shinyServer(function(input, output) {
                legend.position = "top", 
                legend.background = element_rect(fill = "transparent", colour = "transparent"),
                legend.key = element_rect(colour = "transparent"))
-     }}, height = 600, width = 600)
+     }}, height = 500, width = 500)
   
   ###################### sidebyside_2
    output$sidebyside_2 <- renderPlot({
@@ -90,7 +90,7 @@ shinyServer(function(input, output) {
                legend.position = "top", 
                legend.background = element_rect(fill = "transparent", colour = "transparent"),
                legend.key = element_rect(colour = "transparent"))
-     }}, height = 600, width = 600)
+     }}, height = 500, width = 500)
    
    ###################### hover info
    output$info_1 <- renderPrint({
@@ -111,15 +111,14 @@ shinyServer(function(input, output) {
    # to the value currently set in the slider.
    output$sctPlot <- renderWebGL({
      
-     x_3d<- satDF[ , input$x_3d] 
-     y_3d<- satDF[ , input$y_3d] 
-     z_3d<- satDF[ , input$z_3d]
+     open3d()
      
-     plot3d(x_3d, y_3d, z_3d, col = "blue", size = 0.99, type = "s", xlab = input$x_3d, 
-            ylab = input$y_3d, zlab = input$z_3d)
+     plot3d(satDF[, input$x3d], satDF[, input$y3d], satDF[, input$z3d], 
+            col = "blue", size = 0.99, type = "s", xlab = input$x3d, 
+            ylab = input$y3d, zlab = input$z3d)
+     bbox3d(yat = c(900, 1000, 1100))
      aspect3d(1,1,1)
-   }, height = 500, width = 500)
-   
+   })
    
    
    ###################### regression 
@@ -384,7 +383,4 @@ shinyServer(function(input, output) {
          }
        }
      })
-   
-
-   
 })
