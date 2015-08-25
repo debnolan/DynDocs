@@ -1,5 +1,4 @@
 <html>
-
 <head>
 <style type="text/css">
 .knitr .inline {
@@ -84,33 +83,16 @@
 <script src="shared/bootstrap/js/bootstrap.min.js"></script>
 <script src="shared/bootstrap/shim/html5shiv.min.js"></script>
 <script src="shared/bootstrap/shim/respond.min.js"></script>
-<!--rgl header-->
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <script type="application/shiny-singletons">dad5b75bf47e880028b79bccb72da884a78c0f69</script>
-  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.1];selectize[0.11.2];bootstrap[3.3.1]</script>
-<script src="shared/json2-min.js"></script>
-<script src="shared/jquery.min.js"></script>
-<link href="shared/shiny.css" rel="stylesheet" />
-<script src="shared/shiny.min.js"></script>
-<link href="shared/selectize/css/selectize.bootstrap3.css" rel="stylesheet" />
-<!--[if lt IE 9]>
-<script src="shared/selectize/js/es5-shim.min.js"></script>
-<![endif]-->
-<script src="shared/selectize/js/selectize.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-<script src="shared/bootstrap/js/bootstrap.min.js"></script>
-<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
-<script src="shared/bootstrap/shim/respond.min.js"></script>
-  <script src="shinyRGL/CanvasMatrix.js"></script>
-  <script src="shinyRGL/glbinding.js"></script>
-<!--css file-->
+  <!--css file-->
 <script src="shared/jquery.js" type="text/javascript"></script>
 <script src="shared/shiny.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="shared/interactive_doc.css"/> 
 </head>
 
+
 <body>
+<h1>Money and Education</h1>
+<h2>—An interactive document on confounding variable and Simpson's Paradox</h2>
 <h2>Introduction</h2>
 <p>Education is a key component in public policy. As funds for public schools dwindle due to increasing budget restrictions, the debate revolves around both the share of education’s budget and the most efficient allocation of these funds from the public purse. In the following case, we can see how an immature knowledge of statistics can lead to potentially disastrous public policy results and how a fuller understanding of these problems can best delineate the true story and best affect the lives of people. </p>
 	
@@ -119,32 +101,37 @@
 <p>This evidence is somewhat counterintuitive to the idea that paying school teachers more will result in better grades as a result of improved quality of instruction and teaching talent. However, as we will see, the negative correlation does in fact exist! Does this mean that we should reduce public high school teachers’ salaries in order to best improve the academic futures of their students? In this document, we will examine the relationship between teachers’ salary and academic performance using SAT scores and introduce the idea of confounding variables.</p>
 
 
+
+
+
 <h2>Data</h2>
 <p>The data is from the paper “Getting What You Pay For: The Debate Over Equity in Public School Expenditures” by Deborah Lynn Guber (1999) from the Journal of Statistics Education.</p>
 
 <p>There are a number of variables listed in the data description collected from 1994-1995 from public elementary and secondary schools:</p>
 
 <p> State -- Name of state<br>
-expend -- Current expenditure per pupil (in thousands of U.S. dollars per average daily atttendance in public and elementary and secondary schools) <br>ratio -- Average pupil to teacher ratio in public elementary and secondary schools during Fall 1994
-salary-- Estimated average annual salary of teachers in public elementary and secondary schools during 1994-1995 (in thousands of US dollars)<br>
-frac -- Percentage of all eligible students taking the SAT in 1994-1995<br> 
-verbal -- Average verbal SAT score in 1994-1995<br>   
-math --  Average math SAT score in 1994-1995<br>  
-sat -- Average total score on the SAT in 1994-1995<br>
-
+Region--Which area the state belongs to in the United States<br>
+Population--The number of people in that state<br>
+Expenditure (expend) -- Current expenditure per pupil (in thousands of U.S. dollars per average daily atttendance in public and elementary and secondary schools) <br>
+Student Teacher Ratio (ratio) -- Average pupil to teacher ratio in public elementary and secondary schools during Fall 1994<br>
+Teacher Salary (salary)-- Estimated average annual salary of teachers in public elementary and secondary schools during 1994-1995 (in thousands of US dollars)<br>
+Eligible Student Fraction (frac) -- Percentage of all eligible students taking the SAT in 1994-1995<br> 
+SAT Verval (verbal) -- Average verbal SAT score in 1994-1995<br>   
+SAT Math (math) --  Average math SAT score in 1994-1995<br>  
+SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
 </p>
-<!--data display-->
-<p>Just a glance at the data: 
+
+<p>Just a glance at the data:</p> 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
-      <div id="mytable1" class="shiny-html-output"></div>
+      <div id="mytable1" class="shiny-html-output" style="overflow:scroll; height:400px;"></div>
     </div>
   </div>
 </div> 
-</p>
 
-<p>As we can see, there are 50 observation points representing each state with the various data recorded in each of them.</p>
+
+<p>As we can see, there are 50 observation points representing each state with the given data recorded.</p>
 
 <h2>Data Analysis</h2>
 
@@ -159,26 +146,12 @@ sat -- Average total score on the SAT in 1994-1995<br>
 <p>We see a negative correlation between sat scores and teacher salary:</p>
 <div class="chunk" id="unnamed-chunk-2"><div class="rimage default"><img src="figure/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div></div>
 
-<h3>Confounding Variables</h3>
+<p>From the data, we can see that there indeed is a negative correlation between expenditures and SAT scores. However, in this analysis, we should not use expenditures because these negative correlations might be due to other factors not related to teacher salaries, such as inefficient or irrelevant allocations of funds (e.g. large investments into a new football stadium) or corruption (e.g. mysterious deposits into a Swiss bank account). </p>
+<p>Thus, we use teacher salaries as our explanatory variable.</p>
 
-<p>From the charts above, we can see that there is strong positive correlation between frac, the fraction of students taking the SAT, and teacher salary and a very strong negative correlation between frac and SAT scores. Perhaps the issue is that the SAT is not required for all students. Thus, the issue in just viewing the relationship between SAT scores and teacher salary is that it reflects the effects of frac.</p>
-
-<p>Why might this be? If we look at this chart,</p>
-
-
-<p>We note that states with the lowest fraction of students taking the SAT generally have the highest average scores. This might be due to selection bias--the students who actually take the SAT in places with low SAT participation rates tend to be prepared. In contrast, if the majority of students are expected to take the SAT in certain states, then students who are average are likely to take the tests. Thus, the average SAT score reflects this variable.</p>
-
-<p>The key to observing the effects of teacher salary on SAT scores without the effects of frac is to hold constant, or control for, the frac variable.</p> 
-
-<p>After partitioning the frac into groups shown above, we note that the relationship changes between a negative correlation to a positive or neutral one.</p>
-
-<p>This phenomenon is known as Simpson’s Paradox. This paradox occurs when the trends between two variables become neutral or reverses when other variables are introduced.</p>
-<div class="chunk" id="unnamed-chunk-4"><div class="rimage default"><img src="figure/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div><div class="rimage default"><img src="figure/unnamed-chunk-4-2.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div></div>
-
-
+<p>You can also explore relationships between other variables using following interactive scatter plot:</p>
 <!--sidebyside scatterplot-->
-
-	<div class="container-fluid">
+<div class="container-fluid">
   <h2>Scatter Plots and Correlation</h2>
   <div class="row">
     <div class="col-sm-4">
@@ -208,8 +181,8 @@ sat -- Average total score on the SAT in 1994-1995<br>
         <div>
           <select id="x_2"><option value="expend">Expenditure Per Pupil</option>
 <option value="ratio">Student-Teacher Ratio</option>
-<option value="salary" selected>Teacher Salary</option>
-<option value="frac">Eligible Student Fraction</option></select>
+<option value="salary">Teacher Salary</option>
+<option value="frac" selected>Eligible Student Fraction</option></select>
           <script type="application/json" data-for="x_2" data-nonempty="">{}</script>
         </div>
       </div>
@@ -226,12 +199,12 @@ sat -- Average total score on the SAT in 1994-1995<br>
   </div>
   <div class="row">
     <div class="col-sm-6">
-      <div style="height:650px;">
+      <div style="height:550px;">
         <div id="sidebyside_1" class="shiny-plot-output" style="width: 100% ; height: 400px" data-hover-id="plot_hover_1" data-hover-delay="300" data-hover-delay-type="throttle" data-hover-clip="TRUE" data-hover-null-outside="TRUE"></div>
       </div>
     </div>
     <div class="col-sm-6">
-      <div style="height:650px;">
+      <div style="height:550px;">
         <div id="sidebyside_2" class="shiny-plot-output" style="width: 100% ; height: 400px" data-hover-id="plot_hover_2" data-hover-delay="300" data-hover-delay-type="throttle" data-hover-clip="TRUE" data-hover-null-outside="TRUE"></div>
       </div>
     </div>
@@ -246,56 +219,135 @@ sat -- Average total score on the SAT in 1994-1995<br>
   </div>
 </div> 
 
-
 <!--3D scatterplot-->
+<div class="container-fluid">
+
+
+
+
+<h3>Confounding Variables</h3>
+
+<p>From the charts above, we can see that there is strong positive correlation between frac, the fraction of students taking the SAT, and teacher salary and a very strong negative correlation between frac and SAT scores. Perhaps the issue is that the SAT is not required for all students. Thus, the issue in just viewing the relationship between SAT scores and teacher salary is that it reflects the effects of frac. </p>
+
+<p>Why might this be? </p>
+
+<div class="chunk" id="unnamed-chunk-3"><div class="rimage default"><img src="figure/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div></div>
+<p>we note that states with the lowest fraction of students taking the SAT generally have the highest average scores. This might be due to selection bias--the students who actually take the SAT in places with low SAT participation rates tend to be prepared. In contrast, if the majority of students are expected to take the SAT in certain states, then students who are average are likely to take the tests. Thus, the average SAT score reflects this variable.</p>
+
+<p>We note that states with the lowest fraction of students taking the SAT generally have the highest average scores. This might be due to selection bias--the students who actually take the SAT in places with low SAT participation rates tend to be prepared. In contrast, if the majority of students are expected to take the SAT in certain states, then students who are average are likely to take the tests. Thus, the average SAT score reflects this variable.</p>
+
+<p>The key to observing the effects of teacher salary on SAT scores without the effects of frac is to hold constant, or control for, the frac variable.We see that there is a distinct break around frac = 40%, as indicated by the grey vertical line. It is reasonable to partition the frac variable into two groups, one groups are states that have frac lower than 40 percent and the other group are states that have frac greater than 40 percent. </p> 
+
+<div class="chunk" id="unnamed-chunk-4"><div class="rimage default"><img src="figure/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div></div>
+
+<p>This interactive regression app helps you understand step by step how this change of relationship came about:</p>
+
+<p>Here you can observe how the regression line, the line which shows the average relationship between two variables, changes with different portions of the data. In this case, we simply observe what happens to the average relationship between average teacher salary and SAT scores for different levels of fraction of students taking the SAT. The R code and corresponding statistical data for the regression is displayed at the bottom of each plot. The discussion and interpretation of these values will not be discussed here; the main goal is to see how drastically some relationships can change due to hidden variables that are correlated with them.</p>
+<p>In the first plot “Simple regression” we observe the decidedly negative correlation that some were concerned about. The regression shows the average relationship between average teacher salary and SAT scores with all of the data points.</p>
+<p>In the “Controlling for frac” page, we observe the different relationships for different groups of fraction. The groups of fraction are as follows: [[1]] the 15 states with the lowest fraction of students taking the SAT (colored in Blue), [[2]] the states ranked 20-30 for the lowest fraction of student taking the SAT (in Gold), and [[3]] the 15 states with the highest fraction of SAT (in Red). The regression line of each group corresponds to each data point.</p>
+
+<p>After dividing the data into these chunks, we observe that the slopes of the regression lines flatten and, for two of these groups, even become positive!</p>
+
+<p>Moreover, looking at the “First Half of Data” and the “Second Half of Data” pages, we can learn even more regarding the groups. Notice how the two halves almost perfectly split around the 950  SAT score level.</p>
+
+<p>This illustrates Simpson’s Paradox. </p>
+
+
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12">
-        <h1>3-variable-satterplot</h1>
+        <h1>SAT and Teachers' Salaries: The Truth Behind the Numbers</h1>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-4">
         <form class="well">
-          <div class="form-group shiny-input-container">
-            <label class="control-label" for="x">Choose an x variable:</label>
-            <div>
-              <select id="x"><option value="expend">Expenditure Per Pupil (in 000's of dollars)</option>
-<option value="ratio">Student-Teacher Ratio</option>
-<option value="salary" selected>Teacher Salary (in 000's of dollars)</option>
-<option value="frac">Eligible Student Fraction</option></select>
-              <script type="application/json" data-for="x" data-nonempty="">{}</script>
-            </div>
+          <div>
+            <p>Relate modeling choices to plots and summaries of the models</p>
           </div>
-          <div class="form-group shiny-input-container">
-            <label class="control-label" for="y">Choose a y variable</label>
-            <div>
-              <select id="y"><option value="sat" selected>SAT Total Score</option>
-<option value="math">SAT Math Score</option>
-<option value="verbal">SAT Verbal Score</option></select>
-              <script type="application/json" data-for="y" data-nonempty="">{}</script>
-            </div>
-          </div>
-          <div class="form-group shiny-input-container">
-            <label class="control-label" for="z">Choose a z variable:</label>
-            <div>
-              <select id="z"><option value="expend">Expenditure Per Pupil (in 000's of dollars)</option>
-<option value="ratio">Student-Teacher Ratio</option>
-<option value="salary">Teacher Salary (in 000's of dollars)</option>
-<option value="frac" selected>Eligible Student Fraction</option></select>
-              <script type="application/json" data-for="z" data-nonempty="">{}</script>
+          <div>
+            <div class="form-group shiny-input-container">
+              <label class="control-label" for="model">
+                <strong>Linear model to evaluate</strong>
+              </label>
+              <div>
+                <select id="model"><option value="Simple regression" selected>Simple regression</option>
+<option value="Controlling for frac">Controlling for frac</option>
+<option value="First Half of Data">First Half of Data</option>
+<option value="Second Half of Data">Second Half of Data</option></select>
+                <script type="application/json" data-for="model" data-nonempty="">{}</script>
+              </div>
             </div>
           </div>
         </form>
       </div>
       <div class="col-sm-8">
-        <div id="sctPlot" class="shiny-gl-output" style="width: 100% ; height: 400px"></div>
+        <div>
+          <div id="reg.plot" class="shiny-plot-output" style="width: 600px ; height: 450px"></div>
+        </div>
+        <div class="span7">
+          <pre id="reg.summary" class="shiny-text-output"></pre>
+        </div>
       </div>
     </div>
   </div>
 
-  
-<!--simpson's paradox tutorial-->
+<p>After partitioning the frac into two groups shown above, we note that correlation within each group differs from that of the overal negative correlation we previously observed. The group of states that have lower than 40 percent fraction of eligible students show a less steep negative correlation between salary and sat scores, white states that have higher than 40 percent fraction of eligible students show a positive correlation between salary and sat scores, the reverse of the overal correlation.</p>
+
+<p>This phenomenon of changing correlation signs when data is partitioned into groups is known as Simpson’s Paradox. This paradox occurs when the trends between two variables become neutral or reverses when other variables are introduced.</p>
+
+<h2>Simpson's Paradox Interactive Tutorial</p>
+<h3>Kidney stone treatment example</h3>
+<p>This example is taken from wikipedia.</p>
+<blockquote cite="https://en.wikipedia.org/wiki/Simpson%27s_paradox" style="font-size:11px">
+	<p>This is a real-life example from a medical study[12] comparing the success rates of two treatments for kidney stones.[13]</p>
+
+
+<p>The table below shows the success rates and numbers of treatments for treatments involving both small and large kidney stones, where Treatment A includes all open surgical procedures and Treatment B is percutaneous nephrolithotomy (which involves only a small puncture). The numbers in parentheses indicate the number of success cases over the total size of the group. (For example, 93% equals 81 divided by 87.)</p>
+
+<p>
+The paradoxical conclusion is that treatment A is more effective when used on small stones, and also when used on large stones, yet treatment B is more effective when considering both sizes at the same time. In this example the "lurking" variable (or confounding variable) of the stone size was not previously known to be important until its effects were included.</p>
+
+
+<p>Which treatment is considered better is determined by an inequality between two ratios (successes/total). The reversal of the inequality between the ratios, which creates Simpson's paradox, happens because two effects occur together:</p>
+
+
+<ol>
+	<li>The sizes of the groups, which are combined when the lurking variable is ignored, are very different. Doctors tend to give the severe cases (large stones) the better treatment (A), and the milder cases (small stones) the inferior treatment (B). Therefore, the totals are dominated by groups 3 and 2, and not by the two much smaller groups 1 and 4.</li>
+	<li>The lurking variable has a large effect on the ratios, i.e. the success rate is more strongly influenced by the severity of the case than by the choice of treatment. Therefore, the group of patients with large stones using treatment A (group 3) does worse than the group with small stones, even if the latter used the inferior treatment B (group 2).</li>
+</ol>
+<p>Based on these effects, the paradoxical result is seen to arise by suppression of the causal effect of stone size on successful treatment. The paradoxical result can be rephrased more accurately as follows: When the less effective treatment (B) is applied more frequently to easier cases, it can appear to be a more effective treatment.</p>
+
+
+</blockquote>
+</p>
+
+<p>Below is an interactive table that help you understand how Simpson's paradox work. </p>
+
+<p>
+<ul>
+<li>Treatment A is the more effect treatment that doctors tend to give more to severe cases.</li>
+<li>Treatment B is the less effect treatment that doctors tend to give more to milder cases.</li>
+<li>What's fixed?</li>
+  <ul>
+    <li>Total number of cases being treated is fixed: 350 cases.</li>
+    <li>The success rates of each treatment treating small stones and large stones are fixed.
+      <ul>
+    <li>Treament A treat small stones with a success rate of 93 percent.</li>
+    <li>Treament A treat large stones with a success rate of 73 percent.</li> 
+    <li>Treament B treat small stones with a success rate of 87 percent.</li>
+    <li>Treament B treat small stones with a success rate of 69 percent.</li>
+      </ul>
+  </ul>
+<li>What's not fixed?</li>
+  <ul>
+    <li>The marginal totals are not fixed</li>
+  </ul>
+</ul>
+</p>
+
+<!--simpson's paradox tutorial 1-->
 <div class="container-fluid">
   <h2>Simpson's Paradox</h2>
   <div class="row">
@@ -318,11 +370,51 @@ sat -- Average total score on the SAT in 1994-1995<br>
   </div>
 </div> 
 
+<p>Below interactive table allow you to control more variables. The only thing that is fixed is the total number of cases being treated, still equal to 350.</p>
+
+<div class="container-fluid">
+  <h2>Simpson's Paradox</h2>
+  <div class="row">
+    <div class="col-sm-4">
+      <form class="well">
+        <div class="form-group shiny-input-container">
+          <label class="control-label" for="success_rate_A_small2">Treatment A Success Rate For Small Kidney Stones:</label>
+          <input class="js-range-slider" id="success_rate_A_small2" data-min="0" data-max="1" data-from="0.93" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+        </div>
+        <div class="form-group shiny-input-container">
+          <label class="control-label" for="success_rate_B_small2">Treatment B Success Rate for Small Kidney Stones:</label>
+          <input class="js-range-slider" id="success_rate_B_small2" data-min="0" data-max="1" data-from="0.87" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+        </div>
+        <div class="form-group shiny-input-container">
+          <label class="control-label" for="success_rate_A_large2">Treatment A Success Rate For Large Kidney Stones:</label>
+          <input class="js-range-slider" id="success_rate_A_large2" data-min="0" data-max="1" data-from="0.73" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+        </div>
+        <div class="form-group shiny-input-container">
+          <label class="control-label" for="success_rate_B_large2">Treatment B Success Rate for Large Kidney Stones:</label>
+          <input class="js-range-slider" id="success_rate_B_large2" data-min="0" data-max="1" data-from="0.69" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="1"/>
+        </div>
+        <div class="form-group shiny-input-container">
+          <label class="control-label" for="count_A_small2">Treatment A Count For Small Kidney Stones:</label>
+          <input class="js-range-slider" id="count_A_small2" data-min="0" data-max="350" data-from="87" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.285714285714286"/>
+        </div>
+        <div class="form-group shiny-input-container">
+          <label class="control-label" for="count_B_small2">Treatment B Count For Small Kidney Stones:</label>
+          <input class="js-range-slider" id="count_B_small2" data-min="0" data-max="350" data-from="263" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.285714285714286"/>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-8">
+      <div id="table2" class="shiny-html-output"></div>
+      <div id="yesorno2" class="shiny-text-output"></div>
+    </div>
+  </div>
+</div> 
 
 
 
-
-
+<h2>Reference</h2>
+<p><a href="http://vudlab.com/simpsons">http://vudlab.com/simpsons</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Simpson%27s_paradox">http://en.wikipedia.org/wiki/Simpson%27s_paradox</a></p>
 
 </body>
-</html>
+</htm	l>
