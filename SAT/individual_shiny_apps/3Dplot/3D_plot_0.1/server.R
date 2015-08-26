@@ -4,20 +4,19 @@ options(rgl.useNULL=TRUE)
 library(shiny)
 library(shinyRGL)
 library(rgl)
-#' Define server logic required to generate and 3d scatterplot
+load("data/satDF.rda")
 
 shinyServer(function(input, output) {
-  load("data/satDF.rda")
   # Expression that generates a rgl scene with a number of points corresponding
   # to the value currently set in the slider.
   output$sctPlot <- renderWebGL({
-   
-    x<- satDF[ , input$x] 
-    y<- satDF[ , input$y] 
-    z<- satDF[ , input$z]
-
-    plot3d(x, y, z, col = "blue", size = 0.99, type = "s", xlab = input$x, 
-           ylab = input$y, zlab = input$z)
+    
+    open3d()
+    
+    plot3d(satDF[, input$x3d], satDF[, input$y3d], satDF[, input$z3d], 
+           col = "blue", size = 0.99, type = "s", xlab = input$x3d, 
+           ylab = input$y3d, zlab = input$z3d)
+    bbox3d(yat = c(900, 1000, 1100))
     aspect3d(1,1,1)
   })
 })
