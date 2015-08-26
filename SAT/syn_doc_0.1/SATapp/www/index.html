@@ -91,13 +91,8 @@
 
 
 <body>
-<<<<<<< HEAD
-<h1>Money and Education</h1>
-<h2>—An interactive document on confounding variable and Simpson's Paradox</h2>
-=======
-<h1>What does the Data really say? Should we really pay Teachers less to raise SAT Scores?</h1>
+<h1>What does the Data really say? SAT and Teacher Salaries</h1>
 <h2>---An Interactive Document on Confounding Variables and Simpson's Paradox </h2>
->>>>>>> 4acf7700a4d0450501b7f2bd4fdea1d9b642048e
 <h2>Introduction</h2>
 <p>Education is a key component in public policy. As funds for public schools dwindle due to increasing budget restrictions, the debate revolves around both the share of education’s budget and the most efficient allocation of these funds from the public purse. In the following case, we can see how an immature knowledge of statistics can lead to potentially disastrous public policy results and how a fuller understanding of these problems can better delineate the true story and better affect the lives of people. </p>
 	
@@ -117,7 +112,7 @@
 <p> State -- Name of state<br>
 Region (region)--Which area the state belongs to in the United States<br>
 Population--The number of people in that state<br>
-Expenditure (expend) -- Current expenditure per pupil (in thousands of U.S. dollars per average daily atttendance in public and elementary and secondary schools) <br>
+Expenditure (expend) -- Current expenditure per pupil (in thousands of U.S. dollars per average daily attendance in public and elementary and secondary schools) <br>
 Student Teacher Ratio (ratio) -- Average pupil to teacher ratio in public elementary and secondary schools during Fall 1994<br>
 Teacher Salary (salary)-- Estimated average annual salary of teachers in public elementary and secondary schools during 1994-1995 (in thousands of US dollars)<br>
 Eligible Student Fraction (frac) -- Percentage of all eligible students taking the SAT in 1994-1995<br> 
@@ -224,10 +219,8 @@ SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
 <!--3D scatterplot-->
 <div class="container-fluid">
 
-<p>In the following charts, you can compare the different relationships between SAT scores (with the options between “Verbal”, “Math”, and “Total” SAT scores) and the variables “Expenditure Per Pupil”, “Student-Teacher Ratio”, “Teacher Salary”, and “Eligible Fraction”. Notice...  </p>
-
-
-<p>From the data, we can see that there indeed is a negative correlation between expenditures and SAT scores. However, in this analysis, we should not use expenditures because these negative correlations might be due to other factors not related to teacher salaries, such as inefficient or irrelevant allocations of funds (e.g. large investments into a new football stadium) or corruption (e.g. mysterious deposits into a Swiss bank account). </p>
+<p>In charts above, you are able to compare the different relationships between SAT scores (with the options between “Verbal”, “Math”, and “Total” SAT scores) and the variables “Expenditure Per Pupil”, “Student-Teacher Ratio”, “Teacher Salary”, and “Eligible Fraction”. In addition, if you put your cursor over each individual point, you can see the corresponding values of the variables listed (Where the meaning of each is listed above in the "Data" section). Thus, with these two side-by-side plots, we are able to see which states tend to differ in certain aspects and of general trends with each region. Notice how the negative relationship between teacher salary and SAT scores is rather weakly associated and how frac and SAT scores tend to be very strongly negatively correlated. Discover for yourself how each variable differs with average SAT scores and whether the nature of each relationship changes with different regions and other characteristics!</p>
+<p>From the data, we can see that there indeed is a negative correlation between expenditures and SAT scores. However, in this analysis, we should not use expenditures because these negative correlations might be due to other factors not related to teacher salaries, such as inefficient or irrelevant allocations of funds (e.g. large investments into a new football stadium) or corruption (e.g. mysterious deposits into a Swiss bank account).</p>
 <p>Thus, we use teacher salaries as our explanatory variable.</p>
 
 
@@ -240,7 +233,7 @@ SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
 <<<<<<< HEAD
 =======
 <p>See the relationships from a 3D plot:</p>
-<h2>3-variable-satterplot</h2>
+<h2>3-variable-scatterplot</h2>
   <div class="row">
     <div class="col-sm-3">
       <div class="form-group shiny-input-container">
@@ -286,8 +279,6 @@ SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
 <div class="chunk" id="unnamed-chunk-3"><div class="rimage default"><img src="figure/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div></div>
 <p>We note that states with the lowest fraction of students taking the SAT generally have the highest average scores. This might be due to selection bias--the students who actually take the SAT in places with low SAT participation rates tend to be prepared. In contrast, if the majority of students are expected to take the SAT in certain states, then students who are average are likely to take the tests. Thus, the average SAT score reflects this variable.</p>
 
-
->>>>>>> 4acf7700a4d0450501b7f2bd4fdea1d9b642048e
 <p>We note that states with the lowest fraction of students taking the SAT generally have the highest average scores. This might be due to selection bias--the students who actually take the SAT in places with low SAT participation rates tend to be prepared. In contrast, if the majority of students are expected to take the SAT in certain states, then students who are average are likely to take the tests. Thus, the average SAT score reflects this variable.</p>
 
 <p>The key to observing the effects of teacher salary on SAT scores without the effects of frac is to hold constant, or control for, the frac variable. We do this by subsetting the data into various subsets of frac and observing the relationship between SAT and teacher salary for each group. Interestingly, we note that there is almost a perfect split in the data around the frac value of 40%.</p> 
@@ -347,7 +338,7 @@ SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
     </div>
   </div>
 
-<p>After partitioning the frac into two groups shown above, we note that correlation within each group differs from that of the overal negative correlation we previously observed. The group of states that have lower than 40 percent fraction of eligible students show a less steep negative correlation between salary and sat scores, white states that have higher than 40 percent fraction of eligible students show a positive correlation between salary and sat scores, the reverse of the overal correlation.</p>
+<p>After partitioning the frac into two groups shown above, we note that correlation within each group differs from that of the overall negative correlation we previously observed. The group of states that have lower than 40 percent fraction of eligible students show a less steep negative correlation between salary and sat scores, white states that have higher than 40 percent fraction of eligible students show a positive correlation between salary and sat scores, the reverse of the overal correlation.</p>
 
 <p>This phenomenon of changing correlation signs when data is partitioned into groups is known as Simpson’s Paradox. This paradox occurs when the trends between two variables become neutral or reverses when other variables are introduced.</p>
 
@@ -388,10 +379,10 @@ The paradoxical conclusion is that treatment A is more effective when used on sm
     <li>Total number of cases being treated is fixed: 350 cases.</li>
     <li>The success rates of each treatment treating small stones and large stones are fixed.
       <ul>
-    <li>Treament A treat small stones with a success rate of 93 percent.</li>
-    <li>Treament A treat large stones with a success rate of 73 percent.</li> 
-    <li>Treament B treat small stones with a success rate of 87 percent.</li>
-    <li>Treament B treat small stones with a success rate of 69 percent.</li>
+    <li>Treatment A treat small stones with a success rate of 93 percent.</li>
+    <li>Treatment A treat large stones with a success rate of 73 percent.</li> 
+    <li>Treatment B treat small stones with a success rate of 87 percent.</li>
+    <li>Treatment B treat small stones with a success rate of 69 percent.</li>
       </ul>
   </ul>
 <li>What's not fixed?</li>
@@ -466,9 +457,11 @@ The paradoxical conclusion is that treatment A is more effective when used on sm
 
 
 
+<p>We have introduced the concepts of Omitted Variable Bias and Simpson's Paradox in the context of SAT scores and teacher salaries. We have shown that there are cases where an explanatory variable can actually reflect the effects of a different, perhaps unknown, variable, which may seriously compromise that variable's explanatory power. In our increasingly data driven world, people are often looking to data in order to make informed decisions; in order to make sense of this data, however, it is important to understand these concepts--especially regarding perplexing policy problems with significant effects on people. Therefore, we must be careful to understand what lies within the data.</p>
+
 <h2>Reference</h2>
 <p><a href="http://vudlab.com/simpsons">http://vudlab.com/simpsons</a></p>
 <p><a href="http://en.wikipedia.org/wiki/Simpson%27s_paradox">http://en.wikipedia.org/wiki/Simpson%27s_paradox</a></p>
 
 </body>
-</htm	l>
+</html>
