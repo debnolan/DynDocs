@@ -91,18 +91,14 @@
 
 
 <body>
-<h1>Money and Education</h1>
+<h1>What does the Data really say? SAT and Teacher Salaries</h1>
 <h2>—An interactive document on confounding variable and Simpson's Paradox</h2>
 <h2>Introduction</h2>
-<p>Education is a key component in public policy. As funds for public schools dwindle due to increasing budget restrictions, the debate revolves around both the share of education’s budget and the most efficient allocation of these funds from the public purse. In the following case, we can see how an immature knowledge of statistics can lead to potentially disastrous public policy results and how a fuller understanding of these problems can best delineate the true story and best affect the lives of people. </p>
+<p>Education is a key component in public policy. As funds for public schools dwindle due to increasing budget restrictions, the debate revolves around both the share of education’s budget and the most efficient allocation of these funds from the public purse. In the following case, we can see how an immature knowledge of statistics can lead to potentially disastrous public policy results and how a fuller understanding of these problems can better delineate the true story and better affect the lives of people. </p>
 	
-<p>In the article “Meaningless Money Factor” (1993), George F. Will, a political essayist for the Washington Post, points to case studies where some states with the lowest expenditure per student had the highest SAT scores and vice versa--the SAT test is a national college entrance examination used to indicate the academic preparation level for American high school students. He notes that this is a general trend and that the evidence shows that there is a negative correlation between teacher salaries and SAT scores. He concludes with his quip: “The fact that the quality of schools… [fails to correlate] with education appropriations will have no effect on the teacher unions’ insistence that money is the crucial variable.”</p> 
+<p>In the article “Meaningless Money Factor” (1993), George F. Will, a Pulizter Prize winning political essayist, points to case studies where some states with the lowest expenditure per student had the highest SAT scores and vice versa--the SAT test is a national college entrance examination used to indicate the academic preparation level for American high school students. He notes that this is a general trend and that the evidence shows that there is a negative correlation between teacher salaries and SAT scores. He concludes with his lament: “The fact that the quality of schools… [fails to correlate positively] with education appropriations will have no effect on the teacher unions’ insistence that money is the crucial variable.” He then concludes with "The public education lobby's crumbling last line of defense is the miseducation of the public."</p> 
 	
-<p>This evidence is somewhat counterintuitive to the idea that paying school teachers more will result in better grades as a result of improved quality of instruction and teaching talent. However, as we will see, the negative correlation does in fact exist! Does this mean that we should reduce public high school teachers’ salaries in order to best improve the academic futures of their students? In this document, we will examine the relationship between teachers’ salary and academic performance using SAT scores and introduce the idea of confounding variables.</p>
-
-
-
-
+<p>This evidence is somewhat counterintuitive to the idea that paying school teachers more will result in better grades as a result of improved quality of instruction and teaching talent. However, as we will see, the negative correlation does in fact exist! Does this mean that we should reduce public high school teachers’ salaries in order to better improve the academic futures of their students? In this document, we will examine the relationship between teachers’ salary and academic performance using SAT scores and introduce the idea of confounding variables.</p>
 
 <h2>Data</h2>
 <p>The data is from the paper “Getting What You Pay For: The Debate Over Equity in Public School Expenditures” by Deborah Lynn Guber (1999) from the Journal of Statistics Education.</p>
@@ -110,13 +106,13 @@
 <p>There are a number of variables listed in the data description collected from 1994-1995 from public elementary and secondary schools:</p>
 
 <p> State -- Name of state<br>
-Region--Which area the state belongs to in the United States<br>
+Region (region)--Which area the state belongs to in the United States<br>
 Population--The number of people in that state<br>
-Expenditure (expend) -- Current expenditure per pupil (in thousands of U.S. dollars per average daily atttendance in public and elementary and secondary schools) <br>
+Expenditure (expend) -- Current expenditure per pupil (in thousands of U.S. dollars per average daily attendance in public and elementary and secondary schools) <br>
 Student Teacher Ratio (ratio) -- Average pupil to teacher ratio in public elementary and secondary schools during Fall 1994<br>
 Teacher Salary (salary)-- Estimated average annual salary of teachers in public elementary and secondary schools during 1994-1995 (in thousands of US dollars)<br>
 Eligible Student Fraction (frac) -- Percentage of all eligible students taking the SAT in 1994-1995<br> 
-SAT Verval (verbal) -- Average verbal SAT score in 1994-1995<br>   
+SAT Verbal (verbal) -- Average verbal SAT score in 1994-1995<br>   
 SAT Math (math) --  Average math SAT score in 1994-1995<br>  
 SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
 </p>
@@ -137,19 +133,17 @@ SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
 
 <h3>Correlation and Causation</h3>
 
-<p>Correlation is the relationship between two different variables. When two variables are positively correlated, they have a positive association with each other; that is, when there is more of one variable, there is more of the other. For example, there might be more hot chocolate sales during colder weather and more iced tea sales during hot weather. When two things are negatively correlated with each other, they will have a negative association with each other. For example, when people have more money, they might be less inclined to purchase off-brand goods (such examples are known as inferior goods in economics).</p> 
+<p>Correlation is the relationship between two different variables. When two variables are positively correlated, they have a positive association with each other; that is, when there is more of one variable, there is more of the other. For example, there might be more hot chocolate sales during colder weather and more iced tea sales during hot weather. When two things are negatively correlated with each other, they will have a negative association with each other. For example, when people have more money, they might be less inclined to purchase off-brand goods (such examples are known as "inferior goods" in Economics).</p> 
 
 <p>It is important to note that correlation does not equal causation. That is, just because two variables move together well does not mean that one causes the other variable to increase. For example, if an epidemic spreads in certain parts of the world, higher numbers of doctors in those places with high incidences of a disease does not mean that the doctors caused the disease. Rather, doctors might have been sent to those places to address it.</p>
 
-<p>When using an explanatory variable, which is the variable that we consider that might affect the variable of interest (i.e. the independent variable), we need to make sure that the explanatory variable is not really just showing the effect of another variable. Often, explanatory variables will have a number of other variables that are correlated with them, which can skew the explanatory power of the observations.</p>
+<p>When using an explanatory variable(i.e. the independent variable), which is the variable that we consider that might affect the variable of interest, we need to make sure that the explanatory variable is not really just showing the effect of another variable. Often, explanatory variables will have a number of other variables that are correlated with them, which can skew the explanatory power of the observations.</p>
 
-<p>We see a negative correlation between sat scores and teacher salary:</p>
+<p>Here, we see a negative correlation between SAT scores and teacher salary:</p>
 <div class="chunk" id="unnamed-chunk-2"><div class="rimage default"><img src="figure/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" class="plot" /></div></div>
 
-<p>From the data, we can see that there indeed is a negative correlation between expenditures and SAT scores. However, in this analysis, we should not use expenditures because these negative correlations might be due to other factors not related to teacher salaries, such as inefficient or irrelevant allocations of funds (e.g. large investments into a new football stadium) or corruption (e.g. mysterious deposits into a Swiss bank account). </p>
-<p>Thus, we use teacher salaries as our explanatory variable.</p>
+<p>However, there is a better way to observe variables. We have the technology:</p>
 
-<p>You can also explore relationships between other variables using following interactive scatter plot:</p>
 <!--sidebyside scatterplot-->
 <div class="container-fluid">
   <h2>Scatter Plots and Correlation</h2>
@@ -232,11 +226,11 @@ SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
 <p>Why might this be? </p>
 
 <div class="chunk" id="unnamed-chunk-3"><div class="rimage default"><img src="figure/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" class="plot" /></div></div>
-<p>we note that states with the lowest fraction of students taking the SAT generally have the highest average scores. This might be due to selection bias--the students who actually take the SAT in places with low SAT participation rates tend to be prepared. In contrast, if the majority of students are expected to take the SAT in certain states, then students who are average are likely to take the tests. Thus, the average SAT score reflects this variable.</p>
+<p>We note that states with the lowest fraction of students taking the SAT generally have the highest average scores. This might be due to selection bias--the students who actually take the SAT in places with low SAT participation rates tend to be prepared. In contrast, if the majority of students are expected to take the SAT in certain states, then students who are average are likely to take the tests. Thus, the average SAT score reflects this variable.</p>
 
 <p>We note that states with the lowest fraction of students taking the SAT generally have the highest average scores. This might be due to selection bias--the students who actually take the SAT in places with low SAT participation rates tend to be prepared. In contrast, if the majority of students are expected to take the SAT in certain states, then students who are average are likely to take the tests. Thus, the average SAT score reflects this variable.</p>
 
-<p>The key to observing the effects of teacher salary on SAT scores without the effects of frac is to hold constant, or control for, the frac variable.We see that there is a distinct break around frac = 40%, as indicated by the grey vertical line. It is reasonable to partition the frac variable into two groups, one groups are states that have frac lower than 40 percent and the other group are states that have frac greater than 40 percent. </p> 
+<p>The key to observing the effects of teacher salary on SAT scores without the effects of frac is to hold constant, or control for, the frac variable. We do this by subsetting the data into various subsets of frac and observing the relationship between SAT and teacher salary for each group. Interestingly, we note that there is almost a perfect split in the data around the frac value of 40%.</p> 
 
 <div class="chunk" id="unnamed-chunk-4"><div class="rimage default"><img src="figure/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" class="plot" /></div></div>
 
@@ -251,6 +245,8 @@ SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
 <p>Moreover, looking at the “First Half of Data” and the “Second Half of Data” pages, we can learn even more regarding the groups. Notice how the two halves almost perfectly split around the 950  SAT score level.</p>
 
 <p>This illustrates Simpson’s Paradox. </p>
+
+
 
 
 
@@ -293,7 +289,7 @@ SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
     </div>
   </div>
 
-<p>After partitioning the frac into two groups shown above, we note that correlation within each group differs from that of the overal negative correlation we previously observed. The group of states that have lower than 40 percent fraction of eligible students show a less steep negative correlation between salary and sat scores, white states that have higher than 40 percent fraction of eligible students show a positive correlation between salary and sat scores, the reverse of the overal correlation.</p>
+<p>After partitioning the frac into two groups shown above, we note that correlation within each group differs from that of the overall negative correlation we previously observed. The group of states that have lower than 40 percent fraction of eligible students show a less steep negative correlation between salary and sat scores, white states that have higher than 40 percent fraction of eligible students show a positive correlation between salary and sat scores, the reverse of the overal correlation.</p>
 
 <p>This phenomenon of changing correlation signs when data is partitioned into groups is known as Simpson’s Paradox. This paradox occurs when the trends between two variables become neutral or reverses when other variables are introduced.</p>
 
@@ -301,7 +297,7 @@ SAT Total Score (sat) -- Average total score on the SAT in 1994-1995<br>
 <h3>Kidney stone treatment example</h3>
 <p>This example is taken from wikipedia.</p>
 <blockquote cite="https://en.wikipedia.org/wiki/Simpson%27s_paradox" style="font-size:11px">
-	<p>This is a real-life example from a medical study[12] comparing the success rates of two treatments for kidney stones.[13]</p>
+	<p>This is a real-life example from a medical study comparing the success rates of two treatments for kidney stones.</p>
 
 
 <p>The table below shows the success rates and numbers of treatments for treatments involving both small and large kidney stones, where Treatment A includes all open surgical procedures and Treatment B is percutaneous nephrolithotomy (which involves only a small puncture). The numbers in parentheses indicate the number of success cases over the total size of the group. (For example, 93% equals 81 divided by 87.)</p>
@@ -370,7 +366,7 @@ The paradoxical conclusion is that treatment A is more effective when used on sm
   </div>
 </div> 
 
-<p>Below interactive table allow you to control more variables. The only thing that is fixed is the total number of cases being treated, still equal to 350.</p>
+<p>The interactive table below allows you to control more variables. You can control not only the number of cases each treatment is given by the doctor, but also the effectiveness, that is the success rates, of each treatment treating mild and severe cases of kidney stones. Here, the only thing that is fixed is the total number of cases being treated, still equal to 350.</p>
 
 <div class="container-fluid">
   <h2>Simpson's Paradox</h2>
@@ -410,6 +406,7 @@ The paradoxical conclusion is that treatment A is more effective when used on sm
   </div>
 </div> 
 
+<p>We have introduced the concepts of Omitted Variable Bias and Simpson's Paradox in the context of SAT scores and teacher salaries. We have shown that there are cases where an explanatory variable can actually reflect the effects of a different, perhaps unknown, variable, which may seriously compromise that variable's explanatory power. In our increasingly data driven world, people are often looking to data in order to make informed decisions; in order to make sense of this data, however, it is important to understand these concepts--especially regarding perplexing policy problems with significant effects on people. Therefore, we must be careful to understand what lies within the data.</p>
 
 
 <h2>Reference</h2>
@@ -417,4 +414,4 @@ The paradoxical conclusion is that treatment A is more effective when used on sm
 <p><a href="http://en.wikipedia.org/wiki/Simpson%27s_paradox">http://en.wikipedia.org/wiki/Simpson%27s_paradox</a></p>
 
 </body>
-</htm	l>
+</html>
