@@ -1,0 +1,8 @@
+Package: SAT.Case.Study
+Title: Factors Influencing SAT Scores-- Correlation and Simpson's Paradox
+Version: 0.1
+Date: 2015-08-27
+Author: Zeyu Li(lizeyu@berkeley.edu) Dennis Lee(yeoyeo@berkeley.edu)
+Description: An interactive document that provides specific examples of statistical concepts such as correlation, regression, confounding variable, and Simpson's paradox.
+License: Summer 2015 Research Project with Professor Nolan
+LazyData: TRUE

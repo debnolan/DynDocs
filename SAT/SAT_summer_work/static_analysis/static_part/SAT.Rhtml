@@ -1,0 +1,187 @@
+<html>
+
+<head>
+<title>Money and Education</title>
+</head>
+
+<body>
+
+<h2>Introduction</h2>
+<p>Education is a key component in public policy. As funds for public schools dwindle due to increasing budget restrictions, the debate revolves around both the share of education’s budget and the most efficient allocation of these funds from the public purse. In the following case, we can see how an immature knowledge of statistics can lead to potentially disastrous public policy results and how a fuller understanding of these problems can best delineate the true story and best affect the lives of people. </p>
+	
+<p>In the article “Meaningless Money Factor” (1993), George F. Will, a political essayist for the Washington Post, points to case studies where some states with the lowest expenditure per student had the highest SAT scores and vice versa--the SAT test is a national college entrance examination used to indicate the academic preparation level for American high school students. He notes that this is a general trend and that the evidence shows that there is a negative correlation between teacher salaries and SAT scores. He concludes with his quip: “The fact that the quality of schools… [fails to correlate] with education appropriations will have no effect on the teacher unions’ insistence that money is the crucial variable.”</p> 
+	
+<p>This evidence is somewhat counterintuitive to the idea that paying school teachers more will result in better grades as a result of improved quality of instruction and teaching talent. However, as we will see, the negative correlation does in fact exist! Does this mean that we should reduce public high school teachers’ salaries in order to best improve the academic futures of their students? In this document, we will examine the relationship between teachers’ salary and academic performance using SAT scores and introduce the idea of confounding variables.</p>
+
+<!--begin.rcode echo = FALSE
+setwd("~/Dropbox/Senior_Research/Stat_Summer15_Research/DynDocs/SAT")
+# satDF = read.csv("http://www.stat.berkeley.edu/users/nolan/data/sat.csv")
+load("rda_data/satDF.rda")
+library(lattice)
+end.rcode-->
+
+
+
+<h2>Data</h2>
+<p>The data is from the paper “Getting What You Pay For: The Debate Over Equity in Public School Expenditures” by Deborah Lynn Guber (1999) from the Journal of Statistics Education.</p>
+
+<p>There are a number of variables listed in the data description collected from 1994-1995 from public elementary and secondary schools:</p>
+
+<p> State -- Name of state<br>
+expend -- Current expenditure per pupil (in thousands of U.S. dollars per average daily atttendance in public and elementary and secondary schools) <br>ratio -- Average pupil to teacher ratio in public elementary and secondary schools during Fall 1994
+salary-- Estimated average annual salary of teachers in public elementary and secondary schools during 1994-1995 (in thousands of US dollars)<br>
+frac -- Percentage of all eligible students taking the SAT in 1994-1995<br> 
+verbal -- Average verbal SAT score in 1994-1995<br>   
+math --  Average math SAT score in 1994-1995<br>  
+sat -- Average total score on the SAT in 1994-1995<br>
+</p>
+
+<p>Just a glance at the data: 
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+<p>As we can see, there are 50 observation points representing each state with the various data recorded in each of them.</p>
+
+<h2>Data Analysis</h2>
+
+<h3>Correlation and Causation</h3>
+
+<p>Correlation is the relationship between two different variables. When two variables are positively correlated, they have a positive association with each other; that is, when there is more of one variable, there is more of the other. For example, there might be more hot chocolate sales during colder weather and more iced tea sales during hot weather. When two things are negatively correlated with each other, they will have a negative association with each other. For example, when people have more money, they might be less inclined to purchase off-brand goods (such examples are known as inferior goods in economics).</p> 
+
+<p>It is important to note that correlation does not equal causation. That is, just because two variables move together well does not mean that one causes the other variable to increase. For example, if an epidemic spreads in certain parts of the world, higher numbers of doctors in those places with high incidences of a disease does not mean that the doctors caused the disease. Rather, doctors might have been sent to those places to address it.</p>
+
+<p>When using an explanatory variable, which is the variable that we consider that might affect the variable of interest (i.e. the independent variable), we need to make sure that the explanatory variable is not really just showing the effect of another variable. Often, explanatory variables will have a number of other variables that are correlated with them, which can skew the explanatory power of the observations.</p>
+
+<p>We see a negative correlation between sat scores and teacher salary:</p>
+<!--begin.rcode echo = FALSE, fig.width=8, fig.height=6 
+# Plot the simply correlation plot
+plot(sat ~ salary, data = satDF, xlab = "Teacher Salary", ylab = "SAT score")
+# fit the regression
+lm.Ex = lm(sat ~ salary, data = satDF) 
+abline(lm.Ex)
+end.rcode-->
+
+<p>You can also explore relationships between other variables using following interactive scatter plot:
+
+
+
+
+
+
+
+
+
+
+</p>
+
+
+
+
+<h3>Confounding Variables</h3>
+
+<p>From the charts above, we can see that there is strong positive correlation between frac, the fraction of students taking the SAT, and teacher salary and a very strong negative correlation between frac and SAT scores. Perhaps the issue is that the SAT is not required for all students. Thus, the issue in just viewing the relationship between SAT scores and teacher salary is that it reflects the effects of frac. </p>
+
+<p>Why might this be? If we look at this chart,</p>
+
+<!--begin.rcode echo = FALSE, fig.width=8, fig.height=6 
+plot(sat ~ frac, data = satDF) 
+with(satDF, text(x = frac, y= sat, labels = State, cex = 0.5, pos = 4))
+abline(v = 40, col = "grey")
+end.rcode-->
+
+<p>We note that states with the lowest fraction of students taking the SAT generally have the highest average scores. This might be due to selection bias--the students who actually take the SAT in places with low SAT participation rates tend to be prepared. In contrast, if the majority of students are expected to take the SAT in certain states, then students who are average are likely to take the tests. Thus, the average SAT score reflects this variable.</p>
+
+<p>The key to observing the effects of teacher salary on SAT scores without the effects of frac is to hold constant, or control for, the frac variable.We see that there is a distinct break around frac = 40%, as indicated by the grey vertical line. It is reasonable to partition the frac variable into two groups, one groups are states that have frac lower than 40 percent and the other group are states that have frac greater than 40 percent. </p> 
+
+<!--begin.rcode echo = FALSE, fig.width=8, fig.height=6 
+frac_fac = cut(satDF$frac, breaks = 2)
+low40 = which(frac_fac == "(3.92,42.5]")
+high40 = which(frac_fac == "(42.5,81.1]")
+lm.Ex = lm(sat ~ salary, data = satDF) 
+lm_low40 = lm(satDF$sat[low40] ~ satDF$salary[low40])
+lm_high40 = lm(satDF$sat[high40] ~ satDF$salary[high40])
+plot(sat ~ salary, data = satDF, xlab = "Teacher Salary", ylab = "SAT score", type = "n")
+points(satDF$sat[low40] ~ satDF$salary[low40], col = "blue", pch = 16)
+points(satDF$sat[high40] ~ satDF$salary[high40], col = "orange", pch = 16)
+abline(lm.Ex)
+abline(lm_low40, col = "blue", lwd = 3)
+abline(lm_high40, col = "orange", lwd = 3)
+end.rcode-->
+
+<p>
+This interactive regression app helps you understand step by step how this change of relationship came about:
+
+
+
+
+
+
+
+
+
+
+
+
+</p>
+
+<p>After partitioning the frac into two groups shown above, we note that correlation within each group differs from that of the overal negative correlation we previously observed. The group of states that have lower than 40 percent fraction of eligible students show a less steep negative correlation between salary and sat scores, white states that have higher than 40 percent fraction of eligible students show a positive correlation between salary and sat scores, the reverse of the overal correlation.</p>
+
+<p>This phenomenon of changing correlation signs when data is partitioned into groups is known as Simpson’s Paradox. This paradox occurs when the trends between two variables become neutral or reverses when other variables are introduced.</p>
+
+<h2>Simpson's Paradox Interactive Tutorial</p>
+<h3>Kidney stone treatment example</h3>
+<p>This example is taken from wikipedia. 
+"
+
+
+
+"
+</p>
+
+<p>Below is an interactive table that help you understand how Simpson's paradox work. </p>
+
+<p>
+<ul>
+<li>Treatment A is the more effect treatment that doctors tend to give more to severe cases.</li>
+<li>Treatment B is the less effect treatment that doctors tend to give more to milder cases.</li>
+<li>What's fixed?</li>
+  <ul>
+    <li>Total number of cases being treated is fixed: 350 cases.</li>
+    <li>The success rates of each treatment treating small stones and large stones are fixed.
+      <ul>
+    <li>Treament A treat small stones with a success rate of 93 percent.</li>
+    <li>Treament A treat large stones with a success rate of 73 percent.</li> 
+    <li>Treament B treat small stones with a success rate of 87 percent.</li>
+    <li>Treament B treat small stones with a success rate of 69 percent.</li>
+      </ul>
+  </ul>
+<li>What's not fixed?</li>
+  <ul>
+    <li>The marginal totals are not fixed</li>
+  </ul>
+</ul>
+</p>
+
+<p>Below interactive table allow you to control more variables. The only thing that is fixed is the total number of cases being treated, still equal to 350.</p>
+
+
+
+
+
+<h2>Reference</h2>
+<p><a href="http://vudlab.com/simpsons">http://vudlab.com/simpsons</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Simpson%27s_paradox">http://en.wikipedia.org/wiki/Simpson%27s_paradox</a></p>
+
+</body>
+</html>
