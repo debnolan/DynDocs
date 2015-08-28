@@ -13,22 +13,28 @@ library(plyr)
 # Define server logic required to draw a scatterplot
 shinyServer(function(input, output) {
   load("data/satDF.rda")
-  load("data/satDF_one.rda") # adding two columns: region and state population
-  load("data/satDF_pretty.rda")
+#   load("data/satDF_one.rda") # adding two columns: region and state population
   
   output$text <- renderText({
     input$title
   })
   
+  satDF_dataset <- reactive({
+    # adding three columns to the original data frame: region, state population, and state abbreviation.
+    cbind(satDF, region = state.region, population = satDF_one$population, state_abb = state.abb)
+  })
+  
   ###################### sidebyside_1
   output$sidebyside_1 <- renderPlot({
+   
+   satDF <- satDF_dataset()
+   
    x <- satDF[ , input$x_1]
    y <- satDF[ , input$y_1]
    
-   dat <- data.frame(x, y, 
-                     region = state.region, 
-                     population = satDF_one$population, 
-                     state_abb = state.abb)
+   dat <- cbind(x, y, population = satDF$population, 
+                region = satDF$region, 
+                state_abb = satDF$state_abb)
    p <- ggplot(dat, aes(x, y, size = population, 
                colour = region, label = state_abb))
    
@@ -58,13 +64,16 @@ shinyServer(function(input, output) {
   
   ###################### sidebyside_2
    output$sidebyside_2 <- renderPlot({
+     
+     satDF <- satDF_dataset()
+     
      x <- satDF[ , input$x_2]
      y <- satDF[ , input$y_2]
      
-     dat <- data.frame(x, y, 
-                       region = state.region, 
-                       population = satDF_one$population, 
-                       state_abb = state.abb)
+     dat <- cbind(x, y, population = satDF$population, 
+                  region = satDF$region, 
+                  state_abb = satDF$state_abb)
+     
      p <- ggplot(dat, aes(x, y, size = population, 
                           colour = region, label = state_abb))
      
@@ -94,6 +103,8 @@ shinyServer(function(input, output) {
    
    ###################### hover info
    output$info_1 <- renderPrint({
+     satDF <- satDF_dataset()
+     
      nearPoints(satDF, input$plot_hover_1, xvar = input$x_1, yvar = input$y_1, threshold = 7)
    })
    
@@ -103,13 +114,21 @@ shinyServer(function(input, output) {
    
    ###################### data display
    output$mytable1 = renderTable({
-     satDF_pretty
+     satDF <- satDF_dataset()
+     satDF <- satDF[-10]
+     renames(satDF, c("State" = "STATE","expend" = "EXPENDITURE (IN 000S)",
+                          "ratio" = "RATIO", "salary" = "TEACHER's SALARY (IN 000S)",
+                          "frac" = "ELIGIBLE STUDENT FRACTION", "verbal" = "SAT VERBAL SCORE",
+                          "math" = "SAT MATH SCORE", "sat" = "SAT TOTAL SCORE", "region" = "REGION",
+                          "population" = "POPULATION"))
+     satDF
    }, options = list(orderClasses = TRUE))
    
    ###################### 3D plot
    # Expression that generates a rgl scene with a number of points corresponding
    # to the value currently set in the slider.
    output$sctPlot <- renderWebGL({
+     satDF <- satDF_dataset()
      
      x_3d<- satDF[ , input$x_3d] 
      y_3d<- satDF[ , input$y_3d] 
