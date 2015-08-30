@@ -1,14 +1,14 @@
 library(shiny)
 options(rgl.useNULL=TRUE)
 library(ggplot2)
-library(grid)
-library(gridExtra)
 library(scales)
-library(ggvis)
 library(shinyRGL)
 library(rgl)
 library(plyr)
 
+# library(gridExtra)
+# library(grid)
+# library(ggvis)
 
 # Define server logic required to draw a scatterplot
 shinyServer(function(input, output) {
