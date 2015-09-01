@@ -1,60 +1,168 @@
 <!DOCTYPE html>
-<html>
-<head>
+  <html>
+  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <script type="application/shiny-singletons"></script>
   <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.0];bootstrap-datepicker[1.0.2];bootstrap[3.3.1]</script>
-<script src="shared/json2-min.js"></script>
-<script src="shared/jquery.min.js"></script>
-<link href="shared/shiny.css" rel="stylesheet" />
-<script src="shared/shiny.min.js"></script>
-<link href="shared/datepicker/css/datepicker.css" rel="stylesheet" />
-<script src="shared/datepicker/js/bootstrap-datepicker.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-<script src="shared/bootstrap/js/bootstrap.min.js"></script>
-<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
-<script src="shared/bootstrap/shim/respond.min.js"></script>
-  <title>stockVis</title>
-</head>
+  <script src="shared/json2-min.js"></script>
+  <script src="shared/jquery.js"></script>
+  <link href="shared/shiny.css" rel="stylesheet" />
+  <script src="shared/shiny.js"></script>
+  <link href="shared/datepicker/css/datepicker.css" rel="stylesheet" />
+  <script src="shared/datepicker/js/bootstrap-datepicker.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="shared/bootstrap/js/bootstrap.min.js"></script>
+  <script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+  <script src="shared/bootstrap/shim/respond.min.js"></script>
+  <title>Zillow</title>
+  </head>
+  
+  <body>
+  <h1>Using Indicatiors to Analyze Data</h1>
+  <h2>Introduction</h2>
+  
+  <p>In statistics, an indicator shows whether or not an element exists. Often, a value of 1 
+  indicates that the element exists and 0 indicates otherwise.
+ In this project, we will use indicators to see how the existence of fireplace and central air affect home prices in Saratoga County, New york. Not only will this project teach you the basics of indicator and linear regression model, it will teach you a simple way to find out the value of a fireplace, central air, and many other factors. Knowing the values of different facilities may help you decide whether or not to have them when you buy or sell a house.
+  </p>
+  
+<div class="row">
+<div class="col-sm-4">
+<form class="well">
+<span class="help-block">Select a variable to examine.</span>
 
-<body>
-  <div class="container-fluid">
-    <h2>Zillow</h2>
-    <div class="row">
-      <div class="col-sm-4">
-        <form class="well">
-          <span class="help-block">Select a variable to
-  examine.</span>
 
-
- <div>
-  <select id="varName">
-    <option value="Fireplace" selected>Fireplace</option>
-    <option value="Sewer.Type">Sewer Type</option>
+<div>
+<select name="variable">
+<option value="Fireplace" selected>Fireplace</option>
+<option value="Central.Air">Central Air</option>
 </select> 
-<script type="application/json" data-for="varName" data-nonempty="">{}</script>
+<script type="application/json" data-for="variable" data-nonempty="">{}</script>
 </div>
 
 <div>
-  <select id="plotType">
-    <option value="boxplot" selected>Boxplot</option>
-    <option value="densityPlot">Density Plot</option>
+<select name="plotType">
+<option value="boxplot" selected>Boxplot</option>
+<option value="densityPlot">Density Plot</option>
+<option value="scatterplot">Scatter Plot</option>
 </select> 
 <script type="application/json" data-for="plotType" data-nonempty="">{}</script>
 </div>
-         
- <button id="makePlot" type="button" class="btn btn-default action-button">Plot</button>
-          <br/>
-          <br/>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="col-sm-8">
-        <div id="plotA" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
-      </div>
-    </div>
-  </div>
+
+<div>
+<select name="showing">
+<option value="All" selected>All</option>
+<option value="Yes">Yes</option>
+<option value="No">No</option>
+</select> 
+<script type="application/json" data-for="showing" data-nonempty="">{}</script>
+</div>
+
+<button id="makePlot" type="button" class="btn btn-default action-button shiny-plot-output">Plot</button>
+<br/>
+<br/>
+</div>
+</div>
+</form>
+</div>
+<div class="col-sm-8">
+<div id="plotA" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+
+<p> As you see from above, larger houses are generally more expensive. In particular, houses with fireplace or central air tend to be more expensive than houses that don't. Now we want to build a regression model to further examine HOW MUCH value does a fireplace or central air add.
+</p>
+
+
+<h2>The Regression Model</h2>
+
+<p>To find out how much value the existence of fireplace or central air have been added to the house, we have the following regression function:</p>
+
+<p>                     Y = β0 + β1X1 + β2X2</p>
+
+<p>where β0 is the intercept and β1 and β2 are the coefficients. </p>
+
+<p>In this example, Y is the house price, X1 is the sizes of the houses, and X2 is an indicator showing whether the house has fireplace(s) or a central air, with 1 indicating yes and 0 indicating no. Since the the value of X2 is either 0 or 1, β2 is exactly the vertical difference between the two intercepts (with and without fireplace). Therefore, finding β2 will allow us to find out, on average, how much house prices increase when having a fireplace or central air</p>
+
+ 
+
+
+<p> By solving for this linear regression model, we find that β2 is approximately 5567. Thus, a fireplace will on average raise the house price by $5567.</p>
+
+<p> However, this model assumed that the value of a fireplace is constant over all houses, regardless of their sizes. To to house sizes into consideration, we asjust our model as follow:</p>
+
+<p>   House Prices = β0 + β1*living area of all houses + β2*indicators of fireplace(either 1 or 0) + β3*living areas of those that has a fireplace
+</p>
+
+<p>Further modifying the function, it becomes:</p>
+
+<p>House Prices = (β0 + β2) + (β1 + β3) LivingArea</p>
+
+<p>Note that the same method can apply to central air and other factors, as long as you use indicator
+
+</p>
+
+
+<p>Therefore, the existance of fireplace changes both the intercept and the slope of the regression line. Try to explore the graphs below and find out how much a variable contributes to house prices.</p>
+
+
+
+
+<div class="row">
+<div class="col-sm-4">
+<form class="well">
+<span class="help-block">Select a variable to examine.</span>
+
+
+<div>
+<select name="varName">
+<option value="Fireplace" selected>Fireplace</option>
+<option value="Central.Air">Central Air</option>
+</select> 
+<script type="application/json" data-for="variable" data-nonempty="">{}</script>
+</div>
+
+
+<div>
+<select name="showing1">
+<option value="All" selected>All</option>
+<option value="Yes">Yes</option>
+<option value="No">No</option>
+</select> 
+<script type="application/json" data-for="showing" data-nonempty="">{}</script>
+</div>
+
+<button id="makePlot2" type="button" class="btn btn-default action-button shiny-plot-output">Plot</button>
+<br/>
+<br/>
+</div>
+</div>
+</form>
+</div>
+<div class="col-sm-8">
+<div id="plotB" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+
+
+
+<h3>
+Limitations
+</h3>
+
+<p>
+By now you should know what an indicator is and its role in a linear regression model. However, there are limitations of our project. Because this project is meant to be introductory, we only look at one factor at a time and ignore the interactions between factors. For example, we ignore that bigger houses may tend to have a fireplace. If you want, you can explore combinations of factors by applying a similar linear regression model. Here is an example:
+</p>
+
+<p>House Prices = β0 + β1*living area + β2*indicators of fireplace (either 1 or 0) + β3*indicators of central air(either 1 or 0) + interaction of fireplace and central air</p>
+
+<p>This model will allow you to explore how fireplace and central air TOGETHER make a difference in house prices.
+</p>
+
+
+
+</div>
+</div>
+</div>
+
+
+
 </body>
 </html>
